@@ -31,6 +31,16 @@ module.exports = {
     'no-console': 'warn',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/jsx-sort-props': [
+      'warn',
+      {
+        callbacksLast: true,
+        shorthandFirst: false,
+        shorthandLast: true,
+        ignoreCase: true,
+        noSortAlphabetically: false,
+      },
+    ],
     'import/order': [
       'error',
       {

@@ -1,4 +1,6 @@
 .container {
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
   max-width: 360px;
 }
@@ -19,6 +21,7 @@
 .body {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   gap: var(--space-l);
   background-color: var(--card-bg);
   padding: var(--space-xl) var(--space-xs);

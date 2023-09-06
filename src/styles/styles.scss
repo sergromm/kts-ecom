@@ -5,6 +5,7 @@ body {
   font-family: "Roboto";
   margin: 0;
   padding: 0;
+  background-color: var(--background);
 }
 
 * {
@@ -26,12 +27,15 @@ pre {
 
 :root {
   // spacing
-  --space-xl: 24px;
-  --space-l: 20px;
-  --space-m: 16px;
-  --space-s: 14px;
+  --space-xl: 48px;
+  --space-l: 32px;
+  --space-m: 24px;
+  --space-s: 16px;
   --space-xs: 12px;
   --space-xxs: 8px;
+
+  // padding
+  --whole-page-padding: clamp(var(--space-xxs), 5vw, 101px);
 
   // colors
   --brand: #518581;
@@ -43,6 +47,7 @@ pre {
   --gray: #d9d9d9;
   --white-50: rgba(255, 255, 255, 0.5);
   --black-20: rgba(0, 0, 0, 0.2);
+  --background: #fafafa;
 
   // tokens
   --loader-bg: var(--brand);

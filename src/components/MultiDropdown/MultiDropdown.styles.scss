@@ -1,4 +1,12 @@
+.multi-dropdown {
+  position: relative;
+}
+
 .dropdown {
+  position: absolute;
+  top: 52px;
+  left: 0;
+  width: 100%;
   list-style: none;
   margin: 0;
   padding: 0;

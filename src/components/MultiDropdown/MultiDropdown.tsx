@@ -45,13 +45,13 @@ const ListItem: React.FC<ListItemProps> = ({ option, onClick, selected }) => {
   }) as 'primary' | 'secondary' | 'accent';
   return (
     <li
-      key={option.key}
       className="dropdown-option"
+      key={option.key}
+      onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
     >
-      <Text view="p-16" color={color}>
+      <Text color={color} view="p-16">
         {option.value}
       </Text>
     </li>
@@ -63,6 +63,7 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
   value,
   onChange,
   getTitle,
+  className,
   disabled,
   ...rest
 }) => {
@@ -125,19 +126,21 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
     return getTitle(value);
   };
 
+  const classes = classNames('multi-dropdown', className);
+
   return (
-    <div className="multi-dropdown" {...rest}>
+    <div className={classes} {...rest}>
       <Input
+        afterSlot={<ArrowDownIcon color="secondary" />}
+        disabled={disabled}
+        placeholder={getTitle(value)}
         ref={inputRef}
-        onClick={() => setOpen(true)}
         value={getValue(value)}
         onChange={handleInput}
-        placeholder={getTitle(value)}
-        disabled={disabled}
-        afterSlot={<ArrowDownIcon color="secondary" />}
+        onClick={() => setOpen(true)}
       />
       {open && !disabled && (
-        <ul ref={dropdownRef} className="dropdown">
+        <ul className="dropdown" ref={dropdownRef}>
           {options.filter(matchInput).map((option) => (
             <ListItem
               key={option.key}

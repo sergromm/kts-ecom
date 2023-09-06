@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { Text } from '../Text';
 import './Card.styles.scss';
@@ -32,31 +33,32 @@ export const Card: React.FC<CardProps> = ({
   ...rest
 }) => {
   const altText = typeof title === 'string' ? title : '';
+  const classes = classNames('container', className);
   return (
-    <div className={`container ${className}`} {...rest}>
-      <img className="cover" src={image} alt={altText} />
+    <div className={classes} {...rest}>
+      <img alt={altText} className="cover" src={image} />
       <div className="body">
         <div className="description">
           {captionSlot && (
-            <Text view="p-14" color="secondary" weight="medium" maxLines={2}>
+            <Text color="secondary" maxLines={2} view="p-14" weight="medium">
               {captionSlot}
             </Text>
           )}
-          <Text view="p-20" weight="medium" maxLines={2}>
+          <Text maxLines={2} view="p-20" weight="medium">
             {title}
           </Text>
-          <Text view="p-16" color="secondary" maxLines={3}>
+          <Text color="secondary" maxLines={3} view="p-16">
             {subtitle}
           </Text>
         </div>
-        <div className="footer">
-          {contentSlot && (
+        {contentSlot && (
+          <div className="footer">
             <Text view="p-18" weight="bold">
               {contentSlot}
             </Text>
-          )}
-          {actionSlot && actionSlot}
-        </div>
+            {actionSlot && actionSlot}
+          </div>
+        )}
       </div>
     </div>
   );
