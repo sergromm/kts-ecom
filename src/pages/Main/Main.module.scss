@@ -43,7 +43,7 @@
 
 .total {
   display: flex;
-  align-items: center;
+  align-items: first baseline;
   gap: var(--space-m);
   font-size: 32px;
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Product } from 'api/products';
+import { API } from 'api/products';
 import { Button } from 'components/Button';
 import { Card } from 'components/Card';
 import { Input } from 'components/Input';
@@ -7,11 +7,9 @@ import { MultiDropdown } from 'components/MultiDropdown';
 import { Text } from 'components/Text';
 import styles from './Main.module.scss';
 
-type MainProps = {
-  products: Product[];
-};
+const { data: products } = await API.getProducts();
 
-export function Main({ products }: MainProps) {
+export function Main() {
   const [searchQuery, setSearchQuery] = React.useState('');
   return (
     <main className={styles.main}>
@@ -27,11 +25,11 @@ export function Main({ products }: MainProps) {
 
       <section className={styles.catalogue}>
         <div className={styles.search}>
-          <Input value={searchQuery} onChange={setSearchQuery} />
+          <Input placeholder="Search product" value={searchQuery} onChange={setSearchQuery} />
           <Button>Find Now</Button>
           <MultiDropdown
             className={styles.filter}
-            getTitle={() => ''}
+            getTitle={() => 'Filter'}
             options={[{ key: 'a', value: 'a' }]}
             value={[]}
             onChange={() => {}}

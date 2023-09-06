@@ -6,6 +6,7 @@
   background-color: var(--white);
   padding: var(--space-m) var(--whole-page-padding);
   border-bottom: thin solid var(--header-border);
+  z-index: var(--top);
 }
 
 .content {
