@@ -1,0 +1,40 @@
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--white);
+  padding: var(--space-m) var(--whole-page-padding);
+  border-bottom: thin solid var(--header-border);
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  max-width: var(--content-max-width);
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: var(--space-xl);
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  gap: var(--space-m);
+}
+
+.button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.button:hover {
+  color: var(--text-secondary);
+}

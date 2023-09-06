@@ -9,6 +9,7 @@
     "baseUrl": "src",
     "paths": {
       "api": ["api/*"],
+      "assets": ["assets/*"],
       "pages": ["pages/*"],
       "components": ["components/*"],
       "config": ["config/*"],

@@ -40,7 +40,7 @@ export function Main({ products }: MainProps) {
 
         <div className={styles.products}>
           <Text className={styles.total} view="title" weight="bold">
-            Total Producst{' '}
+            Total Products{' '}
             <Text color="accent" tag="span" view="p-20" weight="bold">
               {products.length}
             </Text>

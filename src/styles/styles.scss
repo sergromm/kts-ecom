@@ -6,6 +6,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--background);
+  color: var(--black);
 }
 
 * {
@@ -35,7 +36,10 @@ pre {
   --space-xxs: 8px;
 
   // padding
-  --whole-page-padding: clamp(var(--space-xxs), 5vw, 101px);
+  --whole-page-padding: clamp(var(--space-xxs), 5vw, 100px);
+
+  // size
+  --content-max-width: 1240px;
 
   // colors
   --brand: #518581;
@@ -48,6 +52,7 @@ pre {
   --white-50: rgba(255, 255, 255, 0.5);
   --black-20: rgba(0, 0, 0, 0.2);
   --background: #fafafa;
+  --header-border: #f3f3f3;
 
   // tokens
   --loader-bg: var(--brand);
