@@ -1,0 +1,17 @@
+.dropdown {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: var(--space-xxs);
+  background-color: var(--dropdown-options-bg);
+  box-shadow: var(--shadow);
+}
+
+.dropdown-option {
+  cursor: pointer;
+  padding: var(--space-s) var(--space-xs);
+}
+
+dropdown-option_hover {
+  color: var(--text-secondary);
+}

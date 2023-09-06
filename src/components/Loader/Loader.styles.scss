@@ -1,0 +1,33 @@
+.loader {
+  color: var(--loader-bg);
+}
+
+.color_inherit {
+  color: inherit;
+}
+
+.size_l {
+  width: 60px;
+  height: 60px;
+}
+.size_m {
+  width: 48px;
+  height: 48px;
+}
+.size_s {
+  width: 24px;
+  height: 24px;
+}
+
+.rotate {
+  animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

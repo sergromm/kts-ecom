@@ -1,0 +1,37 @@
+.container {
+  cursor: pointer;
+  max-width: 360px;
+}
+
+.container:hover {
+  box-shadow: var(--shadow);
+}
+
+.cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+  background-color: var(--card-image-bg);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  background-color: var(--card-bg);
+  padding: var(--space-xl) var(--space-xs);
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
