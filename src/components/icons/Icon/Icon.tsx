@@ -3,9 +3,11 @@ import * as React from 'react';
 export type IconProps = React.SVGAttributes<SVGElement> & {
   className?: string;
   color?: 'primary' | 'secondary' | 'accent';
+  width?: number;
+  height?: number;
 };
 
-const Icon: React.FC<React.PropsWithChildren<IconProps>> = ({
+export const Icon: React.FC<React.PropsWithChildren<IconProps>> = ({
   className,
   color,
   width = 24,
@@ -29,5 +31,3 @@ const Icon: React.FC<React.PropsWithChildren<IconProps>> = ({
     </svg>
   );
 };
-
-export default Icon;

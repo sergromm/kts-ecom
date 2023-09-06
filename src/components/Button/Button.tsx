@@ -1,29 +1,25 @@
-import React from 'react';
-import Loader from '../Loader';
-import './Button.styles.scss';
 import classNames from 'classnames';
+import * as React from 'react';
+import { Loader } from '../Loader';
+import './Button.styles.scss';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Состояние загрузки */
   loading?: boolean;
   /** Текст кнопки */
+  disabled?: boolean;
+  className?: string;
   children: React.ReactNode;
 };
 
-const Button: React.FC<ButtonProps> = ({
-  loading,
-  children,
-  disabled,
-  className,
-  ...rest
-}) => {
+export const Button: React.FC<ButtonProps> = ({ loading, children, disabled, className, ...rest }) => {
   const classes = classNames(
     'button',
     {
       button_disabled: disabled,
       button_loading: loading,
     },
-    className
+    className,
   );
 
   return (
@@ -33,5 +29,3 @@ const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
-
-export default Button;

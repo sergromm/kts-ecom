@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Icon, { IconProps } from '../Icon';
+import { Icon, IconProps } from '../Icon';
 
-const ArrowDownIcon: React.FC<IconProps> = (props) => {
+export const ArrowDownIcon: React.FC<IconProps> = (props) => {
   return (
     <Icon {...props}>
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,5 +15,3 @@ const ArrowDownIcon: React.FC<IconProps> = (props) => {
     </Icon>
   );
 };
-
-export default ArrowDownIcon;

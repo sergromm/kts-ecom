@@ -1,11 +1,16 @@
-import * as React from 'react';
 import './App.css';
-import Button from 'components/Button';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Button } from 'components/Button';
 
 function App() {
   return (
     <div>
-      <Button>hi</Button>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/about" element={<Button>hi</Button>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

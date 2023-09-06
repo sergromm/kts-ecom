@@ -1,11 +1,8 @@
-import React from 'react';
 import './Input.styles.scss';
 import classNames from 'classnames';
+import * as React from 'react';
 
-export type InputProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'onChange' | 'value'
-> & {
+export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> & {
   /** Значение поля */
   value: string;
   /** Callback, вызываемый при вводе данных в поле */
@@ -14,18 +11,14 @@ export type InputProps = Omit<
   afterSlot?: React.ReactNode;
 };
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ value, onChange, afterSlot, className, ...rest }, ref) => {
     const [focused, setFocused] = React.useState(false);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange(e.target.value);
     };
 
-    const classes = classNames(
-      'input-wrapper',
-      { 'input-wrapper_focused': focused },
-      className
-    );
+    const classes = classNames('input-wrapper', { 'input-wrapper_focused': focused }, className);
 
     return (
       <div
@@ -48,7 +41,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {afterSlot && <div className="input-icon">{afterSlot}</div>}
       </div>
     );
-  }
+  },
 );
 
-export default Input;
+Input.displayName = 'Input';

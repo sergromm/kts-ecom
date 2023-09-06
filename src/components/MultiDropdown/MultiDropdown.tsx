@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Input from '../Input';
 import './MultiDropdown.styles.scss';
-import Text from '../Text/Text';
-import ArrowDownIcon from '../icons/ArrowDownIcon/ArrowDownIcon';
 import classNames from 'classnames';
+import * as React from 'react';
+import { Input } from '../Input';
+import { Text } from '../Text';
+import { ArrowDownIcon } from '../icons/ArrowDownIcon';
 
 export type Option = {
   /** Ключ варианта, используется для отправки на бек/использования в коде */
@@ -58,7 +58,7 @@ const ListItem: React.FC<ListItemProps> = ({ option, onClick, selected }) => {
   );
 };
 
-const MultiDropdown: React.FC<MultiDropdownProps> = ({
+export const MultiDropdown: React.FC<MultiDropdownProps> = ({
   options,
   value,
   onChange,
@@ -67,7 +67,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   ...rest
 }) => {
   const [open, setOpen] = React.useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = React.useState('');
 
   const dropdownRef = React.useRef<null | HTMLUListElement>(null);
   const inputRef = React.useRef<null | HTMLInputElement>(null);
@@ -151,5 +151,3 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     </div>
   );
 };
-
-export default MultiDropdown;

@@ -11,6 +11,7 @@ const parseTsConfigPaths = (paths: Record<string, string[]>): Record<string, str
     const aliasPath = paths[0].replace(/[^a-zA-Z]/g, '');
     webpackConfigAliases[alias] = path.join(SRC_PATH, aliasPath);
   });
+  console.log(webpackConfigAliases);
   return webpackConfigAliases;
 };
 

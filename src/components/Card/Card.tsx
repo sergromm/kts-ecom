@@ -1,5 +1,5 @@
-import React from 'react';
-import Text from '../Text';
+import * as React from 'react';
+import { Text } from '../Text';
 import './Card.styles.scss';
 
 export type CardProps = {
@@ -21,7 +21,7 @@ export type CardProps = {
   actionSlot?: React.ReactNode;
 };
 
-const Card: React.FC<CardProps> = ({
+export const Card: React.FC<CardProps> = ({
   image,
   title,
   subtitle,
@@ -61,5 +61,3 @@ const Card: React.FC<CardProps> = ({
     </div>
   );
 };
-
-export default Card;

@@ -1,2 +1,2 @@
-export { default } from './MultiDropdown';
-export * from './MultiDropdown';
+export { MultiDropdown } from './MultiDropdown';
+export type { MultiDropdownProps } from './MultiDropdown';

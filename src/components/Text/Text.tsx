@@ -1,7 +1,6 @@
-import * as React from 'react';
-
 import './Text.styles.scss';
 import classNames from 'classnames';
+import * as React from 'react';
 
 export type TextProps = {
   /** Дополнительный класс */
@@ -20,7 +19,7 @@ export type TextProps = {
   maxLines?: number;
 };
 
-const Text: React.FC<TextProps> = ({
+export const Text: React.FC<TextProps> = ({
   className,
   view = 'p-16',
   tag = 'p',
@@ -43,7 +42,7 @@ const Text: React.FC<TextProps> = ({
     `view_${view}`,
     `weight_${weight}`,
     `color_${color}`,
-    className
+    className,
   );
 
   return (
@@ -52,5 +51,3 @@ const Text: React.FC<TextProps> = ({
     </TagName>
   );
 };
-
-export default Text;
