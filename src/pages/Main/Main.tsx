@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { API } from 'api/products';
 import { Button } from 'components/Button';
-import { Card } from 'components/Card';
 import { Input } from 'components/Input';
 import { MultiDropdown } from 'components/MultiDropdown';
 import { Text } from 'components/Text';
 import styles from './Main.module.scss';
+const ProductCards = React.lazy(() => import('./components/Cards'));
 
 const { data: products } = await API.getProducts();
 
@@ -37,28 +37,15 @@ export function Main() {
         </div>
 
         <div className={styles.products}>
-          <Text className={styles.total} view="title" weight="bold">
+          <Text className={styles.total} tag="h2" view="title" weight="bold">
             Total Products{' '}
-            <Text color="accent" tag="span" view="p-20" weight="bold">
+            <Text className={styles.number} color="accent" tag="span" view="p-20" weight="bold">
               {products.length}
             </Text>
           </Text>
-
-          <div className={styles.cards}>
-            {products.map((product) => {
-              return (
-                <Card
-                  actionSlot={<Button>Add to Cart</Button>}
-                  captionSlot={product.category.name}
-                  contentSlot={`$${product.price}`}
-                  image={product.images[0]}
-                  key={product.id}
-                  subtitle={product.description}
-                  title={product.title}
-                />
-              );
-            })}
-          </div>
+          <React.Suspense fallback={<h1>LOADING...</h1>}>
+            <ProductCards products={products} />
+          </React.Suspense>
         </div>
       </section>
     </main>

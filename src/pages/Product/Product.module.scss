@@ -1,0 +1,80 @@
+.main > * {
+  max-width: var(--content-max-width);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px var(--whole-page-padding);
+  gap: var(--space-xl);
+}
+
+.back {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+  width: min-content;
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--secondary);
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+.product__container {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: auto auto;
+  column-gap: var(--space-xl);
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding-top: var(--space-l);
+  place-self: bottom;
+}
+
+.buttons {
+  display: flex;
+  gap: var(--space-xl);
+}
+
+.related {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  width: 100%;
+}
+
+.related__title {
+  font-size: var(--h-32);
+}
+
+.cards {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: var(--space-m);
+}

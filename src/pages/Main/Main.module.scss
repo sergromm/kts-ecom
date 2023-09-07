@@ -43,9 +43,13 @@
 
 .total {
   display: flex;
-  align-items: first baseline;
+  align-items: center;
   gap: var(--space-m);
-  font-size: 32px;
+  font-size: var(--h-32);
+}
+
+.number {
+  padding-top: 6px;
 }
 
 .cards {
