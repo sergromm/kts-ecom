@@ -4,12 +4,12 @@ import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { MultiDropdown } from 'components/MultiDropdown';
 import { Text } from 'components/Text';
-import styles from './Main.module.scss';
-const ProductCards = React.lazy(() => import('./components/Cards'));
+import styles from './Products.module.scss';
+const ProductCards = React.lazy(() => import('./components/Crads/Cards'));
 
 const { data: products } = await API.getProducts();
 
-export function Main() {
+export function Products() {
   const [searchQuery, setSearchQuery] = React.useState('');
   return (
     <main className={styles.main}>
@@ -33,7 +33,7 @@ export function Main() {
             options={[{ key: 'a', value: 'a' }]}
             value={[]}
             onChange={() => {}}
-          ></MultiDropdown>
+          />
         </div>
 
         <div className={styles.products}>
