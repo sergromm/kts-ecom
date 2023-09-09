@@ -1,10 +1,10 @@
 import { AnimatePresence, motion, wrap } from 'framer-motion';
 import * as React from 'react';
-
 import { Icon } from 'components/icons/Icon';
+import { useMeasure } from 'hooks/useMeasure';
 import styles from './Slider.module.scss';
 
-type SliderProps = { images: string[]; description: string };
+type SliderProps = { images: string[]; title: string };
 
 const variants = {
   enter: ({ direction, width }: { direction: number; width: number }) => {
@@ -32,21 +32,7 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-const useMeasure = <T extends HTMLElement>() => {
-  const ref = React.useRef<T>(null);
-  const [measures, setMesures] = React.useState<DOMRect>();
-  React.useEffect(() => {
-    if (!ref.current) {
-      return;
-    }
-    const element = ref.current as HTMLElement;
-    setMesures(element.getBoundingClientRect());
-  }, []);
-
-  return { ref, measures };
-};
-
-export default function Slider({ images, description }: SliderProps) {
+export default function Slider({ images, title }: SliderProps) {
   const [[slide, direction], setSlide] = React.useState([0, 0]);
   const { ref, measures } = useMeasure<HTMLImageElement>();
 
@@ -61,7 +47,7 @@ export default function Slider({ images, description }: SliderProps) {
     <div className={styles.slider}>
       <AnimatePresence custom={{ direction, width }} initial={false} mode="wait">
         <motion.img
-          alt={description}
+          alt={title}
           animate="center"
           className={styles.image}
           custom={{ direction, width }}

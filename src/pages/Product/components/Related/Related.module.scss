@@ -1,0 +1,17 @@
+.related {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  width: 100%;
+}
+
+.title {
+  font-size: var(--h-32);
+}
+
+.cards {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
