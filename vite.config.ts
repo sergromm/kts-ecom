@@ -7,10 +7,12 @@ const SRC_PATH = path.resolve(__dirname, 'src');
 
 const parseTsConfigPaths = (paths: Record<string, string[]>): Record<string, string> => {
   const webpackConfigAliases: Record<string, string> = {};
-  Object.entries(paths).forEach(([alias, paths]) => {
+  Object.entries(paths).forEach(([, paths]) => {
     const aliasPath = paths[0].replace(/[^a-zA-Z]/g, '');
-    webpackConfigAliases[alias] = path.join(SRC_PATH, aliasPath);
+    // console.log({ alias });
+    webpackConfigAliases[aliasPath] = path.join(SRC_PATH, aliasPath);
   });
+
   return webpackConfigAliases;
 };
 
