@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Icon } from '../icons/Icon';
-import './CheckBox.styles.scss';
+import styles from './CheckBox.module.scss';
 
 export type CheckBoxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   /** Вызывается при клике на чекбокс */
@@ -11,10 +11,10 @@ export type CheckBoxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'o
 export const CheckBox: React.FC<CheckBoxProps> = ({ onChange, className, disabled, ...rest }) => {
   const [hovered, setHovered] = React.useState(false);
   const classes = classNames(
-    'checkbox',
+    styles.checkbox,
     {
-      checkbox_hover: hovered,
-      checkbox_disabled: disabled,
+      [styles.checkbox_hover]: hovered,
+      [styles.checkbox_disabled]: disabled,
     },
     className,
   );

@@ -1,6 +1,6 @@
-import './Input.styles.scss';
 import classNames from 'classnames';
 import * as React from 'react';
+import styles from './Input.module.scss';
 
 export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> & {
   /** Значение поля */
@@ -18,7 +18,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onChange(e.target.value);
     };
 
-    const classes = classNames('input-wrapper', { 'input-wrapper_focused': focused }, className);
+    const classes = classNames(styles.wrapper, { [styles.wrapper_focused]: focused }, className);
 
     return (
       <div
@@ -29,16 +29,16 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         }}
       >
         <input
+          className={styles.input}
           ref={ref}
-          className="input"
           type="text"
           value={value}
+          onBlur={() => setFocused(false)}
           onChange={handleChange}
           onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
           {...rest}
         />
-        {afterSlot && <div className="input-icon">{afterSlot}</div>}
+        {afterSlot && <div className={styles.icon}>{afterSlot}</div>}
       </div>
     );
   },

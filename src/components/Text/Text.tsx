@@ -1,12 +1,12 @@
-import './Text.styles.scss';
 import classNames from 'classnames';
 import * as React from 'react';
+import styles from './Text.module.scss';
 
 export type TextProps = {
   /** Дополнительный класс */
   className?: string;
   /** Стиль отображения */
-  view?: 'title' | 'button' | 'p-20' | 'p-18' | 'p-16' | 'p-14';
+  view?: 'title' | 'button' | 'h-32' | 'p-20' | 'p-18' | 'p-16' | 'p-14';
   /** Html-тег */
   tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'p' | 'span';
   /** Начертание шрифта */
@@ -39,9 +39,9 @@ export const Text: React.FC<TextProps> = ({
     {
       'clamped-text': maxLines,
     },
-    `view_${view}`,
-    `weight_${weight}`,
-    `color_${color}`,
+    styles[`view_${view}`],
+    styles[`weight_${weight}`],
+    styles[`color_${color}`],
     className,
   );
 

@@ -10,7 +10,7 @@ export function Search() {
   return (
     <div className={styles.search}>
       <Input placeholder="Search product" value={searchQuery} onChange={setSearchQuery} />
-      <Button>Find Now</Button>
+      <Button loading>Find Now</Button>
       <MultiDropdown
         className={styles.filter}
         getTitle={() => 'Filter'}

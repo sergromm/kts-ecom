@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Loader } from '../Loader';
-import './Button.styles.scss';
+import styles from './Button.module.scss';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Состояние загрузки */
@@ -14,17 +14,17 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 export const Button: React.FC<ButtonProps> = ({ loading, children, disabled, className, ...rest }) => {
   const classes = classNames(
-    'button',
+    styles.button,
     {
-      button_disabled: disabled,
-      button_loading: loading,
+      [styles.button_disabled]: disabled,
+      [styles.button_loading]: loading,
     },
     className,
   );
 
   return (
     <button className={classes} disabled={loading || disabled} {...rest}>
-      {loading && <Loader size="s" className="color_inherit" />}
+      {loading && <Loader size="s" className={styles.spinner__color_inherit} />}
       {children}
     </button>
   );

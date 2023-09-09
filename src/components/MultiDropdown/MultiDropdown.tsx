@@ -1,9 +1,9 @@
-import './MultiDropdown.styles.scss';
 import classNames from 'classnames';
 import * as React from 'react';
 import { Input } from '../Input';
 import { Text } from '../Text';
 import { ArrowDownIcon } from '../icons/ArrowDownIcon';
+import styles from './MultiDropdown.module.scss';
 
 export type Option = {
   /** Ключ варианта, используется для отправки на бек/использования в коде */
@@ -45,7 +45,7 @@ const ListItem: React.FC<ListItemProps> = ({ option, onClick, selected }) => {
   }) as 'primary' | 'secondary' | 'accent';
   return (
     <li
-      className="dropdown-option"
+      className={styles['dropdown-option']}
       key={option.key}
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
@@ -126,7 +126,7 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
     return getTitle(value);
   };
 
-  const classes = classNames('multi-dropdown', className);
+  const classes = classNames(styles, ['multi-dropdown'], className);
 
   return (
     <div className={classes} {...rest}>
@@ -140,7 +140,7 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
         onClick={() => setOpen(true)}
       />
       {open && !disabled && (
-        <ul className="dropdown" ref={dropdownRef}>
+        <ul className={styles.dropdown} ref={dropdownRef}>
           {options.filter(matchInput).map((option) => (
             <ListItem
               key={option.key}

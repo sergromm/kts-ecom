@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Text } from '../Text';
-import './Card.styles.scss';
+import styles from './Card.module.scss';
 
 export type CardProps = {
   /** Дополнительный classname */
@@ -33,12 +33,12 @@ export const Card: React.FC<CardProps> = ({
   ...rest
 }) => {
   const altText = typeof title === 'string' ? title : '';
-  const classes = classNames('container', className);
+  const classes = classNames(styles.container, className);
   return (
     <div className={classes} {...rest}>
-      <img alt={altText} className="cover" src={image} />
-      <div className="body">
-        <div className="description">
+      <img alt={altText} className={styles.cover} src={image} />
+      <div className={styles.body}>
+        <div className={styles.description}>
           {captionSlot && (
             <Text color="secondary" maxLines={2} view="p-14" weight="medium">
               {captionSlot}
@@ -52,7 +52,7 @@ export const Card: React.FC<CardProps> = ({
           </Text>
         </div>
         {contentSlot && (
-          <div className="footer">
+          <div className={styles.footer}>
             <Text view="p-18" weight="bold">
               {contentSlot}
             </Text>

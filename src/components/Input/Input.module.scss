@@ -1,4 +1,4 @@
-.input-wrapper {
+.wrapper {
   display: flex;
   align-items: center;
   height: 52px;
@@ -25,7 +25,7 @@
   color: var(--input-placeholder);
 }
 
-.input-wrapper_focused {
+.wrapper_focused {
   border: solid thin var(--input-border-focus);
 }
 
@@ -33,6 +33,6 @@
   color: var(--input-text-disabled);
 }
 
-.input-icon {
+.icon {
   display: flex;
 }
