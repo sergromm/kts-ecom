@@ -14,7 +14,7 @@ export function About({ product }: AboutProps) {
       <Description description={product.description} title={product.title} />
       {/* NOTE(@sergromm): maybe i should compose components **hmmm** */}
       <Footer.Root>
-        <Footer.Price>{product.price}</Footer.Price>
+        <Footer.Price>${product.price}</Footer.Price>
         <Footer.Buttons>
           <Button>Buy now</Button>
           <Button>Add to cart</Button>
