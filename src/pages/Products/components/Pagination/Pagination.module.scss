@@ -1,0 +1,33 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-s);
+}
+
+.list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.button,
+.item__button {
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--black);
+  cursor: pointer;
+}
+
+.item__button {
+  padding: var(--space-xxs);
+  width: 36px;
+  height: 36px;
+}
+
+.item__button_active {
+  background-color: var(--brand);
+  color: var(--white);
+}

@@ -10,7 +10,6 @@ export type LoaderProps = {
 };
 
 export const Loader: React.FC<LoaderProps> = ({ size = 'l', className }) => {
-  console.log(className);
   const classes = classNames(styles.loader, styles.rotate, styles[`size_${size}`], className);
 
   return (

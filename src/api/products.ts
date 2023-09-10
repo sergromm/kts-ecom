@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
+const root = 'https://api.escuelajs.co/api/v1';
+
 export type CategoryType = {
   id: number;
   name: string;
@@ -17,17 +19,17 @@ export type ProductType = {
 
 type AsyncReturn<T> = Promise<AxiosResponse<T>>;
 
-const getProducts = async (): AsyncReturn<ProductType[]> => {
-  const products = await axios.get<ProductType[]>('https://api.escuelajs.co/api/v1/products?offset=0&limit=9');
+const getProducts = async (offset: number = 0, limit: number = 9): AsyncReturn<ProductType[]> => {
+  const products = await axios.get<ProductType[]>(`${root}/products?offset=${offset}&limit=${limit}`);
   return products;
 };
 
 const getProduct = async (id: number): AsyncReturn<ProductType> => {
-  const product = await axios.get(`https://api.escuelajs.co/api/v1/products/${id}`);
+  const product = await axios.get(`${root}/products/${id}`);
   return product;
 };
 const getCategories = async (): AsyncReturn<CategoryType> => {
-  const categories = await axios.get('https://api.escuelajs.co/api/v1/categories');
+  const categories = await axios.get(`${root}/categories`);
   return categories;
 };
 
