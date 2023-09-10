@@ -70,8 +70,7 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
   const [open, setOpen] = React.useState(false);
   const [inputValue, setInputValue] = React.useState('');
 
-  const dropdownRef = React.useRef<null | HTMLUListElement>(null);
-  const inputRef = React.useRef<null | HTMLInputElement>(null);
+  const dropdownRef = React.useRef<null | HTMLDivElement>(null);
 
   const handleSelect = (option: Option) => {
     const optionIndex = value.findIndex((o) => o.key === option.key);
@@ -89,22 +88,20 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
   };
 
   React.useEffect(() => {
-    if (!dropdownRef.current || !inputRef.current) {
+    if (!dropdownRef.current) {
       return;
     }
 
     const dropdown = dropdownRef.current;
-    const input = inputRef.current;
 
     const handleClickOutside = (e: MouseEvent) => {
-      if (!dropdown.contains(e.target as Node) && input !== e.target) {
+      if (!dropdown.contains(e.target as Node)) {
         setOpen(false);
         setInputValue('');
       }
     };
 
     document.addEventListener('click', handleClickOutside);
-
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
@@ -126,21 +123,19 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
     return getTitle(value);
   };
 
-  const classes = classNames(styles, ['multi-dropdown'], className);
+  const classes = classNames(styles['multi-dropdown'], className);
 
   return (
-    <div className={classes} {...rest}>
+    <div ref={dropdownRef} className={classes} onClick={() => setOpen(true)} {...rest}>
       <Input
-        afterSlot={<ArrowDownIcon color="secondary" />}
+        afterSlot={<ArrowDownIcon onClick={() => setOpen(true)} color="secondary" />}
         disabled={disabled}
         placeholder={getTitle(value)}
-        ref={inputRef}
         value={getValue(value)}
         onChange={handleInput}
-        onClick={() => setOpen(true)}
       />
       {open && !disabled && (
-        <ul className={styles.dropdown} ref={dropdownRef}>
+        <ul className={styles.dropdown}>
           {options.filter(matchInput).map((option) => (
             <ListItem
               key={option.key}
