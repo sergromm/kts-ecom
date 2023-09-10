@@ -10,7 +10,7 @@ export type RelatedProps = {
 export function Related({ products }: RelatedProps) {
   return (
     <section className={styles.related}>
-      <Text className={styles.title} tag="h2" view="title" weight="bold">
+      <Text tag="h2" view="h-32" weight="bold">
         Related Items
       </Text>
       <div className={styles.cards}>
