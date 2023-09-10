@@ -1,9 +1,35 @@
-// import * as React from 'react';
-import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+import { Link, useLocation } from 'react-router-dom';
 import Logo from 'assets/logo.svg';
 import { Text } from 'components/Text';
 import { Icon } from 'components/icons/Icon';
 import styles from './Header.module.scss';
+
+const Navigation: React.FC = () => {
+  const nav = [
+    { link: '/', title: 'Products' },
+    { link: '/categories', title: 'Categories' },
+    { link: '/about', title: 'About us' },
+  ];
+  const { pathname } = useLocation();
+
+  return (
+    <ul className={styles.menu}>
+      {nav.map((item) => {
+        const classes = classNames(styles.page, { [styles.page_active]: pathname === item.link });
+        return (
+          <li key={item.title}>
+            <Link className={styles.link} to={item.link}>
+              <Text className={classes} view="p-18">
+                {item.title}
+              </Text>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
 
 export function Header() {
   return (
@@ -12,23 +38,7 @@ export function Header() {
         <Link to="/">
           <img alt="logo" src={Logo} />
         </Link>
-        <ul className={styles.menu}>
-          <li>
-            <Link to="/">
-              <Text view="p-18">Products</Text>
-            </Link>
-          </li>
-          <li>
-            <Link to="/">
-              <Text view="p-18">Categories</Text>
-            </Link>
-          </li>
-          <li>
-            <Link to="/">
-              <Text view="p-18">About us</Text>
-            </Link>
-          </li>
-        </ul>
+        <Navigation />
         <div className={styles.buttons}>
           <button className={styles.button}>
             <Icon height={30} width={30}>

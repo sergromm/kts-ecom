@@ -39,3 +39,16 @@
 .button:hover {
   color: var(--text-secondary);
 }
+
+.link {
+  text-decoration: none;
+}
+
+.page_active {
+  text-underline-offset: 45px;
+  text-decoration: underline;
+  text-decoration-thickness: 4px;
+  text-decoration-color: var(--text-accent);
+  color: var(--text-accent);
+  font-weight: 500;
+}
