@@ -28,7 +28,7 @@ const getProduct = async (id: number): AsyncReturn<ProductType> => {
   const product = await axios.get(`${root}/products/${id}`);
   return product;
 };
-const getCategories = async (): AsyncReturn<CategoryType> => {
+const getCategories = async (): AsyncReturn<CategoryType[]> => {
   const categories = await axios.get(`${root}/categories`);
   return categories;
 };
