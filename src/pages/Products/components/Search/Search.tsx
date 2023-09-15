@@ -5,9 +5,9 @@ import { Input } from 'components/Input';
 import { MultiDropdown } from 'components/MultiDropdown';
 import styles from './Search.module.scss';
 
-const { data: categories } = await API.getCategories();
+const categories = await API.getCategories();
 
-export function Search() {
+export const Search = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const options = categories.map((category) => ({ key: category.name.toLowerCase(), value: category.name }));
   return (
@@ -23,4 +23,4 @@ export function Search() {
       />
     </div>
   );
-}
+};

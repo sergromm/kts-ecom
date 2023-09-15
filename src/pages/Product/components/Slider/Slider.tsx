@@ -32,10 +32,9 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-export default function Slider({ images, title }: SliderProps) {
+const Slider = ({ images, title }: SliderProps) => {
   const [[slide, direction], setSlide] = React.useState([0, 0]);
   const { ref, measures } = useMeasure<HTMLImageElement>();
-
   const width = measures?.width;
   const index = wrap(0, images.length, slide);
 
@@ -62,7 +61,6 @@ export default function Slider({ images, title }: SliderProps) {
           transition={{
             x: { type: 'tween' },
             duration: 0.1,
-            // opacity: { duration: 0.4 },
           }}
           variants={variants}
           onDragEnd={(e, { offset, velocity }) => {
@@ -106,4 +104,6 @@ export default function Slider({ images, title }: SliderProps) {
       </button>
     </div>
   );
-}
+};
+
+export default Slider;

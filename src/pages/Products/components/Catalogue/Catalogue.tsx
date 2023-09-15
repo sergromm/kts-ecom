@@ -6,8 +6,9 @@ import { Search } from '../Search';
 const Cards = React.lazy(() => import('../Cards'));
 import styles from './Catalogue.module.scss';
 
-const { data: products } = await API.getProducts();
-export function Catalogue() {
+const products = await API.getProducts();
+
+export const Catalogue = () => {
   return (
     <section className={styles.catalogue}>
       <Search />
@@ -17,4 +18,4 @@ export function Catalogue() {
       <Pagination />
     </section>
   );
-}
+};

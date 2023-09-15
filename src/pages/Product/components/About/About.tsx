@@ -8,7 +8,7 @@ export type AboutProps = {
   product: ProductType;
 };
 
-export function About({ product }: AboutProps) {
+export const About = ({ product }: AboutProps) => {
   return (
     <div className={styles.about}>
       <Description description={product.description} title={product.title} />
@@ -22,4 +22,4 @@ export function About({ product }: AboutProps) {
       </Footer.Root>
     </div>
   );
-}
+};

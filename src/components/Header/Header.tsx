@@ -31,7 +31,7 @@ const Navigation: React.FC = () => {
   );
 };
 
-export function Header() {
+export const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.content}>
@@ -100,4 +100,4 @@ export function Header() {
       </div>
     </header>
   );
-}
+};

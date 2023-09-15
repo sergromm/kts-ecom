@@ -1,7 +1,7 @@
 import { Text } from 'components/Text';
 import styles from './Hero.module.scss';
 
-export function Hero() {
+export const Hero = () => {
   return (
     <section className={styles.hero}>
       <Text tag="h1" view="title" weight="bold">
@@ -13,4 +13,4 @@ export function Hero() {
       </Text>
     </section>
   );
-}
+};

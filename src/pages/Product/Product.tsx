@@ -1,15 +1,29 @@
+import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { API } from 'api/products';
-import { useFetch } from 'hooks/useFetch';
+import { API, ProductType } from 'api/products';
 import { Related } from './components/Related';
 import { Showcase } from './components/Showcase';
 import styles from './Product.module.scss';
 
-export function Product() {
+export const Product = () => {
   const { productId } = useParams();
-  const { data: product } = useFetch(() => API.getProduct(Number(productId)));
+  const [product, setProduct] = React.useState<ProductType | null>(null);
+  const [error, setError] = React.useState(false);
 
-  if (!product) return;
+  React.useEffect(() => {
+    const fetchProduct = async (id: string | undefined) => {
+      try {
+        const response = await API.getProduct(Number(id));
+        setProduct(response);
+      } catch (err) {
+        setError(true);
+      }
+    };
+    fetchProduct(productId);
+  }, [productId]);
+
+  if (!product) return 'loading...';
+  if (error) return 'error...';
 
   return (
     <main className={styles.main}>
@@ -17,4 +31,4 @@ export function Product() {
       <Related products={Array(3).fill(product)} />
     </main>
   );
-}
+};

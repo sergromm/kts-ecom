@@ -5,16 +5,22 @@ import { ProductType } from 'api/products';
 export const useFetch = (callback: () => Promise<AxiosResponse>) => {
   const [data, setData] = React.useState<ProductType>();
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState({});
 
   React.useEffect(() => {
     let ignore = false;
 
+    setLoading(true);
     callback()
       .then((product) => {
-        setLoading(true);
-        if (!ignore) {
+        if (!ignore && !error) {
           setData(product.data);
         }
+      })
+      .catch((error) => {
+        setError(true);
+        setErrorMessage(error);
       })
       .finally(() => {
         setLoading(false);
@@ -23,7 +29,7 @@ export const useFetch = (callback: () => Promise<AxiosResponse>) => {
     return () => {
       ignore = true;
     };
-  }, [callback]);
+  }, [callback, error]);
 
-  return { data, loading };
+  return { data, loading, errorMessage, error };
 };

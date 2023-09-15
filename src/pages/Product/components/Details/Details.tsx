@@ -8,7 +8,7 @@ export type DetailsProps = {
   product: ProductType;
 };
 
-export function Details({ product }: DetailsProps) {
+export const Details = ({ product }: DetailsProps) => {
   return (
     <div className={styles.details}>
       <React.Suspense fallback={<h1>Loading...</h1>}>
@@ -17,4 +17,4 @@ export function Details({ product }: DetailsProps) {
       <About product={product} />
     </div>
   );
-}
+};

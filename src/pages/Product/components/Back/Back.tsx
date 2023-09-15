@@ -3,7 +3,7 @@ import { Text } from 'components/Text';
 import { Icon } from 'components/icons/Icon';
 import styles from './Back.module.scss';
 
-export function Back() {
+export const Back = () => {
   return (
     <Link className={styles.back} to="/">
       <Icon height={32} width={32}>
@@ -21,4 +21,4 @@ export function Back() {
       <Text view="p-20">Back</Text>
     </Link>
   );
-}
+};

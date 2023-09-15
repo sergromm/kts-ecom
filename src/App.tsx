@@ -5,7 +5,7 @@ import { Header } from 'components/Header';
 import { Product } from 'pages/Product';
 import { Products } from 'pages/Products';
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Header />
@@ -18,6 +18,6 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

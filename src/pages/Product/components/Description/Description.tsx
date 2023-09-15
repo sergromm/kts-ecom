@@ -6,7 +6,7 @@ export type DescriptionProps = {
   description: string;
 };
 Text;
-export function Description({ title, description }: DescriptionProps) {
+export const Description = ({ title, description }: DescriptionProps) => {
   return (
     <div className={styles.description}>
       <Text tag="h1" view="title" weight="bold">
@@ -17,4 +17,4 @@ export function Description({ title, description }: DescriptionProps) {
       </Text>
     </div>
   );
-}
+};

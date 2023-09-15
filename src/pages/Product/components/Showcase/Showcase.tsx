@@ -7,11 +7,11 @@ export type ShowcaseProps = {
   product: ProductType;
 };
 
-export function Showcase({ product }: ShowcaseProps) {
+export const Showcase = ({ product }: ShowcaseProps) => {
   return (
     <section className={styles.showcase}>
       <Back />
       <Details product={product} />
     </section>
   );
-}
+};
