@@ -10,6 +10,8 @@
     "paths": {
       "api/*": ["api/*"],
       "assets/*": ["assets/*"],
+      "configs/*": ["configs/*"],
+      "entities/*": ["entities/*"],
       "pages/*": ["pages/*"],
       "components/*": ["components/*"],
       "config/*": ["config/*"],

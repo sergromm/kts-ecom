@@ -1,5 +1,5 @@
-import { ProductType } from 'api/products';
 import { Button } from 'components/Button';
+import { ProductType } from 'entities/protuct';
 import { Description } from '../Description';
 import * as Footer from '../Footer';
 import styles from './About.module.scss';

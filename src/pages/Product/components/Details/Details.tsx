@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ProductType } from 'api/products';
+import { ProductType } from 'entities/protuct';
 import { About } from '../About';
 const Slider = React.lazy(() => import('../Slider'));
 import styles from './Details.module.scss';

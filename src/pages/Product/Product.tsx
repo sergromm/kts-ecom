@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { API, ProductType } from 'api/products';
+import { API } from 'api/products';
+import { ProductType } from 'entities/protuct';
 import { Related } from './components/Related';
 import { Showcase } from './components/Showcase';
 import styles from './Product.module.scss';

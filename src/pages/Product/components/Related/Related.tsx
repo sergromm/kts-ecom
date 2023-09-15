@@ -1,6 +1,6 @@
-import { ProductType } from 'api/products';
 import { Card } from 'components/Card';
 import { Text } from 'components/Text';
+import { ProductType } from 'entities/protuct';
 import styles from './Related.module.scss';
 
 export type RelatedProps = {

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
+import { routerPaths } from 'configs/routerPaths';
 import { Product } from 'pages/Product';
 import { Products } from 'pages/Products';
 
@@ -9,11 +10,11 @@ const App = () => {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route element={<Products />} path="/" />
-        <Route path="/products">
-          <Route element={<Product />} path=":productId" />
+        <Route element={<Products />} path={routerPaths.root} />
+        <Route path={routerPaths.products}>
+          <Route element={<Product />} path={routerPaths.productId} />
         </Route>
-        <Route element={<Button>hi</Button>} path="/about" />
+        <Route element={<Button>hi</Button>} path={routerPaths.about} />
       </Routes>
     </BrowserRouter>
   );

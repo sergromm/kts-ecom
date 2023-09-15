@@ -1,4 +1,4 @@
-import { ProductType } from 'api/products';
+import { ProductType } from 'entities/protuct';
 import { Back } from '../Back';
 import { Details } from '../Details';
 import styles from './Showcase.module.scss';

@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import * as React from 'react';
-import { ProductType } from 'api/products';
+import { ProductType } from 'entities/protuct';
 
 export const useFetch = (callback: () => Promise<AxiosResponse>) => {
   const [data, setData] = React.useState<ProductType>();
