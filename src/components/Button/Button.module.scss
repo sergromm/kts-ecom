@@ -1,0 +1,35 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xxs);
+  border: none;
+  cursor: pointer;
+  font: var(--button);
+  padding: var(--space-s) var(--space-l);
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  height: 52px;
+  width: fit-content;
+  white-space: nowrap;
+}
+
+.button:hover:enabled {
+  background-color: var(--button-primary-bg-hover);
+}
+
+.button:active:enabled {
+  background-color: var(--button-primary-bg-active);
+}
+
+.button_disabled {
+  background-color: var(--button-primary-bg-disabled);
+  cursor: not-allowed;
+}
+
+.button_loading {
+  cursor: progress;
+}
+
+.spinner__color_inherit {
+  color: inherit;
+}

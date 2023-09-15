@@ -1,0 +1,6 @@
+.details {
+  display: flex;
+  justify-content: space-between;
+  grid-template-columns: auto auto;
+  column-gap: var(--space-xl);
+}

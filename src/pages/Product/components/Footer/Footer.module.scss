@@ -1,0 +1,12 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding-top: var(--space-l);
+  place-self: bottom;
+}
+
+.buttons {
+  display: flex;
+  gap: var(--space-xl);
+}

@@ -1,0 +1,7 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  max-width: 45%;
+  width: fit-content;
+}

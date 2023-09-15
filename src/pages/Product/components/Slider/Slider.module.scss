@@ -1,0 +1,60 @@
+.slider {
+  display: flex;
+  width: min(100%, 600px);
+  height: min(100%, 600px);
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  aspect-ratio: 1/1;
+}
+
+.slider:active {
+  cursor: grabbing;
+}
+
+.slider:hover .arrow {
+  opacity: 1;
+  visibility: visible;
+}
+
+.image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 600px;
+  max-height: 600px;
+  display: block;
+  z-index: 1;
+  object-fit: cover;
+}
+
+.arrow {
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+  border: none;
+  height: 64px;
+  width: 64px;
+  background-color: var(--black-60);
+  transform: translateY(-50%);
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow:hover {
+  background-color: var(--black);
+}
+
+.arrow_left {
+  left: var(--space-m);
+}
+
+.arrow_right {
+  right: var(--space-m);
+}

@@ -1,0 +1,28 @@
+input[type='checkbox'] {
+  position: absolute;
+  appearance: none;
+}
+
+.checkbox {
+  display: inline-flex;
+  color: var(--brand);
+  width: 40px;
+  height: 40px;
+  padding: 2px 0 0 0;
+  background-color: var(--checkbox-bg);
+  border: solid thin var(--checkbox-border);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox_hover {
+  border: solid thin var(--checkbox-border-hover);
+}
+
+.checkbox_disabled {
+  background-color: var(--checkbox-bg-disabled);
+  border: solid thin var(--checkbox-border-disabled);
+  color: var(--checkbox-check-disabled);
+  cursor: not-allowed;
+}

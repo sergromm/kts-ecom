@@ -1,0 +1,13 @@
+.main > * {
+  max-width: var(--content-max-width);
+  width: 100%;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px var(--whole-page-padding);
+  gap: var(--space-xl);
+}

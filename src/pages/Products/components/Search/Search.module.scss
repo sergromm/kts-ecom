@@ -1,0 +1,9 @@
+.search {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-m);
+}
+
+.filter {
+  width: 300px;
+}
