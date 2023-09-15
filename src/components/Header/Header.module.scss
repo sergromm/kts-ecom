@@ -3,10 +3,10 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: var(--white);
-  padding: var(--space-m) var(--whole-page-padding);
-  border-bottom: thin solid var(--header-border);
-  z-index: var(--top);
+  background-color: $white;
+  padding: $space-m $whole-page-padding;
+  border-bottom: thin solid $header-border;
+  z-index: $top;
 }
 
 .content {
@@ -14,30 +14,29 @@
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  max-width: var(--content-max-width);
+  max-width: $content-max-width;
 }
 
 .menu {
   list-style: none;
   display: flex;
-  gap: var(--space-xl);
+  gap: $space-xl;
   cursor: pointer;
 }
 
 .buttons {
   display: flex;
-  gap: var(--space-m);
+  gap: $space-m;
 }
 
 .button {
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--text-primary);
-}
-
-.button:hover {
-  color: var(--text-secondary);
+  color: $text-primary;
+  &:hover {
+    color: $text-secondary;
+  }
 }
 
 .link {
@@ -48,7 +47,7 @@
   text-underline-offset: 45px;
   text-decoration: underline;
   text-decoration-thickness: 4px;
-  text-decoration-color: var(--text-accent);
-  color: var(--text-accent);
+  text-decoration-color: $text-accent;
+  color: $text-accent;
   font-weight: 500;
 }

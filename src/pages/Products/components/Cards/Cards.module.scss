@@ -2,7 +2,7 @@
   display: grid;
   justify-content: space-between;
   gap: 30px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 360px));
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
 }
 
 @media screen and (max-width: 1342px) {

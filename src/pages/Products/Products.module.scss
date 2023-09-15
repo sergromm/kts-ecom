@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100px var(--whole-page-padding) 48px;
-  gap: var(--space-xl);
-  max-width: var(--content-max-width);
+  padding: 100px $whole-page-padding 48px;
+  gap: $space-xl;
+  max-width: $content-max-width;
   margin: 0 auto;
   box-sizing: content-box;
 }

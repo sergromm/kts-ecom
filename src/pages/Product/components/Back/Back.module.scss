@@ -1,11 +1,11 @@
 .back {
   display: flex;
-  gap: var(--space-xs);
+  gap: $space-xs;
   align-items: center;
   width: min-content;
   text-decoration: none;
 }
 
 .back:hover {
-  color: var(--secondary);
+  color: $text-secondary;
 }

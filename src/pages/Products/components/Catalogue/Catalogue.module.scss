@@ -1,6 +1,6 @@
 .catalogue {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: $space-xl;
   width: 100%;
 }

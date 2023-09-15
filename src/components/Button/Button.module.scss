@@ -1,33 +1,31 @@
 .button {
   display: flex;
   align-items: center;
-  gap: var(--space-xxs);
+  gap: $space-xxs;
   border: none;
   cursor: pointer;
-  font: var(--button);
-  padding: var(--space-s) var(--space-l);
-  background-color: var(--button-primary-bg);
-  color: var(--button-primary-text);
+  font: $button;
+  padding: $space-s $space-l;
+  background-color: $button-primary-bg;
+  color: $button-primary-text;
   height: 52px;
   width: fit-content;
   white-space: nowrap;
-}
 
-.button:hover:enabled {
-  background-color: var(--button-primary-bg-hover);
-}
+  &:hover:enabled {
+    background-color: $button-primary-bg-hover;
+  }
+  &:active:enabled {
+    background-color: $button-primary-bg-active;
+  }
 
-.button:active:enabled {
-  background-color: var(--button-primary-bg-active);
-}
-
-.button_disabled {
-  background-color: var(--button-primary-bg-disabled);
-  cursor: not-allowed;
-}
-
-.button_loading {
-  cursor: progress;
+  &_disabled {
+    background-color: $button-primary-bg-disabled;
+    cursor: not-allowed;
+  }
+  &_loading {
+    cursor: progress;
+  }
 }
 
 .spinner__color_inherit {

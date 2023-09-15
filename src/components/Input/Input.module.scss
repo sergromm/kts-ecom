@@ -4,33 +4,30 @@
   height: 52px;
   min-width: 300px;
   width: 100%;
-  background-color: var(--input-bg);
-  padding: 0 var(--space-s);
-  gap: var(--space-xxs);
-  border: solid thin var(--input-border);
+  background-color: $input-bg;
+  padding: 0 $space-s;
+  gap: $space-xxs;
+  border: solid thin $input-border;
+  &_focused {
+    border: solid thin $input-border-focus;
+  }
 }
 
 .input {
   width: 100%;
   height: 100%;
-  color: var(--input-text);
+  color: $input-text;
   padding: 0;
-  font: var(--p-16);
+  font: $p-16;
   border: none;
   outline: none;
   background-color: transparent;
-}
-
-.input::placeholder {
-  color: var(--input-placeholder);
-}
-
-.wrapper_focused {
-  border: solid thin var(--input-border-focus);
-}
-
-.input:disabled {
-  color: var(--input-text-disabled);
+  &::placeholder {
+    color: $input-placeholder;
+  }
+  &:disabled {
+    color: $input-text-disabled;
+  }
 }
 
 .icon {
