@@ -7,7 +7,7 @@ export type ShowcaseProps = {
   product: ProductType;
 };
 
-export const Showcase = ({ product }: ShowcaseProps) => {
+const Showcase = ({ product }: ShowcaseProps) => {
   return (
     <section className={styles.showcase}>
       <Back />
@@ -15,3 +15,5 @@ export const Showcase = ({ product }: ShowcaseProps) => {
     </section>
   );
 };
+
+export default Showcase;

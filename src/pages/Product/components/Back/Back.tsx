@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Text } from 'components/Text';
 import { Icon } from 'components/icons/Icon';
-import { routerPaths } from 'configs/routerPaths';
+import { routerPaths } from 'config/routerPaths';
 import styles from './Back.module.scss';
 
 export const Back = () => {

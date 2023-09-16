@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import Logo from 'assets/logo.svg';
 import { Text } from 'components/Text';
 import { Icon } from 'components/icons/Icon';
-import { routerPaths } from 'configs/routerPaths';
+import { routerPaths } from 'config/routerPaths';
 import styles from './Header.module.scss';
 
 const Navigation: React.FC = () => {

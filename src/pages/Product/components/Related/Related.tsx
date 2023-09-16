@@ -7,7 +7,7 @@ export type RelatedProps = {
   products: ProductType[];
 };
 
-export const Related = ({ products }: RelatedProps) => {
+const Related = ({ products }: RelatedProps) => {
   return (
     <section className={styles.related}>
       <Text tag="h2" view="h-32" weight="bold">
@@ -23,3 +23,5 @@ export const Related = ({ products }: RelatedProps) => {
     </section>
   );
 };
+
+export default Related;
