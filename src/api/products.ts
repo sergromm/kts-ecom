@@ -4,7 +4,7 @@ import { ProductType } from 'entities/protuct';
 
 const supabaseRoot = 'https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1';
 
-// NOTE:add pagination to all products request
+// TODO(@sergromm):add pagination to all products request
 // offset: number = 0, limit: number = 9
 const getProducts = async (): Promise<ProductType[]> => {
   const products = await axios.get<ProductType[]>(`${supabaseRoot}/products?select=*,categories(*)'`, {

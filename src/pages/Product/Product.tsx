@@ -6,6 +6,8 @@ import { Related } from './components/Related';
 import { Showcase } from './components/Showcase';
 import styles from './Product.module.scss';
 
+const RELATED_ITEMS_COUNT = 3;
+
 export const Product = () => {
   const { productId } = useParams();
   const [product, setProduct] = React.useState<ProductType | null>(null);
@@ -29,7 +31,7 @@ export const Product = () => {
   return (
     <main className={styles.main}>
       <Showcase product={product} />
-      <Related products={Array(3).fill(product)} />
+      <Related products={Array(RELATED_ITEMS_COUNT).fill(product)} />
     </main>
   );
 };

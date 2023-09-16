@@ -1,7 +1,9 @@
 import { AnimatePresence, motion, wrap } from 'framer-motion';
 import * as React from 'react';
-import { Icon } from 'components/icons/Icon';
+import { ArrowLeftIcon } from 'components/icons/ArrowLeftIcon';
+import { ArrowRightIcon } from 'components/icons/ArrowRightIcon';
 import { useMeasure } from 'hooks/useMeasure';
+import { SliderArrow } from './SliderArrow';
 import styles from './Slider.module.scss';
 
 type SliderProps = { images: string[]; title: string };
@@ -74,34 +76,8 @@ const Slider = ({ images, title }: SliderProps) => {
           }}
         />
       </AnimatePresence>
-      <button className={`${styles.arrow} ${styles.arrow_left}`} onClick={() => nextSlide(-1)}>
-        <Icon height={31} width={31}>
-          <svg fill="none" height="31" viewBox="0 0 31 31" width="31" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M19.043 25.6126L10.9561 17.5258C10.0011 16.5708 10.0011 15.008 10.9561 14.0529L19.043 5.96613"
-              stroke="white"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeMiterlimit="10"
-              strokeWidth="3"
-            />
-          </svg>
-        </Icon>
-      </button>
-      <button className={`${styles.arrow} ${styles.arrow_right}`} onClick={() => nextSlide(1)}>
-        <Icon height={31} width={31}>
-          <svg fill="none" height="31" viewBox="0 0 31 31" width="31" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M11.957 25.6126L20.0439 17.5258C20.9989 16.5708 20.9989 15.008 20.0439 14.0529L11.957 5.96613"
-              stroke="white"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeMiterlimit="10"
-              strokeWidth="3"
-            />
-          </svg>
-        </Icon>
-      </button>
+      <SliderArrow direction="left" icon={<ArrowLeftIcon height={31} width={31} />} onClick={() => nextSlide(-1)} />
+      <SliderArrow direction="right" icon={<ArrowRightIcon height={31} width={31} />} onClick={() => nextSlide(1)} />
     </div>
   );
 };
