@@ -13,12 +13,12 @@ export const Catalogue = observer(() => {
   const products = store.products;
 
   React.useEffect(() => {
-    store.getProducts();
+    store.fetch();
   }, [store]);
 
   return (
     <section className={styles.catalogue}>
-      <Search />
+      <Search productsStore={store} />
       <Grid total={products.length}>
         <Cards products={products} />
       </Grid>

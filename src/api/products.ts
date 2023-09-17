@@ -27,6 +27,19 @@ const getProduct = async (id: number): Promise<ProductType> => {
   return product.data[0];
 };
 
+const searchProducts = async (query: string): Promise<ProductType[]> => {
+  const products = await axios.get<ProductType[]>(
+    `${supabaseRoot}/products?title=ilike.${query}*&select=*,categories(*)'`,
+    {
+      headers: {
+        apikey:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6a25oZWRrenVrdmd0c3R6YnhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTQyNjEzNTYsImV4cCI6MjAwOTgzNzM1Nn0.P-_ZrD7GgOZqYZtK-PQXZtmeVPz4mPjmNWyyzk-2GsI',
+      },
+    },
+  );
+  return products.data;
+};
+
 const getCategories = async (): Promise<CategoryType[]> => {
   const categories = await axios.get<CategoryType[]>(`${supabaseRoot}/categories`, {
     headers: {
@@ -37,4 +50,4 @@ const getCategories = async (): Promise<CategoryType[]> => {
   return categories.data;
 };
 
-export const API = { getProducts, getProduct, getCategories };
+export const API = { getProducts, getProduct, searchProducts, getCategories };
