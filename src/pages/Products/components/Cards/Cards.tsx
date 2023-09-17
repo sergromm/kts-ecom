@@ -12,7 +12,7 @@ const Cards = ({ products }: { products: ProductType[] }) => {
         return (
           <Card
             actionSlot={<Button onClick={(e) => e.stopPropagation()}>Add to Cart</Button>}
-            captionSlot={product.categories.name}
+            captionSlot={product.category.name}
             contentSlot={`$${product.price}`}
             image={product.images[0]}
             key={product.id}
