@@ -6,6 +6,7 @@ import { ILocalStore } from './types';
 interface IProductsStore {
   fetch: () => void;
   search: (query: string) => void;
+  filter: (queries: string) => void;
 }
 
 type PrivateFields = '_products';
@@ -39,6 +40,19 @@ export class ProductsStore implements IProductsStore, ILocalStore {
 
   async search(query: string) {
     const response = await API.searchProducts(query);
+
+    runInAction(() => {
+      if (response) {
+        this._products = response;
+        return;
+      }
+    });
+
+    return 'error';
+  }
+
+  async filter(queries: string) {
+    const response = await API.filterProducts(queries);
 
     runInAction(() => {
       if (response) {
