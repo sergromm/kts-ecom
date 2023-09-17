@@ -7,14 +7,18 @@ type SliderArrowProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   onClick: () => void;
   icon: React.ReactElement;
 };
-// NOTE: Оставил компонент на одном уровне с родительским, потому что
-// не нашёл способ использовать css класс потомка в модуле родителя.
-//
-// v------ указывает на родителя
-// &:hover .arrow {
-//         ^^^^^^ arrow находится в другом модуле, поэтому стили не срабатывают
-//    /* ... */
-// }
+
+/**
+ * NOTE: Оставил компонент на одном уровне с родительским, потому что
+ * не нашёл способ использовать css класс потомка в модуле родителя.
+ * v------ указывает на родителя
+ * &:hover .arrow {
+ *         ^^^^^^ arrow находится в другом модуле, поэтому стили не срабатывают
+ * }
+ *
+ * Возможно стоит оставить этот компонент в родительском файле?
+ */
+
 export const SliderArrow: React.FC<SliderArrowProps> = ({ direction, onClick, icon, ...rest }) => {
   const classes = classNames(styles.arrow, styles[`arrow_${direction}`]);
   return (
