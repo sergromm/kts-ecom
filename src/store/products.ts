@@ -1,7 +1,8 @@
-import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, reaction, runInAction } from 'mobx';
 import { productsAPI } from 'api/products';
 import { Option } from 'components/MultiDropdown';
 import { ProductType } from 'entities/protuct';
+import queryStore from './queryStore';
 import { ILocalStore } from './types';
 interface IProductsStore {
   fetch: (start: number, end: number) => void;
@@ -22,7 +23,7 @@ const INITIAL_COUNT = 0;
 export class ProductsStore implements IProductsStore, ILocalStore {
   private _products: ProductType[] = [];
   private _searchQuery: string = '';
-  private _filters: Option[] = [];
+  private _filters: string = '';
   private _pagination: Pagination = {
     offset: INITIAL_OFFSET,
     limit: INITIAL_LIMIT,
@@ -41,7 +42,7 @@ export class ProductsStore implements IProductsStore, ILocalStore {
       setSearchQuery: action,
       searchQuery: computed,
 
-      _filters: observable.ref,
+      _filters: observable,
       setFilters: action,
       filters: computed,
 
@@ -69,23 +70,22 @@ export class ProductsStore implements IProductsStore, ILocalStore {
     this._searchQuery = value;
   };
 
-  setFilters = (values: Option[]) => {
-    this._filters = values;
+  setFilters = (filters: string) => {
+    this._filters = filters;
 
     // this.fetch();
   };
 
   fetch = async () => {
-    const filtersQuery = this.getFilterQuery(this._filters);
     const response = await productsAPI.getAll({
       offset: this._pagination.offset,
-      filters: filtersQuery,
+      filters: this._filters,
       query: this.searchQuery,
     });
 
     runInAction(() => {
       if (response) {
-        this._products = [...this._products, ...response.data];
+        this._products = response.data;
         this._pagination = response.pagination;
         return;
       }
@@ -99,10 +99,21 @@ export class ProductsStore implements IProductsStore, ILocalStore {
   };
 
   destroy(): void {
-    return;
+    this._qpReaction;
   }
 
-  // private readonly queriesChange = reaction(
-  //   () =>
-  // )
+  private readonly _qpReaction = reaction(
+    () => {
+      const filter = queryStore.getParam('filter');
+      const search = queryStore.getParam('search');
+
+      return { filter, search };
+    },
+    ({ filter, search }) => {
+      this.setFilters((filter as string) ?? '');
+      this.setSearchQuery((search as string) ?? '');
+      this.fetch();
+      console.log('search value change', { filter, search });
+    },
+  );
 }

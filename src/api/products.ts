@@ -25,13 +25,13 @@ const getAll = async (args: RequestArguments): Promise<RequestReturn<ProductType
   const { offset = 0, limit = 9, query, filters } = args;
   let path = `products?title=ilike.${query}*&select=*,category:categories!inner(name)`;
   const filterPath = `&category.name=eq(any).{${filters}}`;
-  const paginate = `&limit=9&offset=${offset}`;
+  // const paginate = `&limit=9&offset=${offset}`;
 
   if (filters?.length) {
     path += filterPath;
   }
 
-  const products = await axios.get<ProductType[]>(`${supabaseRoot}/${path}${paginate}`, {
+  const products = await axios.get<ProductType[]>(`${supabaseRoot}/${path}`, {
     headers: {
       apikey: import.meta.env.VITE_SUPABASE_PUBLIC_KEY,
       Prefer: 'count=exact',
