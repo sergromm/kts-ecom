@@ -1,5 +1,5 @@
 import { computed, makeObservable, observable, runInAction } from 'mobx';
-import { API } from 'api/products';
+import { productsAPI } from 'api/products';
 import { ProductType } from 'entities/protuct';
 import { ILocalStore } from './types';
 
@@ -24,7 +24,7 @@ export class ProductStore implements IProductStore, ILocalStore {
   }
 
   async getProduct(id: string) {
-    const response = await API.getProduct(Number(id));
+    const response = await productsAPI.getOne(Number(id));
 
     runInAction(() => {
       if (response) {
