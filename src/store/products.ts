@@ -4,21 +4,38 @@ import { Option } from 'components/MultiDropdown';
 import { ProductType } from 'entities/protuct';
 import { ILocalStore } from './types';
 interface IProductsStore {
-  fetch: () => void;
-  search: (query: string) => void;
-  filter: (queries: string, query: string) => void;
+  fetch: (start: number, end: number) => void;
 }
 
-type PrivateFields = '_products' | '_searchQuery' | '_filters';
+type Pagination = {
+  offset: number;
+  count: number;
+  limit: number;
+};
+
+type PrivateFields = '_products' | '_searchQuery' | '_filters' | '_pagination';
+
+const INITIAL_OFFSET = 0;
+const INITIAL_LIMIT = 9;
+const INITIAL_COUNT = 0;
+
 export class ProductsStore implements IProductsStore, ILocalStore {
   private _products: ProductType[] = [];
   private _searchQuery: string = '';
   private _filters: Option[] = [];
+  private _pagination: Pagination = {
+    offset: INITIAL_OFFSET,
+    limit: INITIAL_LIMIT,
+    count: INITIAL_COUNT,
+  };
 
   constructor() {
     makeObservable<ProductsStore, PrivateFields>(this, {
       _products: observable.ref,
       products: computed,
+
+      _pagination: observable.ref,
+      pagination: computed,
 
       _searchQuery: observable,
       setSearchQuery: action,
@@ -27,12 +44,17 @@ export class ProductsStore implements IProductsStore, ILocalStore {
       _filters: observable.ref,
       setFilters: action,
       filters: computed,
-      filter: action,
+
+      fetch: action,
     });
   }
 
   get products() {
     return this._products;
+  }
+
+  get pagination() {
+    return this._pagination;
   }
 
   get searchQuery() {
@@ -49,52 +71,32 @@ export class ProductsStore implements IProductsStore, ILocalStore {
 
   setFilters = (values: Option[]) => {
     this._filters = values;
-    this.filter();
+
+    // this.fetch();
   };
 
-  async fetch() {
-    const response = await productsAPI.getAll();
-
-    runInAction(() => {
-      if (response) {
-        this._products = response;
-        return;
-      }
-    });
-
-    return 'error';
-  }
-
-  async search(query: string) {
-    const response = await productsAPI.search(query);
-
-    runInAction(() => {
-      if (response) {
-        this._products = response;
-        return;
-      }
-    });
-
-    return 'error';
-  }
-
-  getFilterQuery(values: Option[]) {
-    return values.map((filter) => filter.value).join(', ');
-  }
-
-  async filter() {
+  fetch = async () => {
     const filtersQuery = this.getFilterQuery(this._filters);
-    const response = await productsAPI.filter(filtersQuery, this._searchQuery);
+    const response = await productsAPI.getAll({
+      offset: this._pagination.offset,
+      filters: filtersQuery,
+      query: this.searchQuery,
+    });
 
     runInAction(() => {
       if (response) {
-        this._products = response;
+        this._products = [...this._products, ...response.data];
+        this._pagination = response.pagination;
         return;
       }
     });
 
     return 'error';
-  }
+  };
+
+  getFilterQuery = (values: Option[]) => {
+    return values.map((filter) => filter.value).join(', ');
+  };
 
   destroy(): void {
     return;

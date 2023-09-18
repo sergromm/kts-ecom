@@ -9,14 +9,6 @@ import { CategoriesStore } from 'store/categories';
 import { ProductsStore } from 'store/products';
 import styles from './Search.module.scss';
 
-// const getTitle = (options: Option[]) => {
-//   if (options.length) {
-//     return options.map((el: Option) => el.value).join(', ');
-//   }
-
-//   return 'Filters';
-// };
-
 // NOTE: номально ли прокидывать стор в пропсах? ощущение что что-то не так делаю.
 export const Search = observer(({ productsStore }: { productsStore: ProductsStore }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,7 +16,7 @@ export const Search = observer(({ productsStore }: { productsStore: ProductsStor
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    productsStore.filter();
+    productsStore.fetch();
   };
 
   React.useEffect(() => {
@@ -55,6 +47,7 @@ export const Search = observer(({ productsStore }: { productsStore: ProductsStor
     productsStore.setFilters(value);
     searchParams.set('filter', productsStore.getFilterQuery(value));
     setSearchParams(searchParams);
+    productsStore.fetch();
   };
 
   const handleInput = (value: string) => {
