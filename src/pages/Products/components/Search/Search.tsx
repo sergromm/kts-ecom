@@ -39,8 +39,8 @@ export const Search = observer(({ productsStore }: { productsStore: ProductsStor
       const filterQueries = searchParams.get('filter')?.split(', ');
 
       if (filterQueries) {
-        // const filters = store.options.filter((option) => filterQueries.includes(option.value));
-        // productsStore.setFilters(filters);
+        const filters = store.options.filter((option) => filterQueries.includes(option.value));
+        productsStore.setFilters(filters);
       }
     };
 
