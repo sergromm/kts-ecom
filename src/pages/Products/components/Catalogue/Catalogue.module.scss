@@ -4,3 +4,9 @@
   gap: $space-xl;
   width: 100%;
 }
+
+.scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

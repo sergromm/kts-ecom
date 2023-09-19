@@ -20,13 +20,10 @@ type RequestArguments = {
   filters?: string;
 };
 
-// TODO(@sergromm):add pagination to all products request
 const getAll = async (args: RequestArguments): Promise<RequestReturn<ProductType[]>> => {
   const { offset = 0, limit = 9, query, filters } = args;
   let path = `products?title=ilike.${query}*&select=*,category:categories!inner(name)`;
   const filterPath = `&category.name=eq(any).{${filters}}`;
-  // const paginate = `&limit=9&offset=${offset}`;
-
   if (filters?.length) {
     path += filterPath;
   }
@@ -35,13 +32,20 @@ const getAll = async (args: RequestArguments): Promise<RequestReturn<ProductType
     headers: {
       apikey: import.meta.env.VITE_SUPABASE_PUBLIC_KEY,
       Prefer: 'count=exact',
-      // Range: `${from}-${to}`,
+      Range: `0-${offset - 1}`,
     },
   });
 
   const [, count] = products.headers['content-range'].split('/');
 
-  return { data: products.data, pagination: { offset: offset + limit, count: Number(count), limit } };
+  return {
+    data: products.data,
+    pagination: {
+      offset: offset + limit,
+      count: Number(count),
+      limit: limit,
+    },
+  };
 };
 
 const getOne = async (id: number): Promise<ProductType> => {
@@ -57,37 +61,6 @@ const getOne = async (id: number): Promise<ProductType> => {
   return product.data[0];
 };
 
-const search = async (query: string): Promise<ProductType[]> => {
-  const products = await axios.get<ProductType[]>(
-    `${supabaseRoot}/products?title=ilike.${query}*&select=*,category:categories(name)'`,
-    {
-      headers: {
-        apikey: import.meta.env.VITE_SUPABASE_PUBLIC_KEY,
-      },
-    },
-  );
-  return products.data;
-};
-
-const filter = async (filters: string, query: string): Promise<ProductType[]> => {
-  let path = `products?title=ilike.${query}*&select=*,category:categories!inner(name)`;
-  const filterPath = `&category.name=eq(any).{${filters}}`;
-
-  if (filters.length) {
-    path += filterPath;
-  }
-
-  const products = await axios.get<ProductType[]>(`${supabaseRoot}/${path}`, {
-    headers: {
-      apikey: import.meta.env.VITE_SUPABASE_PUBLIC_KEY,
-      Prefer: 'count=exact',
-      Range: '0-8',
-    },
-  });
-
-  return products.data;
-};
-
 const getCategories = async (): Promise<CategoryType[]> => {
   const categories = await axios.get<CategoryType[]>(`${supabaseRoot}/categories`, {
     headers: {
@@ -97,4 +70,4 @@ const getCategories = async (): Promise<CategoryType[]> => {
   return categories.data;
 };
 
-export const productsAPI = { getAll, getOne, search, getCategories, filter };
+export const productsAPI = { getAll, getOne, getCategories };
