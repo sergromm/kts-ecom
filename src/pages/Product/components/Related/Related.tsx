@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Card } from 'components/Card';
 import { Text } from 'components/Text';
 import { ProductType } from 'entities/protuct';
@@ -7,7 +8,7 @@ export type RelatedProps = {
   products: ProductType[];
 };
 
-const Related = ({ products }: RelatedProps) => {
+const Related: React.FC<RelatedProps> = ({ products }) => {
   return (
     <section className={styles.related}>
       <Text tag="h2" view="h-32" weight="bold">

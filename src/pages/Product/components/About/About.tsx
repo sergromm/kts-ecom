@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Button } from 'components/Button';
 import { ProductType } from 'entities/protuct';
 import { Description } from '../Description';
@@ -8,7 +9,7 @@ export type AboutProps = {
   product: ProductType;
 };
 
-export const About = ({ product }: AboutProps) => {
+export const About: React.FC<AboutProps> = ({ product }) => {
   return (
     <div className={styles.about}>
       <Description description={product.description} title={product.title} />

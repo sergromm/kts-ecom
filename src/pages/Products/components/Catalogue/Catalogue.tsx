@@ -7,12 +7,11 @@ import { Text } from 'components/Text';
 import { useLocalStore } from 'hooks/useLocalStore';
 import { ProductsStore } from 'store/products';
 import { Grid } from '../Grid';
-import { Pagination } from '../Pagination';
 import { Search } from '../Search';
 const Cards = React.lazy(() => import('../Cards'));
 import styles from './Catalogue.module.scss';
 
-export const Catalogue = observer(() => {
+export const Catalogue: React.FC = observer(() => {
   const store = useLocalStore(() => new ProductsStore());
   const products = store.products;
   const [searchPramas, setSearchParams] = useSearchParams();
@@ -57,7 +56,6 @@ export const Catalogue = observer(() => {
           <Cards products={products} />
         </InfiniteScroll>
       </Grid>
-      <Pagination />
     </section>
   );
 });

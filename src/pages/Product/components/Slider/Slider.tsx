@@ -34,7 +34,7 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-const Slider = ({ images, title }: SliderProps) => {
+const Slider: React.FC<SliderProps> = ({ images, title }) => {
   const [[slide, direction], setSlide] = React.useState([0, 0]);
   const { ref, measures } = useMeasure<HTMLImageElement>();
   const width = measures?.width;

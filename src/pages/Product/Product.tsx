@@ -9,7 +9,7 @@ import styles from './Product.module.scss';
 
 const RELATED_ITEMS_COUNT = 3;
 
-export const Product = observer(() => {
+export const Product: React.FC = observer(() => {
   const { productId } = useParams();
   const store = useLocalStore(() => new ProductStore());
   const product = store.product;

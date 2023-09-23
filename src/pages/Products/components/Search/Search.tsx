@@ -9,8 +9,11 @@ import { CategoriesStore } from 'store/categories';
 import { ProductsStore } from 'store/products';
 
 import styles from './Search.module.scss';
+
+type SearchProps = { productsStore: ProductsStore };
+
 // NOTE: номально ли прокидывать стор в пропсах? ощущение что что-то не так делаю.
-export const Search = observer(({ productsStore }: { productsStore: ProductsStore }) => {
+export const Search: React.FC<SearchProps> = observer(({ productsStore }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoriesStore = useLocalStore(() => new CategoriesStore());
   const shouldFetch = React.useRef(true);
