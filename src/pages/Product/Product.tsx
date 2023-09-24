@@ -7,8 +7,6 @@ const Showcase = React.lazy(() => import('./components/Showcase'));
 const Related = React.lazy(() => import('./components/Related'));
 import styles from './Product.module.scss';
 
-const RELATED_ITEMS_COUNT = 3;
-
 export const Product: React.FC = observer(() => {
   const { productId } = useParams();
   const store = useLocalStore(() => new ProductStore());
@@ -20,6 +18,12 @@ export const Product: React.FC = observer(() => {
     }
   }, [store, productId]);
 
+  React.useEffect(() => {
+    if (product) {
+      store.getRelated(product.category.name);
+    }
+  }, [product, store]);
+
   /* smh suspense doesn't work without this */
   if (!product) return;
 
@@ -27,7 +31,7 @@ export const Product: React.FC = observer(() => {
     <main className={styles.main}>
       <React.Suspense fallback={<h1>LOADING...</h1>}>
         <Showcase product={product} />
-        <Related products={Array(RELATED_ITEMS_COUNT).fill(product)} />
+        <Related products={store.related} />
       </React.Suspense>
     </main>
   );

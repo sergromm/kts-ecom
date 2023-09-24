@@ -1,18 +1,21 @@
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { productsAPI } from 'api/products';
 import { Option } from 'components/MultiDropdown';
 import { CategoryType } from 'entities/category';
+import { ProductsApiStore } from './productsApi';
 import { ILocalStore } from './types';
+import { Meta } from './utils';
 interface ICategoriesStore {
   getCategories: () => void;
 }
 
-type PrivateFields = '_categories' | '_options' | '_value';
+type PrivateFields = '_categories' | '_options' | '_value' | '_meta';
 
 export class CategoriesStore implements ICategoriesStore, ILocalStore {
   private _categories: CategoryType[] = [];
   private _options: Option[] = [];
   private _value: Option[] = [];
+  private _meta: Meta = Meta.initial;
+  private api: ProductsApiStore = new ProductsApiStore();
 
   constructor() {
     makeObservable<CategoriesStore, PrivateFields>(this, {
@@ -22,11 +25,15 @@ export class CategoriesStore implements ICategoriesStore, ILocalStore {
       _options: observable.ref,
       options: computed,
 
+      _meta: observable,
+      meta: computed,
+
       _value: observable.ref,
       setValue: action,
       setValueByName: action,
 
       getFilterQuery: action,
+      getCategories: action,
     });
   }
 
@@ -36,6 +43,10 @@ export class CategoriesStore implements ICategoriesStore, ILocalStore {
 
   get options() {
     return this._options;
+  }
+
+  get meta() {
+    return this._meta;
   }
 
   get value() {
@@ -58,20 +69,27 @@ export class CategoriesStore implements ICategoriesStore, ILocalStore {
   }
 
   getCategories = async () => {
-    const response = await productsAPI.getCategories();
+    if (this._meta === Meta.loading) {
+      return;
+    }
 
-    runInAction(() => {
-      if (response) {
+    this._meta = Meta.loading;
+
+    const response = await this.api.getCategories();
+
+    if (response) {
+      runInAction(() => {
+        this._meta = Meta.success;
         this._categories = response;
         this._options = this._categories.map((category) => ({
           key: category.name.toLowerCase(),
           value: category.name,
         }));
         return;
-      }
-    });
-
-    return 'error';
+      });
+    } else {
+      this._meta = Meta.error;
+    }
   };
 
   destroy(): void {

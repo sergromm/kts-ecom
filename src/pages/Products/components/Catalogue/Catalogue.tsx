@@ -15,19 +15,10 @@ export const Catalogue: React.FC = observer(() => {
   const store = useLocalStore(() => new ProductsStore());
   const products = store.products;
   const [searchPramas, setSearchParams] = useSearchParams();
-  const shouldFetch = React.useRef(true);
 
   React.useEffect(() => {
-    /**
-     * NOTE: не придумал способа лучше, как запретить реакту дважды выполнять useEffect
-     * без этого store.fetch вызывался дважды и ломал бесконечный скролл,
-     * а сбрасывать стор внутри не вариант, так как данные дополняются по мере скрола
-     */
-    if (shouldFetch.current) {
-      shouldFetch.current = false;
-      store.setPaginationOffset(searchPramas.get('offset') || String(store.offset));
-      store.fetch();
-    }
+    store.setPaginationOffset(searchPramas.get('offset') || String(store.offset));
+    store.fetch();
   }, [store, searchPramas]);
 
   const handleNext = () => {
