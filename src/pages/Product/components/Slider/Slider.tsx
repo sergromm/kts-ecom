@@ -40,9 +40,12 @@ const Slider: React.FC<SliderProps> = ({ images, title }) => {
   const width = measures?.width;
   const index = wrap(0, images.length, slide);
 
-  const nextSlide = (newDirection: number) => {
-    setSlide([slide + newDirection, newDirection]);
-  };
+  const nextSlide = React.useCallback(
+    (newDirection: number) => {
+      setSlide([slide + newDirection, newDirection]);
+    },
+    [slide],
+  );
 
   return (
     <div className={styles.slider}>

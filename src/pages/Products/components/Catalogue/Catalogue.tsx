@@ -22,11 +22,11 @@ export const Catalogue: React.FC = observer(() => {
     store.fetch();
   }, [store, searchPramas]);
 
-  const handleNext = () => {
+  const handleNext = React.useCallback(() => {
     store.fetch();
     searchPramas.set('offset', String(store.offset));
     setSearchParams(searchPramas);
-  };
+  }, [searchPramas, setSearchParams, store]);
 
   return (
     <section className={styles.catalogue}>

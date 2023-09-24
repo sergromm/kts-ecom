@@ -14,14 +14,17 @@ export const Search: React.FC = observer(() => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoriesStore = useLocalStore(() => new CategoriesStore());
 
-  const handleSearchParams = (name: string, value: string) => {
-    if (value) {
-      searchParams.set(name, value);
-    } else {
-      searchParams.delete(name);
-    }
-    setSearchParams(searchParams);
-  };
+  const handleSearchParams = React.useCallback(
+    (name: string, value: string) => {
+      if (value) {
+        searchParams.set(name, value);
+      } else {
+        searchParams.delete(name);
+      }
+      setSearchParams(searchParams);
+    },
+    [searchParams, setSearchParams],
+  );
 
   const getTitle = (value: Option[]) => {
     return productsStore?.getFilterQuery(value) || 'Filters';
@@ -42,18 +45,24 @@ export const Search: React.FC = observer(() => {
     productsStore?.setSearchQuery(search ?? '');
   }, [categoriesStore, productsStore, searchParams]);
 
-  const handleChange = (value: Option[]) => {
-    categoriesStore.setValue(value);
-    const filter = categoriesStore.getFilterQuery();
-    handleSearchParams('filter', filter);
-  };
+  const handleChange = React.useCallback(
+    (value: Option[]) => {
+      categoriesStore.setValue(value);
+      const filter = categoriesStore.getFilterQuery();
+      handleSearchParams('filter', filter);
+    },
+    [categoriesStore, handleSearchParams],
+  );
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const search = data.get('search') as string;
-    handleSearchParams('search', search);
-  };
+  const handleSubmit = React.useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const data = new FormData(e.currentTarget);
+      const search = data.get('search') as string;
+      handleSearchParams('search', search);
+    },
+    [handleSearchParams],
+  );
 
   return (
     <form className={styles.search} onSubmit={handleSubmit}>
