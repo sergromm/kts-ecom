@@ -16,7 +16,6 @@ type SearchProps = { productsStore: ProductsStore };
 export const Search: React.FC<SearchProps> = observer(({ productsStore }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoriesStore = useLocalStore(() => new CategoriesStore());
-  const shouldFetch = React.useRef(true);
 
   const handleSearchParams = (name: string, value: string) => {
     if (value) {
@@ -32,22 +31,19 @@ export const Search: React.FC<SearchProps> = observer(({ productsStore }) => {
   };
 
   React.useEffect(() => {
-    if (shouldFetch.current) {
-      shouldFetch.current = false;
-      const filter = searchParams.get('filter');
-      const search = searchParams.get('search');
+    const filter = searchParams.get('filter');
+    const search = searchParams.get('search');
 
-      // FIXME: возможно есть способ избавиться от обёртки :thinking:
-      const awaitCategories = async () => {
-        await categoriesStore.getCategories();
-        categoriesStore.setValueByName(filter ?? '');
-      };
+    // FIXME: возможно есть способ избавиться от обёртки :thinking:
+    const awaitCategories = async () => {
+      await categoriesStore.getCategories();
+      categoriesStore.setValueByName(filter ?? '');
+    };
 
-      awaitCategories();
+    awaitCategories();
 
-      productsStore.setFilters(filter ?? '');
-      productsStore.setSearchQuery(search ?? '');
-    }
+    productsStore.setFilters(filter ?? '');
+    productsStore.setSearchQuery(search ?? '');
   }, [categoriesStore, productsStore, searchParams]);
 
   const handleChange = (value: Option[]) => {

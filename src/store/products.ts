@@ -132,7 +132,7 @@ export class ProductsStore implements IProductsStore, ILocalStore {
     ({ filter, search, offset }) => {
       this.setFilters((filter as string) ?? '');
       this.setSearchQuery((search as string) ?? '');
-      this.setPaginationOffset((offset as string) ?? '');
+      this.setPaginationOffset((offset as string) ?? INITIAL_OFFSET);
       this.fetch();
     },
   );
