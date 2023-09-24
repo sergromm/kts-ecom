@@ -33,7 +33,6 @@ export class ProductsApiStore implements IProductsApiStore, ILocalStore {
 
   getMany = async ({ offset = 8, filters = '', query = '' }: GetAllArgs) => {
     let path = `products?title=ilike.${query}*&select=*,category:categories!inner(name)`;
-    console.log(offset);
     if (filters?.length) {
       const filterPath = `&category.name=eq(any).{${filters}}`;
       path += filterPath;
