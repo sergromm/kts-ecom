@@ -4,16 +4,13 @@ import { useSearchParams } from 'react-router-dom';
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { MultiDropdown, Option } from 'components/MultiDropdown';
+import { useProductStore } from 'contexts/productStore';
 import { useLocalStore } from 'hooks/useLocalStore';
 import { CategoriesStore } from 'store/categories';
-import { ProductsStore } from 'store/products';
-
 import styles from './Search.module.scss';
 
-type SearchProps = { productsStore: ProductsStore };
-
-// NOTE: номально ли прокидывать стор в пропсах? ощущение что что-то не так делаю.
-export const Search: React.FC<SearchProps> = observer(({ productsStore }) => {
+export const Search: React.FC = observer(() => {
+  const productsStore = useProductStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoriesStore = useLocalStore(() => new CategoriesStore());
 
@@ -27,14 +24,13 @@ export const Search: React.FC<SearchProps> = observer(({ productsStore }) => {
   };
 
   const getTitle = (value: Option[]) => {
-    return productsStore.getFilterQuery(value) || 'Filters';
+    return productsStore?.getFilterQuery(value) || 'Filters';
   };
 
   React.useEffect(() => {
     const filter = searchParams.get('filter');
     const search = searchParams.get('search');
 
-    // FIXME: возможно есть способ избавиться от обёртки :thinking:
     const awaitCategories = async () => {
       await categoriesStore.getCategories();
       categoriesStore.setValueByName(filter ?? '');
@@ -42,8 +38,8 @@ export const Search: React.FC<SearchProps> = observer(({ productsStore }) => {
 
     awaitCategories();
 
-    productsStore.setFilters(filter ?? '');
-    productsStore.setSearchQuery(search ?? '');
+    productsStore?.setFilters(filter ?? '');
+    productsStore?.setSearchQuery(search ?? '');
   }, [categoriesStore, productsStore, searchParams]);
 
   const handleChange = (value: Option[]) => {
@@ -64,8 +60,8 @@ export const Search: React.FC<SearchProps> = observer(({ productsStore }) => {
       <Input
         name="search"
         placeholder="Search product"
-        value={productsStore.searchQuery}
-        onChange={productsStore.setSearchQuery}
+        value={productsStore?.searchQuery ?? ''}
+        onChange={productsStore?.setSearchQuery ?? (() => {})}
       />
       <Button type="submit">Find Now</Button>
       <MultiDropdown

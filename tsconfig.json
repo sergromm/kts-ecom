@@ -11,6 +11,7 @@
       "api/*": ["api/*"],
       "assets/*": ["assets/*"],
       "config/*": ["config/*"],
+      "contexts/*": ["contexts/*"],
       "entities/*": ["entities/*"],
       "pages/*": ["pages/*"],
       "components/*": ["components/*"],
