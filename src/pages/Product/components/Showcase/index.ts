@@ -1,1 +1,1 @@
-export { Showcase } from './Showcase';
+export { default } from './Showcase';

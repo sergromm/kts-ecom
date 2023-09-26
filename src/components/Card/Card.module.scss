@@ -2,11 +2,10 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  max-width: 360px;
 }
 
 .container:hover {
-  box-shadow: var(--shadow);
+  box-shadow: $shadow;
 }
 
 .cover {
@@ -15,22 +14,23 @@
   height: auto;
   aspect-ratio: 1/1;
   object-fit: contain;
-  background-color: var(--card-image-bg);
+  background-color: $card-image-bg;
 }
 
 .body {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex-grow: 1;
-  gap: var(--space-l);
-  background-color: var(--card-bg);
-  padding: var(--space-xl) var(--space-xs);
+  gap: $space-l;
+  background-color: $card-bg;
+  padding: $space-xl $space-xs;
 }
 
 .description {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xxs);
+  gap: $space-xxs;
 }
 
 .footer {

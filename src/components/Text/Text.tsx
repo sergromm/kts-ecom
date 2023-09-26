@@ -42,6 +42,7 @@ export const Text: React.FC<TextProps> = ({
     styles[`view_${view}`],
     styles[`weight_${weight}`],
     styles[`color_${color}`],
+    styles[`max-lines`],
     className,
   );
 

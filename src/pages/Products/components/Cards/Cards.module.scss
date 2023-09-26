@@ -1,12 +1,6 @@
 .cards {
   display: grid;
-  justify-content: space-between;
+  justify-content: center;
   gap: 30px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 360px));
-}
-
-@media screen and (max-width: 1342px) {
-  .cards {
-    justify-content: space-evenly;
-  }
+  grid-template-columns: repeat(auto-fit, minmax(360px, 0.7fr));
 }

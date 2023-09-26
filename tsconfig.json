@@ -10,12 +10,14 @@
     "paths": {
       "api/*": ["api/*"],
       "assets/*": ["assets/*"],
+      "config/*": ["config/*"],
+      "entities/*": ["entities/*"],
       "pages/*": ["pages/*"],
       "components/*": ["components/*"],
-      "config/*": ["config/*"],
-      "styles/*": ["styles/*"],
+      "hooks/*": ["hooks/*"],
       "utils/*": ["utils/*"],
-      "hooks/*": ["hooks/*"]
+      "styles/*": ["styles/*"],
+      "store/*": ["store/*"]
     },
 
     "moduleResolution": "bundler",

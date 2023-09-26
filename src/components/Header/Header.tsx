@@ -1,15 +1,16 @@
 import classNames from 'classnames';
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import Logo from 'assets/logo.svg';
 import { Text } from 'components/Text';
 import { Icon } from 'components/icons/Icon';
+import { routerPaths } from 'config/routerPaths';
 import styles from './Header.module.scss';
 
 const Navigation: React.FC = () => {
   const nav = [
-    { link: '/', title: 'Products' },
-    { link: '/categories', title: 'Categories' },
-    { link: '/about', title: 'About us' },
+    { link: routerPaths.root, title: 'Products' },
+    { link: routerPaths.categories, title: 'Categories' },
+    { link: routerPaths.about, title: 'About us' },
   ];
   const { pathname } = useLocation();
 
@@ -19,11 +20,11 @@ const Navigation: React.FC = () => {
         const classes = classNames(styles.page, { [styles.page_active]: pathname === item.link });
         return (
           <li key={item.title}>
-            <Link className={styles.link} to={item.link}>
+            <NavLink className={styles.link} to={item.link}>
               <Text className={classes} view="p-18">
                 {item.title}
               </Text>
-            </Link>
+            </NavLink>
           </li>
         );
       })}
@@ -31,13 +32,13 @@ const Navigation: React.FC = () => {
   );
 };
 
-export function Header() {
+export const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.content}>
-        <Link to="/">
+        <NavLink to="/">
           <img alt="logo" src={Logo} />
-        </Link>
+        </NavLink>
         <Navigation />
         <div className={styles.buttons}>
           <button className={styles.button}>
@@ -100,4 +101,4 @@ export function Header() {
       </div>
     </header>
   );
-}
+};

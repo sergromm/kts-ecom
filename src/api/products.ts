@@ -1,36 +1,73 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
+import { CategoryType } from 'entities/category';
+import { ProductType } from 'entities/protuct';
 
-const root = 'https://api.escuelajs.co/api/v1';
+const supabaseRoot = 'https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1';
 
-export type CategoryType = {
-  id: number;
-  name: string;
-  image: string;
+type RequestReturn<T> = {
+  data: T;
+  pagination: {
+    offset: number;
+    count: number;
+    limit: number;
+  };
 };
 
-export type ProductType = {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: CategoryType;
-  images: string[];
+type RequestArguments = {
+  limit?: number;
+  offset?: number;
+  query?: string;
+  filters?: string;
 };
 
-type AsyncReturn<T> = Promise<AxiosResponse<T>>;
+const getAll = async (args: RequestArguments): Promise<RequestReturn<ProductType[]>> => {
+  const { offset = 0, limit = 9, query, filters } = args;
+  let path = `products?title=ilike.${query}*&select=*,category:categories!inner(name)`;
+  const filterPath = `&category.name=eq(any).{${filters}}`;
+  if (filters?.length) {
+    path += filterPath;
+  }
 
-const getProducts = async (offset: number = 0, limit: number = 9): AsyncReturn<ProductType[]> => {
-  const products = await axios.get<ProductType[]>(`${root}/products?offset=${offset}&limit=${limit}`);
-  return products;
+  const products = await axios.get<ProductType[]>(`${supabaseRoot}/${path}`, {
+    headers: {
+      apikey: import.meta.env.VITE_SUPABASE_PUBLIC_KEY,
+      Prefer: 'count=exact',
+      Range: `0-${offset - 1}`,
+    },
+  });
+
+  const [, count] = products.headers['content-range'].split('/');
+
+  return {
+    data: products.data,
+    pagination: {
+      offset: offset + limit,
+      count: Number(count),
+      limit: limit,
+    },
+  };
 };
 
-const getProduct = async (id: number): AsyncReturn<ProductType> => {
-  const product = await axios.get(`${root}/products/${id}`);
-  return product;
-};
-const getCategories = async (): AsyncReturn<CategoryType[]> => {
-  const categories = await axios.get(`${root}/categories`);
-  return categories;
+const getOne = async (id: number): Promise<ProductType> => {
+  const product = await axios.get<ProductType[]>(
+    `${supabaseRoot}/products?id=eq.${id}&select=*,category:categories(name)`,
+    {
+      headers: {
+        apikey: import.meta.env.VITE_SUPABASE_PUBLIC_KEY,
+      },
+    },
+  );
+
+  return product.data[0];
 };
 
-export const API = { getProducts, getProduct, getCategories };
+const getCategories = async (): Promise<CategoryType[]> => {
+  const categories = await axios.get<CategoryType[]>(`${supabaseRoot}/categories`, {
+    headers: {
+      apikey: import.meta.env.VITE_SUPABASE_PUBLIC_KEY,
+    },
+  });
+  return categories.data;
+};
+
+export const productsAPI = { getAll, getOne, getCategories };

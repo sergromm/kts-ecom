@@ -1,5 +1,5 @@
 .main > * {
-  max-width: var(--content-max-width);
+  max-width: $content-max-width;
   width: 100%;
 }
 
@@ -8,6 +8,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 60px var(--whole-page-padding);
-  gap: var(--space-xl);
+  padding: 60px $whole-page-padding;
+  gap: $space-xl;
 }

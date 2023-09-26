@@ -6,7 +6,7 @@ import { usePagination } from 'hooks/usePagination';
 import styles from './Pagination.module.scss';
 
 export const Pagination: React.FC = () => {
-  const { paginate, next, previous, active, setPage } = usePagination({ total: 200 });
+  const { paginate, next, previous, active, setPage } = usePagination({ total: Math.ceil(30 / 9) });
   return (
     <div className={styles.pagination}>
       <button className={styles.button} onClick={() => previous()}>

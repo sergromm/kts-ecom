@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-s);
+  gap: $space-s;
 }
 
 .list {
@@ -17,17 +17,20 @@
   padding: 0;
   background: transparent;
   border: none;
-  color: var(--black);
+  color: $black;
   cursor: pointer;
 }
 
-.item__button {
-  padding: var(--space-xxs);
-  width: 36px;
-  height: 36px;
-}
-
-.item__button_active {
-  background-color: var(--brand);
-  color: var(--white);
+.item {
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    &_active {
+      background-color: $brand;
+      color: $white;
+    }
+  }
 }

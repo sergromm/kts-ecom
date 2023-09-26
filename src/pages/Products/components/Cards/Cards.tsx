@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { ProductType } from 'api/products';
 import { Button } from 'components/Button';
 import { Card } from 'components/Card';
+import { ProductType } from 'entities/protuct';
 import styles from './Cards.module.scss';
 
-export default function Cards({ products }: { products: ProductType[] }) {
+const Cards = ({ products }: { products: ProductType[] }) => {
   const navigate = useNavigate();
   return (
     <div className={styles.cards}>
@@ -24,4 +24,6 @@ export default function Cards({ products }: { products: ProductType[] }) {
       })}
     </div>
   );
-}
+};
+
+export default Cards;

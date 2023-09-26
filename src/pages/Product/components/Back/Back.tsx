@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Text } from 'components/Text';
 import { Icon } from 'components/icons/Icon';
+import { routerPaths } from 'config/routerPaths';
 import styles from './Back.module.scss';
 
-export function Back() {
+export const Back = () => {
   return (
-    <Link className={styles.back} to="/">
+    <Link className={styles.back} to={routerPaths.root}>
       <Icon height={32} width={32}>
         <svg fill="none" height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -21,4 +22,4 @@ export function Back() {
       <Text view="p-20">Back</Text>
     </Link>
   );
-}
+};

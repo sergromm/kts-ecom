@@ -6,15 +6,14 @@
   overflow: hidden;
   cursor: grab;
   aspect-ratio: 1/1;
-}
+  &:active {
+    cursor: grabbing;
+  }
 
-.slider:active {
-  cursor: grabbing;
-}
-
-.slider:hover .arrow {
-  opacity: 1;
-  visibility: visible;
+  &:hover .arrow {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .image {
@@ -38,23 +37,22 @@
   border: none;
   height: 64px;
   width: 64px;
-  background-color: var(--black-60);
+  background-color: $black-60;
   transform: translateY(-50%);
   cursor: pointer;
   backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
-}
+  &:hover {
+    background-color: $black;
+  }
 
-.arrow:hover {
-  background-color: var(--black);
-}
+  &_left {
+    left: $space-m;
+  }
 
-.arrow_left {
-  left: var(--space-m);
-}
-
-.arrow_right {
-  right: var(--space-m);
+  &_right {
+    right: $space-m;
+  }
 }
