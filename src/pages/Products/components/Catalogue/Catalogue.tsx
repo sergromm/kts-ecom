@@ -4,42 +4,35 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSearchParams } from 'react-router-dom';
 import { Loader } from 'components/Loader';
 import { Text } from 'components/Text';
+import { ProductStoreContext } from 'contexts/productStore';
 import { useLocalStore } from 'hooks/useLocalStore';
 import { ProductsStore } from 'store/products';
 import { Grid } from '../Grid';
-import { Pagination } from '../Pagination';
 import { Search } from '../Search';
 const Cards = React.lazy(() => import('../Cards'));
 import styles from './Catalogue.module.scss';
 
-export const Catalogue = observer(() => {
+export const Catalogue: React.FC = observer(() => {
   const store = useLocalStore(() => new ProductsStore());
   const products = store.products;
   const [searchPramas, setSearchParams] = useSearchParams();
-  const shouldFetch = React.useRef(true);
 
   React.useEffect(() => {
-    /**
-     * NOTE: не придумал способа лучше, как запретить реакту дважды выполнять useEffect
-     * без этого store.fetch вызывался дважды и ломал бесконечный скролл,
-     * а сбрасывать стор внутри не вариант, так как данные дополняются по мере скрола
-     */
-    if (shouldFetch.current) {
-      shouldFetch.current = false;
-      store.setPaginationOffset(searchPramas.get('offset') || String(store.offset));
-      store.fetch();
-    }
+    store.setPaginationOffset(searchPramas.get('offset') || String(store.offset));
+    store.fetch();
   }, [store, searchPramas]);
 
-  const handleNext = () => {
+  const handleNext = React.useCallback(() => {
     store.fetch();
     searchPramas.set('offset', String(store.offset));
     setSearchParams(searchPramas);
-  };
+  }, [searchPramas, setSearchParams, store]);
 
   return (
     <section className={styles.catalogue}>
-      <Search productsStore={store} />
+      <ProductStoreContext.Provider value={store}>
+        <Search />
+      </ProductStoreContext.Provider>
       <Grid total={products.length}>
         <InfiniteScroll
           className={styles.scroll}
@@ -57,7 +50,6 @@ export const Catalogue = observer(() => {
           <Cards products={products} />
         </InfiniteScroll>
       </Grid>
-      <Pagination />
     </section>
   );
 });

@@ -34,15 +34,18 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-const Slider = ({ images, title }: SliderProps) => {
+const Slider: React.FC<SliderProps> = ({ images, title }) => {
   const [[slide, direction], setSlide] = React.useState([0, 0]);
   const { ref, measures } = useMeasure<HTMLImageElement>();
   const width = measures?.width;
   const index = wrap(0, images.length, slide);
 
-  const nextSlide = (newDirection: number) => {
-    setSlide([slide + newDirection, newDirection]);
-  };
+  const nextSlide = React.useCallback(
+    (newDirection: number) => {
+      setSlide([slide + newDirection, newDirection]);
+    },
+    [slide],
+  );
 
   return (
     <div className={styles.slider}>
@@ -65,7 +68,7 @@ const Slider = ({ images, title }: SliderProps) => {
             duration: 0.1,
           }}
           variants={variants}
-          onDragEnd={(e, { offset, velocity }) => {
+          onDragEnd={(_, { offset, velocity }) => {
             const swipe = swipePower(offset.x, velocity.x);
 
             if (swipe < -swipeConfidenceThreshold) {

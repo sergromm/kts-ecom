@@ -4,7 +4,7 @@ import { Icon } from 'components/icons/Icon';
 import { routerPaths } from 'config/routerPaths';
 import styles from './Back.module.scss';
 
-export const Back = () => {
+export const Back: React.FC = () => {
   return (
     <Link className={styles.back} to={routerPaths.root}>
       <Icon height={32} width={32}>

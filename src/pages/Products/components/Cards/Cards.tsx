@@ -1,10 +1,13 @@
+import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'components/Button';
 import { Card } from 'components/Card';
 import { ProductType } from 'entities/protuct';
 import styles from './Cards.module.scss';
 
-const Cards = ({ products }: { products: ProductType[] }) => {
+type CardsType = { products: ProductType[] };
+
+const Cards: React.FC<CardsType> = ({ products }) => {
   const navigate = useNavigate();
   return (
     <div className={styles.cards}>

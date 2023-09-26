@@ -1,16 +1,17 @@
 import { action, computed, makeObservable, observable, reaction, runInAction } from 'mobx';
-import { productsAPI } from 'api/products';
 import { Option } from 'components/MultiDropdown';
 import { ProductType } from 'entities/protuct';
+import { ProductsApiStore } from './productsApi';
 import queryStore from './queryStore';
 import { ILocalStore } from './types';
+import { Meta } from './utils';
 interface IProductsStore {
   fetch: (start: number, end: number) => void;
 }
 
-type PrivateFields = '_products' | '_searchQuery' | '_filters';
+type PrivateFields = '_products' | '_searchQuery' | '_filters' | '_meta';
 
-const INITIAL_OFFSET = 9;
+const INITIAL_OFFSET = 8;
 const INITIAL_LIMIT = 9;
 const INITIAL_COUNT = 0;
 
@@ -18,14 +19,19 @@ export class ProductsStore implements IProductsStore, ILocalStore {
   private _products: ProductType[] = [];
   private _searchQuery: string = '';
   private _filters: string = '';
+  private _meta = Meta.initial;
   private _limit: number = INITIAL_LIMIT;
   private _offset: number = INITIAL_OFFSET;
   private _count: number = INITIAL_COUNT;
+  private api: ProductsApiStore = new ProductsApiStore();
 
   constructor() {
     makeObservable<ProductsStore, PrivateFields>(this, {
       _products: observable.ref,
       products: computed,
+
+      _meta: observable,
+      meta: computed,
 
       _searchQuery: observable,
       setSearchQuery: action,
@@ -43,8 +49,8 @@ export class ProductsStore implements IProductsStore, ILocalStore {
     return this._products;
   }
 
-  get limit() {
-    return this._limit;
+  get meta() {
+    return this._meta;
   }
 
   get count() {
@@ -76,29 +82,35 @@ export class ProductsStore implements IProductsStore, ILocalStore {
   }
 
   fetch = async () => {
-    // FIXME
+    if (this._meta === Meta.loading) {
+      return;
+    }
+
+    this._meta = Meta.loading;
+
+    //NOTE
     /**
-     * запросы отправляются неоптимально. с каждым запросом увеличивается
-     * размер возвращаемого массива, иначе ломается бесконечный скролл
-     *
-     *
-     * нужно хендлить ошибки в try/catch
+     *  не знаю должны ли фильтры, оффсет и запрос принадлежать стору с продуктами.
+     *  такое ощущение, что они должны быть внутри стора с api
      */
-    const response = await productsAPI.getAll({
-      offset: this._offset,
+
+    const { count, products } = await this.api.getMany({
       filters: this._filters,
-      query: this.searchQuery,
+      offset: this._offset,
+      query: this._searchQuery,
     });
 
-    runInAction(() => {
-      if (response) {
-        this._products = response.data;
-        this._offset = response.pagination.offset;
+    if (products) {
+      runInAction(() => {
+        this._meta = Meta.success;
+        this._products = products;
+        this._offset = this._offset + this._limit;
+        this._count = Number(count);
         return;
-      }
-    });
-
-    return 'error';
+      });
+    } else {
+      this._meta = Meta.error;
+    }
   };
 
   getFilterQuery = (values: Option[]) => {
@@ -120,7 +132,7 @@ export class ProductsStore implements IProductsStore, ILocalStore {
     ({ filter, search, offset }) => {
       this.setFilters((filter as string) ?? '');
       this.setSearchQuery((search as string) ?? '');
-      this.setPaginationOffset((offset as string) ?? '');
+      this.setPaginationOffset((offset as string) ?? INITIAL_OFFSET);
       this.fetch();
     },
   );
