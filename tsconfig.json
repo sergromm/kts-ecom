@@ -5,22 +5,36 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    // "baseUrl": "src",
+    // "paths": {
+    //   "api/*": ["api/*"],
+    //   "assets/*": ["assets/*"],
+    //   "config/*": ["config/*"],
+    //   "contexts/*": ["contexts/*"],
+    //   "entities/*": ["entities/*"],
+    //   "pages/*": ["pages/*"],
+    //   "components/*": ["components/*"],
+    //   "hooks/*": ["hooks/*"],
+    //   "utils/*": ["utils/*"],
+    //   "styles/*": ["styles/*"],
+    //   "store/*": ["store/*"]
+    // },
 
     "baseUrl": "src",
     "paths": {
-      "api/*": ["api/*"],
-      "assets/*": ["assets/*"],
-      "config/*": ["config/*"],
-      "contexts/*": ["contexts/*"],
-      "entities/*": ["entities/*"],
-      "pages/*": ["pages/*"],
-      "components/*": ["components/*"],
-      "hooks/*": ["hooks/*"],
-      "utils/*": ["utils/*"],
-      "styles/*": ["styles/*"],
-      "store/*": ["store/*"]
+      "api": ["api"],
+      "assets": ["assets"],
+      "config": ["config"],
+      "contexts": ["contexts"],
+      "entities": ["entities"],
+      "pages": ["pages"],
+      "components": ["components"],
+      "hooks": ["hooks"],
+      "utils": ["utils"],
+      "styles": ["styles"],
+      "store": ["store"]
     },
-
+    
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,

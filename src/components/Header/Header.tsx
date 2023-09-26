@@ -37,7 +37,7 @@ export const Header = () => {
     <header className={styles.header}>
       <div className={styles.content}>
         <NavLink to="/">
-          <img alt="logo" src={Logo} />
+          <Logo />
         </NavLink>
         <Navigation />
         <div className={styles.buttons}>

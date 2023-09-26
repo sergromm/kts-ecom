@@ -40,7 +40,7 @@ export class ProductsApiStore implements IProductsApiStore, ILocalStore {
 
     const response = await axios.get<ProductType[]>(`${this.baseURL}/${path}`, {
       headers: {
-        apikey: import.meta.env.VITE_SUPABASE_PUBLIC_KEY,
+        apikey: process.env.SUPABASE_PUBLIC_KEY,
         Prefer: 'count=exact',
         Range: `0-${offset}`,
       },
@@ -51,11 +51,12 @@ export class ProductsApiStore implements IProductsApiStore, ILocalStore {
   };
 
   getOne = async (id: number) => {
+    console.log(process.env.SUPABASE_PUBLIC_KEY)
     const product = await axios.get<ProductType[]>(
       `${this.baseURL}/products?id=eq.${id}&select=*,category:categories(name)`,
       {
         headers: {
-          apikey: import.meta.env.VITE_SUPABASE_PUBLIC_KEY,
+          apikey:process.env.SUPABASE_PUBLIC_KEY,
         },
       },
     );
@@ -66,7 +67,7 @@ export class ProductsApiStore implements IProductsApiStore, ILocalStore {
   getCategories = async (): Promise<CategoryType[]> => {
     const categories = await axios.get<CategoryType[]>(`${this.baseURL}/categories`, {
       headers: {
-        apikey: import.meta.env.VITE_SUPABASE_PUBLIC_KEY,
+        apikey:process.env.SUPABASE_PUBLIC_KEY,
       },
     });
     return categories.data;

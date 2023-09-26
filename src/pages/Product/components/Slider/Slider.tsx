@@ -68,7 +68,7 @@ const Slider: React.FC<SliderProps> = ({ images, title }) => {
             duration: 0.1,
           }}
           variants={variants}
-          onDragEnd={(e, { offset, velocity }) => {
+          onDragEnd={(_, { offset, velocity }) => {
             const swipe = swipePower(offset.x, velocity.x);
 
             if (swipe < -swipeConfidenceThreshold) {
