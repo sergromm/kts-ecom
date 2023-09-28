@@ -6,9 +6,8 @@ import 'config/configureMobx.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Router.BrowserRouter> 
+    <Router.BrowserRouter>
       <App />
     </Router.BrowserRouter>
-    <div>Hello</div>
   </React.StrictMode>,
 );

@@ -1,0 +1,8 @@
+.container {
+  background: $white;
+  padding: $space-xl;
+  box-shadow: $shadow;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-xl;
+}

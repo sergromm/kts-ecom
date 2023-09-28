@@ -34,12 +34,11 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-const Slider: React.FC<SliderProps> = ({ images, title }) => {
+const Slider: React.FC<SliderProps> = ({ images, title, ...rest }) => {
   const [[slide, direction], setSlide] = React.useState([0, 0]);
   const { ref, measures } = useMeasure<HTMLImageElement>();
   const width = measures?.width;
   const index = wrap(0, images.length, slide);
-
   const nextSlide = React.useCallback(
     (newDirection: number) => {
       setSlide([slide + newDirection, newDirection]);
@@ -48,7 +47,7 @@ const Slider: React.FC<SliderProps> = ({ images, title }) => {
   );
 
   return (
-    <div className={styles.slider}>
+    <div className={styles.slider} {...rest}>
       <AnimatePresence custom={{ direction, width }} initial={false} mode="wait">
         <motion.img
           alt={title}
@@ -68,9 +67,9 @@ const Slider: React.FC<SliderProps> = ({ images, title }) => {
             duration: 0.1,
           }}
           variants={variants}
-          onDragEnd={(_, { offset, velocity }) => {
+          onDragEnd={(e, { offset, velocity }) => {
             const swipe = swipePower(offset.x, velocity.x);
-
+            e.stopImmediatePropagation();
             if (swipe < -swipeConfidenceThreshold) {
               nextSlide(1);
             } else if (swipe > swipeConfidenceThreshold) {

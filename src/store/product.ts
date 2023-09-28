@@ -73,7 +73,7 @@ export class ProductStore implements IProductStore, ILocalStore {
 
     const offset = 2;
 
-    const { products } = await this.api.getMany({ filters: category, offset });
+    const { products } = await this.api.getMany({ filters: category, from: 0, to: offset });
 
     if (products) {
       runInAction(() => {
