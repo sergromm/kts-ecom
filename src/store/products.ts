@@ -1,7 +1,7 @@
+import axios from 'axios';
 import { action, computed, makeObservable, observable, reaction, runInAction } from 'mobx';
 import { Option } from 'components/MultiDropdown';
 import { ProductType } from 'entities/protuct';
-import { ProductsApiStore } from './productsApi';
 import queryStore from './queryStore';
 import { ILocalStore } from './types';
 import { Meta } from './utils';
@@ -11,19 +11,22 @@ interface IProductsStore {
 
 type PrivateFields = '_products' | '_searchQuery' | '_filters' | '_meta';
 
-const INITIAL_OFFSET = 8;
-const INITIAL_LIMIT = 9;
+const PRODUCTS_PER_PAGE = 9;
 const INITIAL_COUNT = 0;
+const INITIAL_LEFT_RANGE = 0;
+const INITIAL_RIGHT_RANGE = PRODUCTS_PER_PAGE - 1;
+const INITIAL_PAGE = 1;
 
 export class ProductsStore implements IProductsStore, ILocalStore {
+  private baseURL = 'https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1';
   private _products: ProductType[] = [];
   private _searchQuery: string = '';
   private _filters: string = '';
   private _meta = Meta.initial;
-  private _limit: number = INITIAL_LIMIT;
-  private _offset: number = INITIAL_OFFSET;
+  private _from: number = INITIAL_LEFT_RANGE;
+  private _to: number = INITIAL_RIGHT_RANGE;
+  private _page: number = INITIAL_PAGE;
   private _count: number = INITIAL_COUNT;
-  private api: ProductsApiStore = new ProductsApiStore();
 
   constructor() {
     makeObservable<ProductsStore, PrivateFields>(this, {
@@ -57,8 +60,8 @@ export class ProductsStore implements IProductsStore, ILocalStore {
     return this._count;
   }
 
-  get offset() {
-    return this._offset;
+  get page() {
+    return this._page;
   }
 
   get searchQuery() {
@@ -77,9 +80,37 @@ export class ProductsStore implements IProductsStore, ILocalStore {
     this._filters = filters;
   };
 
-  setPaginationOffset(offset: string) {
-    this._offset = Number(offset);
+  setPage(page: number) {
+    this._page = page;
   }
+
+  private setRange() {
+    this._from = 0;
+    this._to = this._page * PRODUCTS_PER_PAGE - 1;
+  }
+
+  private getProducts = async ({
+    from = 0,
+    to = 8,
+    filters = '',
+    query = '',
+  }): Promise<{ count: number; products: ProductType[] }> => {
+    let path = `products?title=ilike.${query}*&select=*,category:categories!inner(name)`;
+    if (filters?.length) {
+      const filterPath = `&category.name=eq(any).{${filters}}`;
+      path += filterPath;
+    }
+    const response = await axios.get<ProductType[]>(`${this.baseURL}/${path}`, {
+      headers: {
+        apikey: process.env.SUPABASE_PUBLIC_KEY,
+        Prefer: 'count=exact',
+        Range: `${from}-${to}`,
+      },
+    });
+
+    const [, count] = response.headers['content-range'].split('/');
+    return { count: Number(count), products: response.data };
+  };
 
   fetch = async () => {
     if (this._meta === Meta.loading) {
@@ -88,15 +119,12 @@ export class ProductsStore implements IProductsStore, ILocalStore {
 
     this._meta = Meta.loading;
 
-    //NOTE
-    /**
-     *  не знаю должны ли фильтры, оффсет и запрос принадлежать стору с продуктами.
-     *  такое ощущение, что они должны быть внутри стора с api
-     */
+    this.setRange();
 
-    const { count, products } = await this.api.getMany({
+    const { count, products } = await this.getProducts({
       filters: this._filters,
-      offset: this._offset,
+      from: this._from,
+      to: this._to,
       query: this._searchQuery,
     });
 
@@ -104,8 +132,8 @@ export class ProductsStore implements IProductsStore, ILocalStore {
       runInAction(() => {
         this._meta = Meta.success;
         this._products = products;
-        this._offset = this._offset + this._limit;
         this._count = Number(count);
+        this._page = this._page < Math.ceil(this._count / PRODUCTS_PER_PAGE) ? this._page + 1 : this._page;
         return;
       });
     } else {
@@ -118,22 +146,21 @@ export class ProductsStore implements IProductsStore, ILocalStore {
   };
 
   destroy(): void {
-    this._qpReaction;
+    this._qpReaction();
   }
 
   private readonly _qpReaction = reaction(
     () => {
       const filter = queryStore.getParam('filter');
       const search = queryStore.getParam('search');
-      const offset = queryStore.getParam('offset');
+      const page = queryStore.getParam('page');
 
-      return { filter, search, offset };
+      return { filter, search, page };
     },
-    ({ filter, search, offset }) => {
+    ({ filter, search, page }) => {
       this.setFilters((filter as string) ?? '');
       this.setSearchQuery((search as string) ?? '');
-      this.setPaginationOffset((offset as string) ?? INITIAL_OFFSET);
-      this.fetch();
+      this.setPage(Number(page));
     },
   );
 }

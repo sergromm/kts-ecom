@@ -12,19 +12,37 @@ import { Search } from '../Search';
 const Cards = React.lazy(() => import('../Cards'));
 import styles from './Catalogue.module.scss';
 
+type EndMessageProps = { shouldShow: boolean };
+
+const EndMessage: React.FC<EndMessageProps> = ({ shouldShow }) => {
+  return (
+    <>
+      {shouldShow && (
+        <Text color="secondary" view="h-32" weight="bold">
+          Yay! You have seen it all
+        </Text>
+      )}
+    </>
+  );
+};
+
 export const Catalogue: React.FC = observer(() => {
   const store = useLocalStore(() => new ProductsStore());
   const products = store.products;
   const [searchPramas, setSearchParams] = useSearchParams();
+  const page = searchPramas.get('page');
 
   React.useEffect(() => {
-    store.setPaginationOffset(searchPramas.get('offset') || String(store.offset));
+    searchPramas.set('page', page || String(store.page));
+    setSearchParams(searchPramas);
+
+    store.setPage(Number(searchPramas.get('page')));
     store.fetch();
-  }, [store, searchPramas]);
+  }, [searchPramas, setSearchParams, store, page]);
 
   const handleNext = React.useCallback(() => {
     store.fetch();
-    searchPramas.set('offset', String(store.offset));
+    searchPramas.set('page', String(store.page));
     setSearchParams(searchPramas);
   }, [searchPramas, setSearchParams, store]);
 
@@ -33,15 +51,11 @@ export const Catalogue: React.FC = observer(() => {
       <ProductStoreContext.Provider value={store}>
         <Search />
       </ProductStoreContext.Provider>
-      <Grid total={products.length}>
+      <Grid total={store.count}>
         <InfiniteScroll
           className={styles.scroll}
           dataLength={products.length}
-          endMessage={
-            <Text color="secondary" view="h-32" weight="bold">
-              Yay! You have seen it all
-            </Text>
-          }
+          endMessage={<EndMessage shouldShow={store.meta !== 'loading'} />}
           hasMore={products.length !== store.count}
           loader={<Loader />}
           next={handleNext}
