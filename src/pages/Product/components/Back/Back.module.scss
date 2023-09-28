@@ -4,8 +4,12 @@
   align-items: center;
   width: min-content;
   text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .back:hover {
-  color: $text-secondary;
+  opacity: 0.5;
 }

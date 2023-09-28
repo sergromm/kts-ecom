@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Text } from 'components/Text';
 import { Icon } from 'components/icons/Icon';
-import { routerPaths } from 'config/routerPaths';
 import styles from './Back.module.scss';
 
 export const Back: React.FC = () => {
+  const navigate = useNavigate();
   return (
-    <Link className={styles.back} to={routerPaths.root}>
+    <button className={styles.back} onClick={() => navigate(-1)}>
       <Icon height={32} width={32}>
         <svg fill="none" height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -20,6 +20,6 @@ export const Back: React.FC = () => {
         </svg>
       </Icon>
       <Text view="p-20">Back</Text>
-    </Link>
+    </button>
   );
 };
