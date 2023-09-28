@@ -26,19 +26,17 @@ const EndMessage: React.FC<EndMessageProps> = ({ shouldShow }) => {
   );
 };
 
+const FIRST_PAGE = 1;
+
 export const Catalogue: React.FC = observer(() => {
   const store = useLocalStore(() => new ProductsStore());
   const products = store.products;
   const [searchPramas, setSearchParams] = useSearchParams();
-  const page = searchPramas.get('page');
 
   React.useEffect(() => {
-    searchPramas.set('page', page || String(store.page));
-    setSearchParams(searchPramas);
-
-    store.setPage(Number(searchPramas.get('page')));
+    store.setPage(Number(searchPramas.get('page')) || FIRST_PAGE);
     store.fetch();
-  }, [searchPramas, setSearchParams, store, page]);
+  }, [searchPramas, store]);
 
   const handleNext = React.useCallback(() => {
     store.fetch();

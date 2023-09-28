@@ -160,7 +160,7 @@ export class ProductsStore implements IProductsStore, ILocalStore {
     ({ filter, search, page }) => {
       this.setFilters((filter as string) ?? '');
       this.setSearchQuery((search as string) ?? '');
-      this.setPage(Number(page));
+      this.setPage(Number(page) ?? INITIAL_PAGE);
     },
   );
 }
