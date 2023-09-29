@@ -36,7 +36,7 @@ export const Card: React.FC<CardProps> = ({
   const classes = classNames(styles.container, className);
   return (
     <div className={classes} {...rest}>
-      <img alt={altText} className={styles.cover} src={image} />
+      <img alt={altText} className={styles.cover} loading="lazy" src={image} />
       <div className={styles.body}>
         <div className={styles.description}>
           {captionSlot && (

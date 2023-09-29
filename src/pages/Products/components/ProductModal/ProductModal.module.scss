@@ -1,8 +1,50 @@
 .container {
   background: $white;
-  padding: $space-xl;
   box-shadow: $shadow;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  max-width: min(80vw, $content-max-width);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
   gap: $space-xl;
+  justify-content: space-between;
+  padding: $space-xl;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: $space-m;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: $space-m;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: $space-m;
+  align-items: center;
+}
+
+.price {
+  display: flex;
+}
+
+.link {
+  display: flex;
+  font: $button;
+  align-items: center;
+  text-decoration-line: none;
+  color: $text-primary;
+  transition: $hover;
+  &:hover {
+    color: $text-secondary;
+  }
 }

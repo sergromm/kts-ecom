@@ -19,7 +19,7 @@ const EndMessage: React.FC<EndMessageProps> = ({ shouldShow }) => {
     <>
       {shouldShow && (
         <Text color="secondary" view="h-32" weight="bold">
-          Yay! You have seen it all
+          No more products to display.
         </Text>
       )}
     </>
@@ -29,9 +29,9 @@ const EndMessage: React.FC<EndMessageProps> = ({ shouldShow }) => {
 const FIRST_PAGE = 1;
 
 export const Catalogue: React.FC = observer(() => {
+  const [searchPramas, setSearchParams] = useSearchParams();
   const store = useLocalStore(() => new ProductsStore());
   const products = store.products;
-  const [searchPramas, setSearchParams] = useSearchParams();
 
   React.useEffect(() => {
     store.setPage(Number(searchPramas.get('page')) || FIRST_PAGE);

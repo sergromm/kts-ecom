@@ -1,6 +1,7 @@
 .total {
   display: flex;
   align-items: center;
+  place-self: flex-start;
   gap: $space-m;
 }
 
