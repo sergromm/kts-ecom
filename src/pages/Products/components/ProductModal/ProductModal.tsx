@@ -6,6 +6,7 @@ import { Button } from 'components/Button';
 import { Content, Modal, Overlay } from 'components/Modal';
 import { Text } from 'components/Text';
 import { ArrowRightIcon } from 'components/icons/ArrowRightIcon';
+import { DragHandleIcon } from 'components/icons/DragHandleIcon';
 import { useLocalStore } from 'hooks/useLocalStore';
 import { ProductStore } from 'store/product';
 const Slider = React.lazy(() => import('pages/Product/components/Slider'));
@@ -62,15 +63,18 @@ export const ProductModal: React.FC = observer(() => {
   return (
     <Modal open={open} position="center">
       <Content handleDragEnd={handleDragEnd} y={y}>
-        <motion.div className={styles.container}>
+        <div className={styles.handle}>
+          <DragHandleIcon height={31} width={31} />
+        </div>
+        <motion.div className={styles.container} drag="y" dragConstraints={{ top: 0, bottom: 0 }} dragElastic={false}>
           <React.Suspense fallback={<h1>Loading images</h1>}>
-            <Slider images={product.images} title={product.title} />
+            <Slider images={product.images} title={product.title} reverse />
           </React.Suspense>
           <motion.div
-            animate={{ y: 0, opacity: 1, transition: { opacity: { duration: 0.5 } } }}
+            animate={{ y: 0, opacity: 1 }}
             className={styles.details}
-            initial={{ y: 20, opacity: 0 }}
-            transition={{ type: 'tween', delay: 0.5 }}
+            initial={{ y: 50, opacity: 0 }}
+            transition={{ type: 'tween' }}
           >
             <div className={styles.info}>
               <Text tag="h1" view="title" weight="bold">
@@ -81,7 +85,7 @@ export const ProductModal: React.FC = observer(() => {
             <div className={styles.footer}>
               <Text className={styles.price} view="p-20">
                 Price:&nbsp;
-                <Text view="p-20" weight="bold">
+                <Text tag="span" view="p-20" weight="bold">
                   ${product.price}
                 </Text>
               </Text>
@@ -89,7 +93,7 @@ export const ProductModal: React.FC = observer(() => {
               <div className={styles.actions}>
                 <Button>Add To Cart</Button>
                 <Link className={styles.link} to={`/products/${product.id}`}>
-                  To product page
+                  To product&apos;s page
                   <ArrowRightIcon height={31} width={31} />
                 </Link>
               </div>

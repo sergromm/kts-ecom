@@ -28,14 +28,13 @@ export const Overlay: React.FC<OverlayProps> = ({ opacity, handleClose }) => {
       initial={{ opacity: 0 }}
       key="modal-overlay"
       style={{ opacity }}
+      transition={{ type: 'tween', duration: 0.8 }}
       onClick={handleClose}
     />
   );
 };
 
 export const Content: React.FC<React.PropsWithChildren<ContentProps>> = ({ handleDragEnd, y, children }) => {
-  const modalRef = React.useRef<HTMLDivElement | null>(null);
-
   return (
     <motion.div
       className={styles.content}
@@ -43,10 +42,8 @@ export const Content: React.FC<React.PropsWithChildren<ContentProps>> = ({ handl
       dragConstraints={{ top: 0, bottom: 0 }}
       dragElastic={1}
       key="modal-content"
-      ref={modalRef}
       style={{ y }}
       transition={{ type: 'tween', duration: 0.3 }}
-      dragPropagation
       dragSnapToOrigin
       onDragEnd={handleDragEnd}
     >

@@ -25,6 +25,9 @@
 
 .content {
   z-index: $top;
+  overflow: hidden;
+  background: $white;
+  box-shadow: $shadow;
 }
 
 .overlay {

@@ -1,6 +1,4 @@
 .container {
-  background: $white;
-  box-shadow: $shadow;
   display: grid;
   grid-template-columns: 1fr 1fr;
   max-width: min(80vw, $content-max-width);
@@ -46,5 +44,22 @@
   transition: $hover;
   &:hover {
     color: $text-secondary;
+  }
+}
+
+.handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  background: $background;
+  color: $gray;
+  transition: $hover;
+  &:hover {
+    cursor: grab;
+    color: $darkgray;
+  }
+  &:active {
+    cursor: grabbing;
   }
 }

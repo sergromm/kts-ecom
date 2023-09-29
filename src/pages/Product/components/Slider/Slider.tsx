@@ -6,7 +6,11 @@ import { useMeasure } from 'hooks/useMeasure';
 import { SliderArrow } from './SliderArrow';
 import styles from './Slider.module.scss';
 
-type SliderProps = { images: string[]; title: string };
+type SliderProps = {
+  images: string[];
+  title: string;
+  reverse?: boolean;
+};
 
 const variants = {
   enter: ({ direction, width }: { direction: number; width: number }) => {
@@ -34,8 +38,8 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-const Slider: React.FC<SliderProps> = ({ images, title, ...rest }) => {
-  const [[slide, direction], setSlide] = React.useState([0, 0]);
+const Slider: React.FC<SliderProps> = ({ images, title, reverse, ...rest }) => {
+  const [[slide, direction], setSlide] = React.useState([reverse ? images.length - 1 : 0, 0]);
   const { ref, measures } = useMeasure<HTMLImageElement>();
   const width = measures?.width;
   const index = wrap(0, images.length, slide);
