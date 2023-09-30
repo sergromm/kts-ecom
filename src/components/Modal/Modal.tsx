@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { AnimatePresence, MotionValue, PanInfo, motion } from 'framer-motion';
+import { AnimatePresence, MotionValue, motion } from 'framer-motion';
 import * as React from 'react';
 import styles from './Modal.module.scss';
 
@@ -10,13 +10,8 @@ type ModalProps = {
 };
 
 type OverlayProps = {
-  opacity: MotionValue<number>;
+  opacity?: MotionValue<number>;
   handleClose: () => void;
-};
-
-type ContentProps = {
-  handleDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
-  y: MotionValue<number>;
 };
 
 export const Overlay: React.FC<OverlayProps> = ({ opacity, handleClose }) => {
@@ -28,35 +23,28 @@ export const Overlay: React.FC<OverlayProps> = ({ opacity, handleClose }) => {
       initial={{ opacity: 0 }}
       key="modal-overlay"
       style={{ opacity }}
-      transition={{ type: 'tween', duration: 0.8 }}
+      transition={{ type: 'tween', duration: 0.4 }}
       onClick={handleClose}
     />
   );
 };
 
-export const Content: React.FC<React.PropsWithChildren<ContentProps>> = ({ handleDragEnd, y, children }) => {
+export const Content = React.forwardRef<HTMLDivElement, React.PropsWithChildren>((props, ref) => {
   return (
-    <motion.div
-      className={styles.content}
-      drag="y"
-      dragConstraints={{ top: 0, bottom: 0 }}
-      dragElastic={1}
-      key="modal-content"
-      style={{ y }}
-      transition={{ type: 'tween', duration: 0.3 }}
-      dragSnapToOrigin
-      onDragEnd={handleDragEnd}
-    >
-      {children}
-    </motion.div>
+    <div className={styles.content} ref={ref}>
+      {props.children}
+    </div>
   );
-};
+});
+Content.displayName = 'Content';
 
 export const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({ open, position, children }) => {
   React.useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    if (window.navigator.userAgent.includes('Chrome')) {
-      document.body.style.paddingRight = '15px';
+    if (open) {
+      document.body.style.overflow = 'hidden';
+      if (window.navigator.userAgent.includes('Chrome')) {
+        document.body.style.paddingRight = '8px';
+      }
     }
     return () => {
       document.body.style.overflow = 'unset';
@@ -71,19 +59,11 @@ export const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({ open, pos
       {/* <motion.button className={styles.trigger} onClick={() => handleOpen(true)} /> */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            animate={{ y: 0, opacity: 1 }}
-            className={classes}
-            exit={{ y: 100, opacity: 0 }}
-            initial={{ y: 100, opacity: 0 }}
-            key="modal-root"
-            transition={{ type: 'tween' }}
-          >
+          <motion.div className={classes} key="modal-root">
             {children}
           </motion.div>
         )}
       </AnimatePresence>
-      ,
     </>
   );
 };

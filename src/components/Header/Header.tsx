@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import * as React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from 'assets/logo.svg';
 import { Text } from 'components/Text';
@@ -32,7 +33,11 @@ const Navigation: React.FC = () => {
   );
 };
 
-export const Header = () => {
+type HeaderProps = {
+  handleOpenModal: () => void;
+};
+
+export const Header: React.FC<HeaderProps> = ({ handleOpenModal }) => {
   return (
     <header className={styles.header}>
       <div className={styles.content}>
@@ -41,7 +46,7 @@ export const Header = () => {
         </NavLink>
         <Navigation />
         <div className={styles.buttons}>
-          <button className={styles.button}>
+          <button className={styles.button} onClick={handleOpenModal}>
             <Icon height={30} width={30}>
               <svg fill="none" height="30" viewBox="0 0 30 30" width="30" xmlns="http://www.w3.org/2000/svg">
                 <path

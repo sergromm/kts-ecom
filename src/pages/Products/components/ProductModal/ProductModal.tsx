@@ -18,6 +18,12 @@ type DragEvent = MouseEvent | TouchEvent | PointerEvent;
 const CLOSE_THRESHOLD = window.innerHeight * 0.6;
 const MAX_VELOCITY = 300;
 
+const MotionContent = motion(Content);
+const contentVariants = {
+  visible: { y: 0, opacity: 1 },
+  hidden: { y: 100, opacity: 0 },
+};
+
 export const ProductModal: React.FC = observer(() => {
   const { productId } = useParams();
   const [open, setOpen] = React.useState(true);
@@ -51,18 +57,25 @@ export const ProductModal: React.FC = observer(() => {
     }
   }, [store, productId]);
 
-  React.useEffect(() => {
-    if (product) {
-      store.getRelated(product.category.name);
-    }
-  }, [product, store]);
-
   if (!product) return;
 
   // TODO(@sergromm): split into smaller components
   return (
     <Modal open={open} position="center">
-      <Content handleDragEnd={handleDragEnd} y={y}>
+      <MotionContent
+        animate="visible"
+        drag="y"
+        dragConstraints={{ top: 0, bottom: 0 }}
+        dragElastic={1}
+        exit="hidden"
+        initial="hidden"
+        key="modal-content"
+        style={{ y }}
+        transition={{ type: 'tween', duration: 0.3 }}
+        variants={contentVariants}
+        dragSnapToOrigin
+        onDragEnd={handleDragEnd}
+      >
         <div className={styles.handle}>
           <DragHandleIcon height={31} width={31} />
         </div>
@@ -100,7 +113,7 @@ export const ProductModal: React.FC = observer(() => {
             </div>
           </motion.div>
         </motion.div>
-      </Content>
+      </MotionContent>
       <Overlay handleClose={handleClose} opacity={opacity} />
     </Modal>
   );

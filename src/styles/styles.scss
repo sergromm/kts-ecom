@@ -36,6 +36,27 @@ pre {
   -webkit-text-size-adjust: 100%;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: $scollbar-width;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $background;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $brand;
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $brand-dark;
+}
+
 @media (prefers-color-scheme: light) {
   /* :root {
   } */
