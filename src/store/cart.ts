@@ -11,7 +11,7 @@ class CartStore implements ILocalStore {
   private _cart: CartItem[] = [];
   private _cartId: string | null = '907d44d1-ff91-4621-a9a3-88622dc1ed32';
   private _meta: Meta = Meta.initial;
-
+  private _discount: number = 0;
   constructor() {
     makeObservable<CartStore, PrivateFields>(this, {
       _cart: observable.ref,
@@ -42,8 +42,20 @@ class CartStore implements ILocalStore {
     return this._cart.length;
   }
 
-  get total() {
+  get subtotal() {
     return this._cart.reduce((acc, product) => acc + product.price, 0);
+  }
+
+  get total() {
+    return parseFloat((this.subtotal - this._discount).toFixed(2));
+  }
+
+  get discount() {
+    return this._discount;
+  }
+
+  applyDiscount(amount: number) {
+    this._discount = parseFloat((this.subtotal * (amount / 100)).toFixed(2));
   }
 
   get meta() {

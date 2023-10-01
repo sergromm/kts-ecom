@@ -5,6 +5,7 @@ import { Cart } from 'components/Cart';
 import { Header } from 'components/Header';
 import { routerPaths } from 'config/routerPaths';
 import { useQueryParamsStoreInit } from 'hooks/useQueryParamsStoreInit';
+import { Checkout } from 'pages/Checkout';
 import { Product } from 'pages/Product';
 import { Products } from 'pages/Products';
 import { ProductModal } from 'pages/Products/components/ProductModal';
@@ -31,7 +32,7 @@ const App: React.FC = () => {
           <Route element={<Product />} path={routerPaths.productId} />
         </Route>
         <Route element={<Button>hi</Button>} path={routerPaths.about} />
-        <Route element={<Button>checkout</Button>} path={routerPaths.checkout} />
+        <Route element={<Checkout />} path={routerPaths.checkout} />
       </Routes>
       {state?.backgroundLocation && (
         <Routes>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ProductType } from 'entities/protuct';
-import { Back } from '../Back';
+import { Back } from '../../../../components/Back';
 import { Details } from '../Details';
 import styles from './Showcase.module.scss';
 

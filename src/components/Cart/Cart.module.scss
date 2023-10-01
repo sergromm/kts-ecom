@@ -18,6 +18,7 @@
 .item {
   display: flex;
   gap: $space-m;
+  width: 100%;
 }
 
 .cover {
@@ -31,6 +32,7 @@
   display: flex;
   gap: $space-s;
   flex-direction: column;
+  width: 100%;
 }
 
 .footer {

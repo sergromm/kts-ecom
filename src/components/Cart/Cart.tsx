@@ -24,7 +24,7 @@ const contentVariants = {
   hidden: { x: 550 },
 };
 
-const CartItem: React.FC<React.PropsWithChildren<{ product: Omit<ProductType, 'description' | 'category'> }>> =
+export const CartItem: React.FC<React.PropsWithChildren<{ product: Omit<ProductType, 'description' | 'category'> }>> =
   observer(({ product }) => {
     return (
       <motion.li
@@ -65,13 +65,13 @@ const CartItem: React.FC<React.PropsWithChildren<{ product: Omit<ProductType, 'd
     );
   });
 
-const CartList: React.FC<React.PropsWithChildren> = ({ children }) => {
+export const CartList: React.FC<React.PropsWithChildren> = ({ children }) => {
   return <ul className={styles.list}>{children}</ul>;
 };
 
 export const Cart: React.FC<CartProps> = observer(({ open, handleClose }) => {
   const navigate = useNavigate();
-
+  const [value, setValue] = React.useState(0);
   React.useEffect(() => {
     cartStore.fetch();
   }, [open]);
@@ -130,7 +130,28 @@ export const Cart: React.FC<CartProps> = observer(({ open, handleClose }) => {
                       ${cartStore.total}
                     </Text>
                   </Text>
-                  <Input disabled={isEmpty} placeholder="Get discount" value="" onChange={() => {}} />
+                  <Text className={styles.subtotal} view="p-18">
+                    Discount:&nbsp;
+                    <Text tag="span" view="p-18" weight="medium">
+                      ${cartStore.discount}
+                    </Text>
+                  </Text>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const data = new FormData(e.currentTarget);
+                      const discount = data.get('discount');
+                      cartStore.applyDiscount(Number(discount));
+                    }}
+                  >
+                    <Input
+                      disabled={isEmpty}
+                      name="discount"
+                      placeholder="Get discount"
+                      value={value > 0 ? String(value) : ''}
+                      onChange={(value) => setValue(Number(value))}
+                    />
+                  </form>
                 </motion.div>
               )}
             </AnimatePresence>
