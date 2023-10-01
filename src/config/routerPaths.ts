@@ -4,4 +4,5 @@ export const routerPaths = {
   productId: ':productId',
   about: '/about',
   categories: '/categories',
+  checkout: '/checkout',
 };

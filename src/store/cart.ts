@@ -50,6 +50,10 @@ class CartStore implements ILocalStore {
     return this._meta;
   }
 
+  set meta(value: Meta) {
+    this._meta = value;
+  }
+
   create = async (id: string) => {
     if (id) {
       this._cartId = id;
@@ -74,7 +78,7 @@ class CartStore implements ILocalStore {
       return;
     }
 
-    this._meta = Meta.loading;
+    this.meta = Meta.loading;
 
     const body = {
       productId,
@@ -89,10 +93,10 @@ class CartStore implements ILocalStore {
 
     try {
       axios.post('https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/products_in_cart', body, options);
-      this._meta = Meta.success;
+      this.meta = Meta.success;
       this.fetch();
     } catch {
-      this._meta = Meta.error;
+      this.meta = Meta.error;
     }
   };
 
@@ -101,7 +105,7 @@ class CartStore implements ILocalStore {
       return;
     }
 
-    this._meta = Meta.loading;
+    this.meta = Meta.loading;
 
     const options = {
       headers: {
@@ -115,10 +119,10 @@ class CartStore implements ILocalStore {
 
     try {
       await axios.delete('https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/products_in_cart', options);
-      this._meta = Meta.success;
+      this.meta = Meta.success;
       await this.fetch();
     } catch {
-      this._meta = Meta.error;
+      this.meta = Meta.error;
     }
   };
 
@@ -127,7 +131,7 @@ class CartStore implements ILocalStore {
       return;
     }
 
-    this._meta = Meta.loading;
+    this.meta = Meta.loading;
 
     const options = {
       headers: {
@@ -146,11 +150,11 @@ class CartStore implements ILocalStore {
     if (cartItems) {
       runInAction(() => {
         this._cart = cartItems.data[0].products;
-        this._meta = Meta.success;
         return;
       });
+      this.meta = Meta.success;
     } else {
-      this._meta = Meta.error;
+      this.meta = Meta.error;
     }
   };
 

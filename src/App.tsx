@@ -26,6 +26,7 @@ const App: React.FC = () => {
           <Route element={<Product />} path={routerPaths.productId} />
         </Route>
         <Route element={<Button>hi</Button>} path={routerPaths.about} />
+        <Route element={<Button>checkout</Button>} path={routerPaths.checkout} />
       </Routes>
       {state?.backgroundLocation && (
         <Routes>

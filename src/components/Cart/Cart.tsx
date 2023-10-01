@@ -1,11 +1,13 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { Loader } from 'components/Loader';
 import { Content, Modal, Overlay } from 'components/Modal';
 import { Text } from 'components/Text';
+import { routerPaths } from 'config/routerPaths';
 import { ProductType } from 'entities/protuct';
 import cartStore from 'store/cart';
 import { Meta } from 'store/utils';
@@ -25,7 +27,14 @@ const contentVariants = {
 const CartItem: React.FC<React.PropsWithChildren<{ product: Omit<ProductType, 'description' | 'category'> }>> =
   observer(({ product }) => {
     return (
-      <li className={styles.item}>
+      <motion.li
+        animate={{ scale: 1, opacity: 1 }}
+        className={styles.item}
+        exit={{ scale: 0.95, opacity: 0 }}
+        key={product.id}
+        transition={{ type: 'tween' }}
+        layout
+      >
         <img alt={product.title} className={styles.cover} src={product.images[0]} />
         <div className={styles.info}>
           <Text view="p-20" weight="medium">
@@ -51,18 +60,22 @@ const CartItem: React.FC<React.PropsWithChildren<{ product: Omit<ProductType, 'd
             )}
           </div>
         </div>
-      </li>
+      </motion.li>
     );
   });
 
-const CartList: React.FC<React.PropsWithChildren> = observer(({ children }) => {
+const CartList: React.FC<React.PropsWithChildren> = ({ children }) => {
   return <ul className={styles.list}>{children}</ul>;
-});
+};
 
 export const Cart: React.FC<CartProps> = observer(({ open, handleClose }) => {
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     cartStore.fetch();
   }, [open]);
+
+  const isEmpty = cartStore.count === 0;
 
   return (
     <Modal open={open} position="right">
@@ -77,28 +90,59 @@ export const Cart: React.FC<CartProps> = observer(({ open, handleClose }) => {
         <aside className={styles.cart}>
           <Text className={styles.title} tag="h2" view="h-32" weight="bold">
             Cart&nbsp;
-            <Text color="accent" tag="span" view="p-24" weight="bold">
-              (&nbsp;{cartStore.count}&nbsp;)
-            </Text>
+            {cartStore.meta === Meta.loading ? (
+              <Loader size="s" />
+            ) : (
+              <Text color="accent" tag="span" view="p-24" weight="bold">
+                {isEmpty || `( ${cartStore.count} )`}
+              </Text>
+            )}
           </Text>
 
-          <CartList>
-            {cartStore.cart.map((product) => {
-              return <CartItem key={product.id} product={product} />;
-            })}
-          </CartList>
+          {isEmpty ? (
+            <Text color="secondary" view="p-24" weight="medium">
+              Cart is empty
+            </Text>
+          ) : (
+            <CartList>
+              <AnimatePresence mode="popLayout">
+                {cartStore.cart.map((product) => {
+                  return <CartItem key={product.id} product={product} />;
+                })}
+              </AnimatePresence>
+            </CartList>
+          )}
 
           <div className={styles.cart__footer}>
-            <div className={styles.promocode}>
-              <Text className={styles.subtotal} view="p-18">
-                Subtotal:&nbsp;
-                <Text tag="span" view="p-18" weight="medium">
-                  ${cartStore.total}
-                </Text>
-              </Text>
-              <Input placeholder="Get discount" value="" onChange={() => {}} />
-            </div>
-            <Button loading={cartStore.meta === Meta.loading}>Checkout</Button>
+            <AnimatePresence>
+              {isEmpty || (
+                <motion.div
+                  animate={{ opacity: 1, y: 0 }}
+                  className={styles.promocode}
+                  exit={{ opacity: 0, y: 100 }}
+                  initial={{ opacity: 0, y: 100 }}
+                  transition={{ type: 'tween' }}
+                >
+                  <Text className={styles.subtotal} view="p-18">
+                    Subtotal:&nbsp;
+                    <Text tag="span" view="p-18" weight="medium">
+                      ${cartStore.total}
+                    </Text>
+                  </Text>
+                  <Input disabled={isEmpty} placeholder="Get discount" value="" onChange={() => {}} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <Button
+              disabled={isEmpty}
+              loading={cartStore.meta === Meta.loading}
+              onClick={() => {
+                navigate(routerPaths.checkout);
+                handleClose();
+              }}
+            >
+              To checkout
+            </Button>
           </div>
         </aside>
       </MotionConten>
