@@ -73,7 +73,7 @@ class CartStore implements ILocalStore {
     return;
   };
 
-  add = (productId: number) => {
+  add = async (productId: number) => {
     if (this._meta === Meta.loading) {
       return;
     }
@@ -92,11 +92,15 @@ class CartStore implements ILocalStore {
     };
 
     try {
-      axios.post('https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/products_in_cart', body, options);
-      this.meta = Meta.success;
+      await axios.post('https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/products_in_cart', body, options);
+      runInAction(() => {
+        this.meta = Meta.success;
+      });
       this.fetch();
-    } catch {
-      this.meta = Meta.error;
+    } catch (error) {
+      runInAction(() => {
+        this.meta = Meta.error;
+      });
     }
   };
 

@@ -1,18 +1,28 @@
-// import { observer } from 'mobx-react-lite';
-import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from 'components/Button';
 import { Card } from 'components/Card';
 import { ProductType } from 'entities/protuct';
 import cartStore from 'store/cart';
-import { Meta } from 'store/utils';
 import styles from './Cards.module.scss';
 
 type CardsType = { products: ProductType[] };
 
-const CardItem: React.FC<{ product: ProductType }> = observer(({ product }) => {
+const CardItem: React.FC<{ product: ProductType }> = ({ product }) => {
   const location = useLocation();
+  const [pending, setPending] = React.useState(false);
+
+  const addToCart = React.useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      setPending(true);
+      await cartStore.add(product.id);
+      setPending(false);
+    },
+    [product.id],
+  );
 
   return (
     <Link
@@ -23,14 +33,7 @@ const CardItem: React.FC<{ product: ProductType }> = observer(({ product }) => {
     >
       <Card
         actionSlot={
-          <Button
-            loading={cartStore.meta === Meta.loading}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              cartStore.add(product.id);
-            }}
-          >
+          <Button loading={pending} onClick={addToCart}>
             Add to Cart
           </Button>
         }
@@ -42,7 +45,7 @@ const CardItem: React.FC<{ product: ProductType }> = observer(({ product }) => {
       />
     </Link>
   );
-});
+};
 
 const Cards: React.FC<CardsType> = ({ products }) => {
   return (
