@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { MultiDropdown, Option } from 'components/MultiDropdown';
-import { useProductStore } from 'contexts/productStore';
+import { useProductStore } from 'contexts/productStoreContext';
 import { useLocalStore } from 'hooks/useLocalStore';
 import { CategoriesStore } from 'store/categories';
 import styles from './Search.module.scss';
