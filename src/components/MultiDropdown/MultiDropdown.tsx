@@ -48,8 +48,8 @@ const ListItem: React.FC<ListItemProps> = ({ option, index, onClick, selected })
 
   const variants = {
     visible: { opacity: 1, x: 0 },
-    hidden: { opacity: 0, x: 10, transition: { delay: 0, duration: 0.1 } },
-    exit: { opacity: 0, x: 0, transition: { delay: 0, duration: 0.1 } },
+    hidden: { opacity: 0, x: 8 },
+    exit: { opacity: 0, x: 0, transition: { delay: 0, duration: 0.05 } },
   };
 
   return (
@@ -141,7 +141,7 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
 
   const variants = {
     open: { height: 'auto' },
-    closed: { height: 0, transition: { type: 'tween', duration: 0.3 } },
+    closed: { height: 0 },
   };
 
   return (
@@ -155,7 +155,14 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
       />
       <AnimatePresence>
         {open && !disabled && (
-          <motion.ul animate="open" className={styles.dropdown} exit="closed" initial="closed" variants={variants}>
+          <motion.ul
+            animate="open"
+            className={styles.dropdown}
+            exit="closed"
+            initial="closed"
+            transition={{ type: 'tween', duration: 0.2 }}
+            variants={variants}
+          >
             {options.filter(matchInput).map((option, index) => (
               <ListItem
                 index={index}
