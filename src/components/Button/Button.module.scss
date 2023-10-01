@@ -11,6 +11,7 @@
   color: $button-primary-text;
   height: 52px;
   white-space: nowrap;
+  transition: $hover;
 
   &:hover:enabled {
     background-color: $button-primary-bg-hover;
