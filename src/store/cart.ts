@@ -147,6 +147,7 @@ class CartStore implements ILocalStore {
       'https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/carts',
       options,
     );
+
     if (cartItems) {
       runInAction(() => {
         this._cart = cartItems.data[0].products;

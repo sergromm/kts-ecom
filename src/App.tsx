@@ -8,11 +8,16 @@ import { useQueryParamsStoreInit } from 'hooks/useQueryParamsStoreInit';
 import { Product } from 'pages/Product';
 import { Products } from 'pages/Products';
 import { ProductModal } from 'pages/Products/components/ProductModal';
+import cartStore from 'store/cart';
 
 const App: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
+
+  React.useEffect(() => {
+    cartStore.fetch();
+  }, []);
 
   useQueryParamsStoreInit();
 

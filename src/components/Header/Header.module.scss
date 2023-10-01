@@ -22,6 +22,8 @@
   display: flex;
   gap: $space-xl;
   cursor: pointer;
+  margin: 0;
+  padding: 0;
 }
 
 .buttons {
@@ -30,6 +32,7 @@
 }
 
 .button {
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;
@@ -37,6 +40,17 @@
   &:hover {
     color: $text-secondary;
   }
+}
+
+.indicator {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 8px;
+  background: red;
+  outline: solid 2px white;
 }
 
 .link {
