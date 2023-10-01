@@ -37,7 +37,7 @@ const CartItem: React.FC<React.PropsWithChildren<{ product: Omit<ProductType, 'd
       >
         <img alt={product.title} className={styles.cover} src={product.images[0]} />
         <div className={styles.info}>
-          <Text view="p-20" weight="medium">
+          <Text maxLines={1} view="p-20" weight="medium">
             {product.title}
           </Text>
           <div className={styles.footer}>
@@ -49,11 +49,12 @@ const CartItem: React.FC<React.PropsWithChildren<{ product: Omit<ProductType, 'd
             </Text>
             {!(cartStore.meta === Meta.loading) ? (
               <button
+                className={styles.delete}
                 onClick={() => {
                   cartStore.remove(product.id);
                 }}
               >
-                delete
+                <Text view="button">remove</Text>
               </button>
             ) : (
               <Loader size="s" />
@@ -119,8 +120,8 @@ export const Cart: React.FC<CartProps> = observer(({ open, handleClose }) => {
                 <motion.div
                   animate={{ opacity: 1, y: 0 }}
                   className={styles.promocode}
-                  exit={{ opacity: 0, y: 100 }}
-                  initial={{ opacity: 0, y: 100 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 10 }}
                   transition={{ type: 'tween' }}
                 >
                   <Text className={styles.subtotal} view="p-18">
