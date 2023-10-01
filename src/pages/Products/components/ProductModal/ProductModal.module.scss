@@ -48,6 +48,14 @@
 }
 
 .handle {
+  width: 90px;
+  height: 8px;
+  border-radius: 8px;
+  background: lightgray;
+  transition: $hover;
+}
+
+.grab-area {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,10 +63,12 @@
   background: $background;
   color: $gray;
   transition: $hover;
-  &:hover {
-    cursor: grab;
-    color: $darkgray;
+  cursor: grab;
+
+  &:hover > .handle {
+    background: $darkgray;
   }
+
   &:active {
     cursor: grabbing;
   }

@@ -6,7 +6,6 @@ import { Button } from 'components/Button';
 import { Content, Modal, Overlay } from 'components/Modal';
 import { Text } from 'components/Text';
 import { ArrowRightIcon } from 'components/icons/ArrowRightIcon';
-import { DragHandleIcon } from 'components/icons/DragHandleIcon';
 import { useLocalStore } from 'hooks/useLocalStore';
 import cartStore from 'store/cart';
 import { ProductStore } from 'store/product';
@@ -92,8 +91,8 @@ export const ProductModal: React.FC = observer(() => {
         dragSnapToOrigin
         onDragEnd={handleDragEnd}
       >
-        <div className={styles.handle}>
-          <DragHandleIcon height={31} width={31} />
+        <div className={styles['grab-area']}>
+          <div className={styles.handle} />
         </div>
         <motion.div className={styles.container} drag="y" dragConstraints={{ top: 0, bottom: 0 }} dragElastic={false}>
           <React.Suspense fallback={<h1>Loading images</h1>}>
