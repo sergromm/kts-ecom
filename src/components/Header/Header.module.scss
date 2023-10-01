@@ -53,6 +53,16 @@
   outline: solid 2px white;
 }
 
+.glow {
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.5) 0%, rgba(255, 255, 255, 0) 80%);
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+}
+
 .link {
   text-decoration: none;
 }

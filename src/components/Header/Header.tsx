@@ -59,7 +59,17 @@ export const Header: React.FC<HeaderProps> = observer(({ handleOpenModal }) => {
                   className={styles.indicator}
                   exit={{ scale: 0 }}
                   initial={{ scale: 0 }}
-                />
+                >
+                  <motion.div
+                    animate={{ opacity: 0, scale: 1 }}
+                    className={styles.glow}
+                    initial={{ opacity: 1, scale: 1.5 }}
+                    transition={{
+                      type: 'tween',
+                      duration: 0.4,
+                    }}
+                  />
+                </motion.div>
               )}
             </AnimatePresence>
           </button>
