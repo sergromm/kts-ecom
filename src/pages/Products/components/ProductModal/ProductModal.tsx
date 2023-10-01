@@ -8,6 +8,7 @@ import { Text } from 'components/Text';
 import { ArrowRightIcon } from 'components/icons/ArrowRightIcon';
 import { DragHandleIcon } from 'components/icons/DragHandleIcon';
 import { useLocalStore } from 'hooks/useLocalStore';
+import cartStore from 'store/cart';
 import { ProductStore } from 'store/product';
 const Slider = React.lazy(() => import('pages/Product/components/Slider'));
 
@@ -26,6 +27,7 @@ const contentVariants = {
 
 export const ProductModal: React.FC = observer(() => {
   const { productId } = useParams();
+  const [pending, setPending] = React.useState(false);
   const [open, setOpen] = React.useState(true);
   const store = useLocalStore(() => new ProductStore());
   const product = store.product;
@@ -49,6 +51,20 @@ export const ProductModal: React.FC = observer(() => {
       }
     },
     [handleClose, opacity],
+  );
+
+  const addToCart = React.useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (product) {
+        setPending(true);
+        await cartStore.add(product.id);
+        setPending(false);
+      }
+    },
+    [product],
   );
 
   React.useEffect(() => {
@@ -104,7 +120,9 @@ export const ProductModal: React.FC = observer(() => {
               </Text>
 
               <div className={styles.actions}>
-                <Button>Add To Cart</Button>
+                <Button loading={pending} onClick={addToCart}>
+                  Add To Cart
+                </Button>
                 <Link className={styles.link} to={`/products/${product.id}`}>
                   To product&apos;s page
                   <ArrowRightIcon height={31} width={31} />
