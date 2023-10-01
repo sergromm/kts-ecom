@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
 import * as React from 'react';
 import { Input } from '../Input';
 import { Text } from '../Text';
@@ -29,11 +30,12 @@ export type MultiDropdownProps = {
 
 type ListItemProps = {
   option: Option;
+  index: number;
   selected: Option | undefined;
   onClick: () => void;
 };
 
-const ListItem: React.FC<ListItemProps> = ({ option, onClick, selected }) => {
+const ListItem: React.FC<ListItemProps> = ({ option, index, onClick, selected }) => {
   const [hovered, setHovered] = React.useState(false);
 
   const handleMouseEnter = () => setHovered(true);
@@ -43,10 +45,22 @@ const ListItem: React.FC<ListItemProps> = ({ option, onClick, selected }) => {
     accent: !!selected,
     secondary: hovered && !selected,
   }) as 'primary' | 'secondary' | 'accent';
+
+  const variants = {
+    visible: { opacity: 1, x: 0 },
+    hidden: { opacity: 0, x: 10, transition: { delay: 0, duration: 0.1 } },
+    exit: { opacity: 0, x: 0, transition: { delay: 0, duration: 0.1 } },
+  };
+
   return (
-    <li
+    <motion.li
+      animate="visible"
       className={styles['dropdown-option']}
+      exit="exit"
+      initial="hidden"
       key={option.key}
+      transition={{ type: 'tween', delay: index * 0.05 }}
+      variants={variants}
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -54,7 +68,7 @@ const ListItem: React.FC<ListItemProps> = ({ option, onClick, selected }) => {
       <Text color={color} view="p-16">
         {option.value}
       </Text>
-    </li>
+    </motion.li>
   );
 };
 
@@ -125,27 +139,35 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
 
   const classes = classNames(styles['multi-dropdown'], className);
 
+  const variants = {
+    open: { height: 'auto' },
+    closed: { height: 0, transition: { type: 'tween', duration: 0.3 } },
+  };
+
   return (
-    <div ref={dropdownRef} className={classes} onClick={() => setOpen(true)} {...rest}>
+    <div className={classes} ref={dropdownRef} onClick={() => setOpen(true)} {...rest}>
       <Input
-        afterSlot={<ArrowDownIcon onClick={() => setOpen(true)} color="secondary" />}
+        afterSlot={<ArrowDownIcon color="secondary" onClick={() => setOpen(true)} />}
         disabled={disabled}
         placeholder={getTitle(value)}
         value={getValue(value)}
         onChange={handleInput}
       />
-      {open && !disabled && (
-        <ul className={styles.dropdown}>
-          {options.filter(matchInput).map((option) => (
-            <ListItem
-              key={option.key}
-              option={option}
-              selected={value.find((v) => v.key === option.key)}
-              onClick={() => handleSelect(option)}
-            />
-          ))}
-        </ul>
-      )}
+      <AnimatePresence>
+        {open && !disabled && (
+          <motion.ul animate="open" className={styles.dropdown} exit="closed" initial="closed" variants={variants}>
+            {options.filter(matchInput).map((option, index) => (
+              <ListItem
+                index={index}
+                key={option.key}
+                option={option}
+                selected={value.find((v) => v.key === option.key)}
+                onClick={() => handleSelect(option)}
+              />
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
