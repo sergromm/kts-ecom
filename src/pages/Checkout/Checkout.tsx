@@ -11,8 +11,6 @@ import styles from './Checkout.module.scss';
 export const Checkout: React.FC = observer(() => {
   const isEmpty = cartStore.count === 0;
 
-  cartStore.applyDiscount(12);
-
   return (
     <main className={styles.main}>
       <Back />
