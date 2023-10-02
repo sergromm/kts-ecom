@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from 'components/Card';
+import { FadeIn } from 'components/FadeIn';
 import { Hero } from 'components/Hero';
 import { useLocalStore } from 'hooks/useLocalStore';
 import { CategoriesStore } from 'store/categories';
@@ -13,8 +14,9 @@ export const Categories: React.FC = observer(() => {
   React.useEffect(() => {
     store.getCategories();
   }, [store]);
+
   return (
-    <main className={styles.main}>
+    <FadeIn className={styles.main}>
       <Hero
         subtitle="Our categories page is designed to make it easy for customers to find the type of furniture they're
           looking for"
@@ -30,6 +32,6 @@ export const Categories: React.FC = observer(() => {
           );
         })}
       </section>
-    </main>
+    </FadeIn>
   );
 });
