@@ -29,6 +29,7 @@
 .buttons {
   display: flex;
   gap: $space-m;
+  min-width: 92px;
 }
 
 .button {

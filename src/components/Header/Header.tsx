@@ -37,19 +37,14 @@ const Navigation: React.FC = () => {
   );
 };
 
-type HeaderProps = {
-  handleOpenModal: () => void;
-};
+const Buttons: React.FC<{ handleOpenModal: () => void }> = ({ handleOpenModal }) => {
+  const { pathname } = useLocation();
+  const shouldShowButton = pathname === routerPaths.signup || pathname === routerPaths.signin;
 
-export const Header: React.FC<HeaderProps> = observer(({ handleOpenModal }) => {
   return (
-    <header className={styles.header}>
-      <div className={styles.content}>
-        <NavLink to="/">
-          <Logo />
-        </NavLink>
-        <Navigation />
-        <div className={styles.buttons}>
+    <div className={styles.buttons}>
+      {!shouldShowButton && (
+        <>
           <button className={styles.button} onClick={handleOpenModal}>
             <CartIcon height={30} width={30} />
             <AnimatePresence>
@@ -76,7 +71,25 @@ export const Header: React.FC<HeaderProps> = observer(({ handleOpenModal }) => {
           <NavLink className={styles.button} to={routerPaths.signup}>
             <ProfileIcon height={30} width={30} />
           </NavLink>
-        </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+type HeaderProps = {
+  handleOpenModal: () => void;
+};
+
+export const Header: React.FC<HeaderProps> = observer(({ handleOpenModal }) => {
+  return (
+    <header className={styles.header}>
+      <div className={styles.content}>
+        <NavLink to="/">
+          <Logo />
+        </NavLink>
+        <Navigation />
+        <Buttons handleOpenModal={handleOpenModal} />
       </div>
     </header>
   );
