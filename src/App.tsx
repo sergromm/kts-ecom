@@ -5,6 +5,7 @@ import { Cart } from 'components/Cart';
 import { Header } from 'components/Header';
 import { routerPaths } from 'config/routerPaths';
 import { useQueryParamsStoreInit } from 'hooks/useQueryParamsStoreInit';
+import { AuthLayout, SignIn, SignUp } from 'pages/Auth';
 import { Checkout } from 'pages/Checkout';
 import { Product } from 'pages/Product';
 import { Products } from 'pages/Products';
@@ -33,6 +34,10 @@ const App: React.FC = () => {
         </Route>
         <Route element={<Button>hi</Button>} path={routerPaths.about} />
         <Route element={<Checkout />} path={routerPaths.checkout} />
+        <Route element={<AuthLayout />}>
+          <Route element={<SignUp />} path={routerPaths.signup} />
+          <Route element={<SignIn />} path={routerPaths.signin} />
+        </Route>
       </Routes>
       {state?.backgroundLocation && (
         <Routes>

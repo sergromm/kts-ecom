@@ -5,4 +5,6 @@ export const routerPaths = {
   about: '/about',
   categories: '/categories',
   checkout: '/checkout',
+  signup: '/sign-up',
+  signin: '/sign-in',
 };

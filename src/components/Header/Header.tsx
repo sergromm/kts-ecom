@@ -73,9 +73,9 @@ export const Header: React.FC<HeaderProps> = observer(({ handleOpenModal }) => {
               )}
             </AnimatePresence>
           </button>
-          <button className={styles.button}>
+          <NavLink className={styles.button} to={routerPaths.signup}>
             <ProfileIcon height={30} width={30} />
-          </button>
+          </NavLink>
         </div>
       </div>
     </header>

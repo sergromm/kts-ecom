@@ -1,0 +1,33 @@
+.main {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 100px;
+  height: calc(100vh - $header-height);
+}
+
+.links {
+  display: flex;
+  gap: $space-xxs;
+}
+
+.link {
+  text-decoration: none;
+  color: $text-secondary;
+  &_active {
+    color: $text-primary;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-l;
+  width: 100%;
+  margin-top: 25vh;
+  max-width: 600px;
+}
+
+.video {
+  object-fit: cover;
+  width: 50vw;
+}
