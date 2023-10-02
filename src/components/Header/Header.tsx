@@ -37,7 +37,7 @@ const Navigation: React.FC = () => {
   );
 };
 
-const Buttons: React.FC<{ handleOpenModal: () => void }> = ({ handleOpenModal }) => {
+const Buttons: React.FC<{ handleOpenModal: () => void }> = observer(({ handleOpenModal }) => {
   const { pathname } = useLocation();
   const shouldShowButton = pathname === routerPaths.signup || pathname === routerPaths.signin;
 
@@ -75,13 +75,13 @@ const Buttons: React.FC<{ handleOpenModal: () => void }> = ({ handleOpenModal })
       )}
     </div>
   );
-};
+});
 
 type HeaderProps = {
   handleOpenModal: () => void;
 };
 
-export const Header: React.FC<HeaderProps> = observer(({ handleOpenModal }) => {
+export const Header: React.FC<HeaderProps> = ({ handleOpenModal }) => {
   return (
     <header className={styles.header}>
       <div className={styles.content}>
@@ -93,4 +93,4 @@ export const Header: React.FC<HeaderProps> = observer(({ handleOpenModal }) => {
       </div>
     </header>
   );
-});
+};
