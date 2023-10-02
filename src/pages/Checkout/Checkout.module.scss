@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 100px $whole-page-padding 48px;
+  justify-content: center;
+  padding: 0 $whole-page-padding;
   gap: $space-xl;
   max-width: $content-max-width;
   margin: 0 auto;
   box-sizing: content-box;
+  height: calc(100vh - $header-height);
 }
 
 .content {
@@ -46,10 +48,9 @@
 }
 
 .list {
-  max-height: 60vh;
   display: grid;
   align-content: space-between;
-  grid-template-rows: auto auto;
+  grid-template-rows: 50vh auto;
   gap: $space-m;
 }
 
