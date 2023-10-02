@@ -6,6 +6,7 @@ import { Header } from 'components/Header';
 import { routerPaths } from 'config/routerPaths';
 import { useQueryParamsStoreInit } from 'hooks/useQueryParamsStoreInit';
 import { AuthLayout, SignIn, SignUp } from 'pages/Auth';
+import { Categories } from 'pages/Categories';
 import { Checkout } from 'pages/Checkout';
 import { Product } from 'pages/Product';
 import { Products } from 'pages/Products';
@@ -32,6 +33,7 @@ const App: React.FC = () => {
         <Route path={routerPaths.products}>
           <Route element={<Product />} path={routerPaths.productId} />
         </Route>
+        <Route element={<Categories />} path={routerPaths.categories} />
         <Route element={<Button>hi</Button>} path={routerPaths.about} />
         <Route element={<Checkout />} path={routerPaths.checkout} />
         <Route element={<AuthLayout />}>

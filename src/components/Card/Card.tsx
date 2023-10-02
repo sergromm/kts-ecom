@@ -12,6 +12,8 @@ export type CardProps = {
   captionSlot?: React.ReactNode;
   /** Заголовок карточки */
   title: React.ReactNode | string;
+  /** Подгонка обложки */
+  fit?: 'cover' | 'contain';
   /** Описание карточки */
   subtitle: React.ReactNode;
   /** Содержимое карточки (футер/боковая часть), может быть пустым */
@@ -26,6 +28,7 @@ export const Card: React.FC<CardProps> = ({
   image,
   title,
   subtitle,
+  fit = 'contain',
   captionSlot,
   actionSlot,
   contentSlot,
@@ -36,7 +39,7 @@ export const Card: React.FC<CardProps> = ({
   const classes = classNames(styles.container, className);
   return (
     <div className={classes} {...rest}>
-      <img alt={altText} className={styles.cover} loading="lazy" src={image} />
+      <img alt={altText} className={styles.cover} loading="lazy" src={image} style={{ objectFit: fit }} />
       <div className={styles.body}>
         <div className={styles.description}>
           {captionSlot && (
