@@ -144,23 +144,10 @@ export const MultiDropdown: React.FC<MultiDropdownProps> = ({
     closed: { height: 0, opacity: 0 },
   };
 
-  const iconVariants = {
-    open: { rotate: 0 },
-    close: { rotate: '-90deg' },
-  };
-
   return (
     <div className={classes} ref={dropdownRef} onClick={() => setOpen(true)} {...rest}>
       <Input
-        afterSlot={
-          <motion.div
-            animate={open ? 'open' : 'close'}
-            transition={{ type: 'tween', ease: 'circOut' }}
-            variants={iconVariants}
-          >
-            <ArrowDownIcon color="secondary" onClick={() => setOpen(true)} />
-          </motion.div>
-        }
+        afterSlot={<ArrowDownIcon color="secondary" onClick={() => setOpen(true)} />}
         disabled={disabled}
         placeholder={getTitle(value)}
         value={getValue(value)}
