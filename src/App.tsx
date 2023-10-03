@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import { Button } from 'components/Button';
 import { Cart } from 'components/Cart';
 import { Header } from 'components/Header';
@@ -28,6 +29,7 @@ const App: React.FC = () => {
     <>
       <Header handleOpenModal={() => setOpen(true)} />
       <Cart handleClose={() => setOpen(false)} open={open} />
+      <Toaster position="bottom-center" richColors />
       <Routes location={state?.backgroundLocation || location}>
         <Route element={<Products />} path={routerPaths.root} />
         <Route path={routerPaths.products}>

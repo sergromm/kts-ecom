@@ -25,7 +25,8 @@
     "react-dom": "^18.2.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.16.0",
-    "regenerator-runtime": "^0.14.0"
+    "regenerator-runtime": "^0.14.0",
+    "sonner": "^1.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.0",

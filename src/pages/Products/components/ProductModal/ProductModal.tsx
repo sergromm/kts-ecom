@@ -59,7 +59,7 @@ export const ProductModal: React.FC = observer(() => {
 
       if (product) {
         setPending(true);
-        await cartStore.add(product.id);
+        await cartStore.add(product);
         setPending(false);
       }
     },

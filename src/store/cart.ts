@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import { toast } from 'sonner';
 import { ProductType } from 'entities/protuct';
 import { ILocalStore } from './types';
 import { Meta } from './utils';
@@ -85,7 +86,7 @@ class CartStore implements ILocalStore {
     return;
   };
 
-  add = async (productId: number) => {
+  add = async (product: ProductType, successAction?: () => void) => {
     if (this._meta === Meta.loading) {
       return;
     }
@@ -93,7 +94,7 @@ class CartStore implements ILocalStore {
     this.meta = Meta.loading;
 
     const body = {
-      productId,
+      productId: product.id,
       cartId: this._cartId,
     };
 
@@ -107,11 +108,16 @@ class CartStore implements ILocalStore {
       await axios.post('https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/products_in_cart', body, options);
       runInAction(() => {
         this.meta = Meta.success;
+        toast(`${product.title} added to your cart`, {
+          description: `Price: $${product.price}`,
+          action: { label: 'checkout', onClick: successAction ? successAction : () => {} },
+        });
       });
       this.fetch();
     } catch (error) {
       runInAction(() => {
         this.meta = Meta.error;
+        toast.error('The product is already in your cart');
       });
     }
   };
