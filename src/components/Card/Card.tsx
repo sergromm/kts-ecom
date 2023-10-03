@@ -19,6 +19,8 @@ export type CardProps = {
   fit?: 'cover' | 'contain';
   /** Описание карточки */
   subtitle: React.ReactNode;
+  /** Регулируеот отступы */
+  size?: 'normal' | 'small';
   /** Содержимое карточки (футер/боковая часть), может быть пустым */
   contentSlot?: React.ReactNode;
   /** Клик на карточку */
@@ -32,6 +34,7 @@ export const Card: React.FC<CardProps> = ({
   title,
   subtitle,
   hash,
+  size = 'normal',
   fit = 'contain',
   captionSlot,
   actionSlot,
@@ -41,7 +44,7 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   const altText = typeof title === 'string' ? title : '';
   const classes = classNames(styles.container, className);
-
+  const bodyClasses = classNames(styles.body, { [styles.body_small]: size === 'small' });
   return (
     <div className={classes} {...rest}>
       <ImageWithBlur
@@ -53,7 +56,7 @@ export const Card: React.FC<CardProps> = ({
         src={image}
         width={'100%'}
       />
-      <div className={styles.body}>
+      <div className={bodyClasses}>
         <div className={styles.description}>
           {captionSlot && (
             <Text color="secondary" maxLines={2} view="p-14" weight="medium">

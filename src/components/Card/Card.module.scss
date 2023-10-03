@@ -26,6 +26,9 @@
   gap: $space-l;
   background-color: $card-bg;
   padding: $space-xl $space-xs;
+  &_small {
+    padding: $space-m $space-xs;
+  }
 }
 
 .description {

@@ -11,7 +11,7 @@ export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   fit?: 'cover' | 'contain';
 };
 
-export const ImageWithBlur: React.FC<ImageProps> = ({ className, src, alt, ...rest }) => {
+export const ImageWithBlur: React.FC<ImageProps> = ({ className, src, alt, fit, ...rest }) => {
   const [show, setShow] = React.useState(false);
   return (
     <div>
@@ -19,14 +19,14 @@ export const ImageWithBlur: React.FC<ImageProps> = ({ className, src, alt, ...re
         alt={alt}
         className={className}
         draggable="false"
-        // loading="lazy"
         src={src}
-        style={{ display: show ? 'flex' : 'none' }}
+        style={{ display: show ? 'flex' : 'none', objectFit: fit }}
         onLoad={() => setShow(true)}
       />
       <Blurhash
         className={className}
         style={{
+          objectFit: fit,
           display: show ? 'none' : 'flex',
           filter: 'contrast(40%) brightness(190%) opacity(70%)',
         }}

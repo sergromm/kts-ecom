@@ -27,7 +27,14 @@ export const Categories: React.FC = observer(() => {
         {store.categories.map((category) => {
           return (
             <Link className={styles.card} key={category.id} to={`/?filter=${category.name}`}>
-              <Card fit="cover" hash={category.blurhash} image={category.image} subtitle="" title={category.name} />
+              <Card
+                fit="cover"
+                hash={category.blurhash}
+                image={category.image}
+                size="small"
+                subtitle=""
+                title={category.name}
+              />
             </Link>
           );
         })}
