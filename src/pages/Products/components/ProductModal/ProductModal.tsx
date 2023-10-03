@@ -6,8 +6,8 @@ import { Button } from 'components/Button';
 import { Content, Modal, Overlay } from 'components/Modal';
 import { Text } from 'components/Text';
 import { ArrowRightIcon } from 'components/icons/ArrowRightIcon';
+import { useCart } from 'hooks/useCart';
 import { useLocalStore } from 'hooks/useLocalStore';
-import cartStore from 'store/cart';
 import { ProductStore } from 'store/product';
 const Slider = React.lazy(() => import('pages/Product/components/Slider'));
 
@@ -27,6 +27,7 @@ const contentVariants = {
 export const ProductModal: React.FC = observer(() => {
   const { productId } = useParams();
   const [pending, setPending] = React.useState(false);
+  const { add } = useCart(setPending);
   const [open, setOpen] = React.useState(true);
   const store = useLocalStore(() => new ProductStore());
   const product = store.product;
@@ -50,20 +51,6 @@ export const ProductModal: React.FC = observer(() => {
       }
     },
     [handleClose, opacity],
-  );
-
-  const addToCart = React.useCallback(
-    async (e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (product) {
-        setPending(true);
-        await cartStore.add(product);
-        setPending(false);
-      }
-    },
-    [product],
   );
 
   React.useEffect(() => {
@@ -119,7 +106,7 @@ export const ProductModal: React.FC = observer(() => {
               </Text>
 
               <div className={styles.actions}>
-                <Button loading={pending} onClick={addToCart}>
+                <Button loading={pending} onClick={add(product)}>
                   Add To Cart
                 </Button>
                 <Link className={styles.link} to={`/products/${product.id}`}>

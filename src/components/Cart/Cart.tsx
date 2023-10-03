@@ -9,6 +9,7 @@ import { Content, Modal, Overlay } from 'components/Modal';
 import { Text } from 'components/Text';
 import { routerPaths } from 'config/routerPaths';
 import { ProductType } from 'entities/protuct';
+import { useCart } from 'hooks/useCart';
 import cartStore from 'store/cart';
 import { Meta } from 'store/utils';
 import styles from './Cart.module.scss';
@@ -24,46 +25,45 @@ const contentVariants = {
   hidden: { x: 550 },
 };
 
-export const CartItem: React.FC<React.PropsWithChildren<{ product: Omit<ProductType, 'description' | 'category'> }>> =
-  observer(({ product }) => {
-    return (
-      <motion.li
-        animate={{ scale: 1, opacity: 1 }}
-        className={styles.item}
-        exit={{ scale: 0.95, opacity: 0 }}
-        key={product.id}
-        transition={{ type: 'tween' }}
-        layout
-      >
-        <img alt={product.title} className={styles.cover} src={product.images[0]} />
-        <div className={styles.info}>
-          <Text maxLines={1} view="p-20" weight="medium">
-            {product.title}
-          </Text>
-          <div className={styles.footer}>
-            <Text className={styles.price} view="p-18">
-              Price:&nbsp;
-              <Text tag="span" view="p-18" weight="medium">
-                ${product.price}
-              </Text>
+export const CartItem: React.FC<
+  React.PropsWithChildren<{ product: Omit<ProductType, 'description' | 'category'> }>
+> = ({ product }) => {
+  const [pending, setPending] = React.useState(false);
+  const { remove } = useCart(setPending);
+
+  return (
+    <motion.li
+      animate={{ scale: 1, opacity: 1 }}
+      className={styles.item}
+      exit={{ scale: 0.95, opacity: 0 }}
+      key={product.id}
+      transition={{ type: 'tween' }}
+      layout
+    >
+      <img alt={product.title} className={styles.cover} src={product.images[0]} />
+      <div className={styles.info}>
+        <Text maxLines={1} view="p-20" weight="medium">
+          {product.title}
+        </Text>
+        <div className={styles.footer}>
+          <Text className={styles.price} view="p-18">
+            Price:&nbsp;
+            <Text tag="span" view="p-18" weight="medium">
+              ${product.price}
             </Text>
-            {!(cartStore.meta === Meta.loading) ? (
-              <button
-                className={styles.delete}
-                onClick={() => {
-                  cartStore.remove(product.id);
-                }}
-              >
-                <Text view="button">remove</Text>
-              </button>
-            ) : (
-              <Loader size="s" />
-            )}
-          </div>
+          </Text>
+          {!pending ? (
+            <button className={styles.delete} onClick={remove(product.id)}>
+              <Text view="button">remove</Text>
+            </button>
+          ) : (
+            <Loader size="s" />
+          )}
         </div>
-      </motion.li>
-    );
-  });
+      </div>
+    </motion.li>
+  );
+};
 
 export const CartList: React.FC<React.PropsWithChildren> = ({ children }) => {
   return <ul className={styles.list}>{children}</ul>;
