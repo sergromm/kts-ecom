@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { ImageWithBlur } from 'components/Image';
 import { Text } from '../Text';
 import styles from './Card.module.scss';
 
@@ -12,6 +13,8 @@ export type CardProps = {
   captionSlot?: React.ReactNode;
   /** Заголовок карточки */
   title: React.ReactNode | string;
+  /**  Блюр картинки */
+  hash: string;
   /** Подгонка обложки */
   fit?: 'cover' | 'contain';
   /** Описание карточки */
@@ -28,6 +31,7 @@ export const Card: React.FC<CardProps> = ({
   image,
   title,
   subtitle,
+  hash,
   fit = 'contain',
   captionSlot,
   actionSlot,
@@ -37,9 +41,18 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   const altText = typeof title === 'string' ? title : '';
   const classes = classNames(styles.container, className);
+
   return (
     <div className={classes} {...rest}>
-      <img alt={altText} className={styles.cover} loading="lazy" src={image} style={{ objectFit: fit }} />
+      <ImageWithBlur
+        alt={altText}
+        className={styles.cover}
+        fit={fit}
+        hash={hash}
+        height={'100%'}
+        src={image}
+        width={'100%'}
+      />
       <div className={styles.body}>
         <div className={styles.description}>
           {captionSlot && (

@@ -39,6 +39,7 @@ const CardItem: React.FC<{ product: ProductType }> = ({ product }) => {
         }
         captionSlot={product.category.name}
         contentSlot={`$${product.price}`}
+        hash={product.blurhash[0].blurhash}
         image={product.images[0]}
         subtitle={product.description}
         title={product.title}

@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Back } from 'components/Back';
 import { Button } from 'components/Button';
 import { CartList, CartItem } from 'components/Cart';
+import { FadeIn } from 'components/FadeIn';
 import { Input } from 'components/Input';
 import { Text } from 'components/Text';
 import cartStore from 'store/cart';
@@ -12,7 +13,7 @@ export const Checkout: React.FC = observer(() => {
   const isEmpty = cartStore.count === 0;
 
   return (
-    <main className={styles.main}>
+    <FadeIn className={styles.main}>
       <Back />
       <section className={styles.content}>
         <form className={styles.form}>
@@ -83,6 +84,6 @@ export const Checkout: React.FC = observer(() => {
           </div>
         )}
       </section>
-    </main>
+    </FadeIn>
   );
 });

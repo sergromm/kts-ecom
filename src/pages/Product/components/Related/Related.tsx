@@ -17,7 +17,13 @@ const Related: React.FC<RelatedProps> = ({ products }) => {
       <div className={styles.cards}>
         {products.map((product) => {
           return (
-            <Card image={product.images[0]} key={product.id} subtitle={product.description} title={product.title} />
+            <Card
+              hash={product.blurhash[0].blurhash}
+              image={product.images[0]}
+              key={product.id}
+              subtitle={product.description}
+              title={product.title}
+            />
           );
         })}
       </div>

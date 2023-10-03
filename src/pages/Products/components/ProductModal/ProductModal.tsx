@@ -96,7 +96,7 @@ export const ProductModal: React.FC = observer(() => {
         </div>
         <motion.div className={styles.container} drag="y" dragConstraints={{ top: 0, bottom: 0 }} dragElastic={false}>
           <React.Suspense fallback={<h1>Loading images</h1>}>
-            <Slider images={product.images} title={product.title} reverse />
+            <Slider blur={product.blurhash} images={product.images} title={product.title} reverse />
           </React.Suspense>
           <motion.div
             animate={{ y: 0, opacity: 1 }}

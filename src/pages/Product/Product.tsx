@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
+import { FadeIn } from 'components/FadeIn';
+import { Loader } from 'components/Loader';
 import { useLocalStore } from 'hooks/useLocalStore';
 import { ProductStore } from 'store/product';
 const Showcase = React.lazy(() => import('./components/Showcase'));
@@ -28,11 +30,11 @@ export const Product: React.FC = observer(() => {
   if (!product) return;
 
   return (
-    <main className={styles.main}>
-      <React.Suspense fallback={<h1>LOADING...</h1>}>
+    <FadeIn className={styles.main}>
+      <React.Suspense fallback={<Loader />}>
         <Showcase product={product} />
         <Related products={store.related} />
       </React.Suspense>
-    </main>
+    </FadeIn>
   );
 });
