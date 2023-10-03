@@ -1,18 +1,21 @@
+import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from 'components/Button';
 import { Card } from 'components/Card';
 import { ProductType } from 'entities/protuct';
 import { useCart } from 'hooks/useCart';
+import cartStore from 'store/cart';
+
 import styles from './Cards.module.scss';
 
 type CardsType = { products: ProductType[] };
 
-const CardItem: React.FC<{ product: ProductType }> = ({ product }) => {
+const CardItem: React.FC<{ product: ProductType }> = observer(({ product }) => {
   const location = useLocation();
   const [pending, setPending] = React.useState(false);
   const { add } = useCart(setPending);
-
+  const inCart = cartStore.cart.some((p) => p.id === product.id);
   return (
     <Link
       className={styles.link}
@@ -22,7 +25,7 @@ const CardItem: React.FC<{ product: ProductType }> = ({ product }) => {
     >
       <Card
         actionSlot={
-          <Button loading={pending} onClick={add(product)}>
+          <Button disabled={inCart} loading={pending} onClick={add(product)}>
             Add to Cart
           </Button>
         }
@@ -35,7 +38,7 @@ const CardItem: React.FC<{ product: ProductType }> = ({ product }) => {
       />
     </Link>
   );
-};
+});
 
 const Cards: React.FC<CardsType> = ({ products }) => {
   return (

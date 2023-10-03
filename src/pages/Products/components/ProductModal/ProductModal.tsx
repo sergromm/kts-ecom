@@ -8,6 +8,7 @@ import { Text } from 'components/Text';
 import { ArrowRightIcon } from 'components/icons/ArrowRightIcon';
 import { useCart } from 'hooks/useCart';
 import { useLocalStore } from 'hooks/useLocalStore';
+import cartStore from 'store/cart';
 import { ProductStore } from 'store/product';
 const Slider = React.lazy(() => import('pages/Product/components/Slider'));
 
@@ -28,7 +29,9 @@ export const ProductModal: React.FC = observer(() => {
   const { productId } = useParams();
   const [pending, setPending] = React.useState(false);
   const { add } = useCart(setPending);
+  const inCart = cartStore.cart.some((p) => p.id === Number(productId));
   const [open, setOpen] = React.useState(true);
+
   const store = useLocalStore(() => new ProductStore());
   const product = store.product;
   const navigate = useNavigate();
@@ -106,7 +109,7 @@ export const ProductModal: React.FC = observer(() => {
               </Text>
 
               <div className={styles.actions}>
-                <Button loading={pending} onClick={add(product)}>
+                <Button disabled={inCart} loading={pending} onClick={add(product)}>
                   Add To Cart
                 </Button>
                 <Link className={styles.link} to={`/products/${product.id}`}>

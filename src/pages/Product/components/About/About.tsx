@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Button } from 'components/Button';
 import { ProductType } from 'entities/protuct';
 import { useCart } from 'hooks/useCart';
+import cartStore from 'store/cart';
 import { Description } from '../Description';
 import * as Footer from '../Footer';
 import styles from './About.module.scss';
@@ -13,6 +14,7 @@ export type AboutProps = {
 export const About: React.FC<AboutProps> = ({ product }) => {
   const [pending, setPending] = React.useState(false);
   const { add } = useCart(setPending);
+  const inCart = cartStore.cart.some((p) => p.id === product.id);
 
   return (
     <div className={styles.about}>
@@ -20,7 +22,7 @@ export const About: React.FC<AboutProps> = ({ product }) => {
       <Footer.Root>
         <Footer.Price>${product.price}</Footer.Price>
         <Footer.Buttons>
-          <Button loading={pending} onClick={add(product)}>
+          <Button disabled={inCart} loading={pending} onClick={add(product)}>
             Add to cart
           </Button>
         </Footer.Buttons>
