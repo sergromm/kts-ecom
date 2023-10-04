@@ -127,6 +127,7 @@ class UserStore implements ILocalStore {
       const message = getAxiosError(error);
       toast.error(message);
       localStorage.removeItem('access_token');
+      localStorage.removeItem('cartId');
     }
   };
 
