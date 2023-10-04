@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'components/Button';
-import { Input } from 'components/Input';
 import { Loader } from 'components/Loader';
 import { Content, Modal, Overlay } from 'components/Modal';
 import { Text } from 'components/Text';
@@ -71,7 +70,6 @@ export const CartList: React.FC<React.PropsWithChildren> = ({ children }) => {
 
 export const Cart: React.FC<CartProps> = observer(({ open, handleClose }) => {
   const navigate = useNavigate();
-  const [value, setValue] = React.useState(0);
 
   const isEmpty = cartStore.count === 0;
 
@@ -127,28 +125,6 @@ export const Cart: React.FC<CartProps> = observer(({ open, handleClose }) => {
                       ${cartStore.total}
                     </Text>
                   </Text>
-                  <Text className={styles.subtotal} view="p-18">
-                    Discount:&nbsp;
-                    <Text tag="span" view="p-18" weight="medium">
-                      ${cartStore.discount}
-                    </Text>
-                  </Text>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      const data = new FormData(e.currentTarget);
-                      const discount = data.get('discount');
-                      cartStore.applyDiscount(Number(discount));
-                    }}
-                  >
-                    <Input
-                      disabled={isEmpty}
-                      name="discount"
-                      placeholder="Get discount"
-                      value={value > 0 ? String(value) : ''}
-                      onChange={(value) => setValue(Number(value))}
-                    />
-                  </form>
                 </motion.div>
               )}
             </AnimatePresence>
