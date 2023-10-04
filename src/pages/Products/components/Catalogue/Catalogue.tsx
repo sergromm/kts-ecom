@@ -18,8 +18,8 @@ const EndMessage: React.FC<EndMessageProps> = ({ shouldShow }) => {
   return (
     <>
       {shouldShow && (
-        <Text color="secondary" view="h-32" weight="bold">
-          No more products to display.
+        <Text className={styles.message} color="secondary" view="h-32" weight="bold">
+          No more products to display
         </Text>
       )}
     </>

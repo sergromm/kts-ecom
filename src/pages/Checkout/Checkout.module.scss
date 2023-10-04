@@ -13,7 +13,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: minmax(300px, 1fr) auto;
+  grid-template-columns: minmax(300px, 1fr) 0.7fr;
   grid-template-rows: 1fr;
   justify-content: space-between;
   gap: $space-m;
