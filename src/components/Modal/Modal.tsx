@@ -6,7 +6,6 @@ import styles from './Modal.module.scss';
 type ModalProps = {
   open: boolean;
   position: 'center' | 'right';
-  // handleOpen: (value: boolean) => void;
 };
 
 type OverlayProps = {
