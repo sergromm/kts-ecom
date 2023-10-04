@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Text } from 'components/Text';
-import cartStore from 'store/cart';
 import userStore from 'store/user';
 
 export const Profile: React.FC = observer(() => {
@@ -29,8 +28,6 @@ export const Profile: React.FC = observer(() => {
               onClick={() => {
                 runInAction(() => {
                   userStore.logout(userStore.token!);
-                  cartStore.cartId = '';
-                  console.log(cartStore.cartId);
                 });
               }}
             >
