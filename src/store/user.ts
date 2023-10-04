@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { toast } from 'sonner';
+import { getAxiosError } from 'utils/getAxiosError';
 import { ILocalStore } from './types';
 import { Meta } from './utils';
 
@@ -49,19 +50,32 @@ class UserStore implements ILocalStore {
     return this._meta;
   }
 
-  signup = async ({ email, password }: { email: string; password: string }) => {
-    const response = await axios.post(
-      'https://rzknhedkzukvgtstzbxj.supabase.co/auth/v1/signup',
-      { email, password },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: process.env.SUPABASE_PUBLIC_KEY,
+  signup = async ({
+    email,
+    password,
+    data,
+  }: {
+    email: string;
+    password: string;
+    data: { firstName: string; lastName: string; avatar: string; cartId: string };
+  }) => {
+    try {
+      await axios.post(
+        'https://rzknhedkzukvgtstzbxj.supabase.co/auth/v1/signup',
+        { email, password, data },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            apikey: process.env.SUPABASE_PUBLIC_KEY,
+          },
         },
-      },
-    );
+      );
 
-    return await response.data;
+      await this.signin({ email, password });
+    } catch (error) {
+      const message = getAxiosError(error);
+      toast.error(message);
+    }
   };
 
   signin = async (body: AuthBody) => {
@@ -87,19 +101,9 @@ class UserStore implements ILocalStore {
       runInAction(() => {
         this._meta = Meta.error;
       });
-      toast.error("Couldn't loggin. Try again.");
+      const message = getAxiosError(error);
+      toast.error(message);
     }
-  };
-
-  private getProfile = async (id: string) => {
-    const response = await axios.get(`https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/profile?id.eq${id}&select=*`, {
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: process.env.SUPABASE_PUBLIC_KEY,
-      },
-    });
-
-    return await response.data;
   };
 
   getUserProfile = async (token: string) => {
@@ -111,15 +115,17 @@ class UserStore implements ILocalStore {
           Authorization: `Bearer ${token}`,
         },
       });
-      const user = await response.data;
-      const [profile] = await this.getProfile(user.id);
+
+      const { id, user_metadata } = await response.data;
+
       runInAction(() => {
-        this._profile = profile;
+        this._profile = { id, ...user_metadata };
         this._token = token;
         return;
       });
     } catch (error) {
-      toast.error('Token expired. Signin again.');
+      const message = getAxiosError(error);
+      toast.error(message);
       localStorage.removeItem('access_token');
     }
   };
@@ -136,7 +142,8 @@ class UserStore implements ILocalStore {
       localStorage.removeItem('access_token');
       localStorage.removeItem('cartId');
     } catch (error) {
-      toast.error("Couldn't logout.");
+      const message = getAxiosError(error);
+      toast.error(message);
     }
 
     runInAction(() => {

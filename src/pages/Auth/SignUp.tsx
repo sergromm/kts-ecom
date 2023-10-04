@@ -1,10 +1,14 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { runInAction } from 'mobx';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
+import { routerPaths } from 'config/routerPaths';
+import cartStore from 'store/cart';
+import userStore from 'store/user';
 import styles from './Auth.module.scss';
-
 const MotionInput = motion(Input);
 
 export const SignUp: React.FC = () => {
@@ -15,13 +19,48 @@ export const SignUp: React.FC = () => {
     firstName: '',
     lastName: '',
   });
+  const navigate = useNavigate();
   const [showNameFields, setShowNameFields] = React.useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget as HTMLFormElement);
-    const body = Object.fromEntries(data.entries());
-    console.log(body);
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const data = Object.fromEntries(formData.entries()) as {
+      email: string;
+      password: string;
+      confirm: string;
+      firstName: string;
+      lastName: string;
+    };
+
+    if (data.password !== data.confirm) {
+      toast.error('Password mismatch.');
+      return;
+    }
+
+    if (data.firstName === '' || data.lastName === '') {
+      toast.error('First and last name are required.');
+      return;
+    }
+
+    const body = {
+      email: data.email,
+      password: data.password,
+      data: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        avatar: '',
+        cartId: '',
+      },
+    };
+
+    runInAction(() => {
+      body.data.cartId = cartStore.cartId;
+      (async () => {
+        await userStore.signup(body);
+        navigate(routerPaths.profile.root);
+      })();
+    });
   };
 
   React.useEffect(() => {
@@ -44,7 +83,7 @@ export const SignUp: React.FC = () => {
       <Input
         name="email"
         placeholder="E-mail"
-        value={form.password}
+        value={form.email}
         onChange={(value) => {
           setForm((prev) => ({ ...prev, email: value }));
         }}

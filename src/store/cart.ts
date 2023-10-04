@@ -171,7 +171,7 @@ class CartStore implements ILocalStore {
     }
 
     this.meta = Meta.loading;
-    this.create();
+    await this.create();
 
     const options = {
       headers: {
