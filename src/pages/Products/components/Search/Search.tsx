@@ -7,6 +7,7 @@ import { MultiDropdown, Option } from 'components/MultiDropdown';
 import { useProductStore } from 'contexts/productStoreContext';
 import { useLocalStore } from 'hooks/useLocalStore';
 import { CategoriesStore } from 'store/categories';
+import { debounce } from 'utils/debounce';
 import styles from './Search.module.scss';
 
 export const Search: React.FC = observer(() => {
@@ -54,25 +55,23 @@ export const Search: React.FC = observer(() => {
     [categoriesStore, handleSearchParams],
   );
 
-  const handleSubmit = React.useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const data = new FormData(e.currentTarget);
-      const search = data.get('search') as string;
-      handleSearchParams('search', search);
-    },
+  const delayChange = React.useMemo(
+    () =>
+      debounce((value: string) => {
+        handleSearchParams('search', value);
+      }, 30),
     [handleSearchParams],
   );
 
   return (
-    <form className={styles.search} onSubmit={handleSubmit}>
+    <form className={styles.search}>
       <Input
         name="search"
         placeholder="Search product"
         value={productsStore?.searchQuery ?? ''}
-        onChange={productsStore?.setSearchQuery ?? (() => {})}
+        onChange={delayChange}
       />
-      <Button type="submit">Find Now</Button>
+      <Button onClick={(e) => e.preventDefault()}>Find Now</Button>
       <MultiDropdown
         className={styles.filter}
         getTitle={getTitle}
