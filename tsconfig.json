@@ -8,16 +8,17 @@
 
     "baseUrl": "src",
     "paths": {
-      "api/*": ["api/*"],
-      "assets/*": ["assets/*"],
-      "config/*": ["config/*"],
-      "entities/*": ["entities/*"],
-      "pages/*": ["pages/*"],
-      "components/*": ["components/*"],
-      "hooks/*": ["hooks/*"],
-      "utils/*": ["utils/*"],
-      "styles/*": ["styles/*"],
-      "store/*": ["store/*"]
+      "api": ["api"],
+      "assets": ["assets"],
+      "config": ["config"],
+      "contexts": ["contexts"],
+      "entities": ["entities"],
+      "pages": ["pages"],
+      "components": ["components"],
+      "hooks": ["hooks"],
+      "utils": ["utils"],
+      "styles": ["styles"],
+      "store": ["store"]
     },
 
     "moduleResolution": "bundler",

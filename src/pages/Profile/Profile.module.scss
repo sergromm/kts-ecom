@@ -1,0 +1,71 @@
+.main {
+  --top-padding: 100px;
+  --bottom-padding: 48px;
+  display: grid;
+  grid-template-columns: auto 0.9fr;
+  grid-template-rows: 1fr;
+  justify-content: space-between;
+  padding: var(--top-padding) $whole-page-padding var(--bottom-padding);
+  gap: $space-xl;
+  max-width: $content-max-width;
+  margin: 0 auto;
+  box-sizing: content-box;
+  height: calc(100vh - $header-height - var(--top-padding) - var(--bottom-padding));
+}
+.links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: $space-m;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: min-content;
+}
+
+.link {
+  text-decoration: none;
+  transition: $hover;
+  opacity: 1;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.bottom {
+  margin-top: auto;
+  margin-bottom: $space-m;
+}
+
+.logout {
+  margin-top: auto;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  transition: $hover;
+  opacity: 1;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.text {
+  color: $red;
+}
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  gap: $space-l;
+  margin-top: auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: $space-xl;
+}

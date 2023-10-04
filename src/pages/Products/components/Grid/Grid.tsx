@@ -5,11 +5,13 @@ import styles from './Grid.module.scss';
 
 type GridProps = { total: number };
 
-export const Grid = ({ children, total }: React.PropsWithChildren<GridProps>) => {
+export const Grid: React.FC<React.PropsWithChildren<GridProps>> = ({ children, total }) => {
   return (
-    <div className={styles.grid}>
-      <Title total={total} />
-      <React.Suspense fallback={<Loader size="l" />}>{children}</React.Suspense>
-    </div>
+    <>
+      <div className={styles.grid}>
+        <Title total={total} />
+        <React.Suspense fallback={<Loader size="l" />}>{children}</React.Suspense>
+      </div>
+    </>
   );
 };

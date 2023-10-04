@@ -1,14 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import * as Router from 'react-router-dom';
 import App from './App.tsx';
-import './styles/styles.scss';
 import 'config/configureMobx.ts';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-);
+const ReactApp = (): React.ReactNode => {
+  return (
+    <React.StrictMode>
+      <Router.BrowserRouter>
+        <App />
+      </Router.BrowserRouter>
+    </React.StrictMode>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')!).render(<ReactApp />);

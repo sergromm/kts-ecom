@@ -4,51 +4,56 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSearchParams } from 'react-router-dom';
 import { Loader } from 'components/Loader';
 import { Text } from 'components/Text';
+import { ProductStoreContext } from 'contexts/productStoreContext';
 import { useLocalStore } from 'hooks/useLocalStore';
 import { ProductsStore } from 'store/products';
 import { Grid } from '../Grid';
-import { Pagination } from '../Pagination';
 import { Search } from '../Search';
 const Cards = React.lazy(() => import('../Cards'));
 import styles from './Catalogue.module.scss';
 
-export const Catalogue = observer(() => {
+type EndMessageProps = { shouldShow: boolean };
+
+const EndMessage: React.FC<EndMessageProps> = ({ shouldShow }) => {
+  return (
+    <>
+      {shouldShow && (
+        <Text color="secondary" view="h-32" weight="bold">
+          No more products to display.
+        </Text>
+      )}
+    </>
+  );
+};
+
+const FIRST_PAGE = 1;
+
+export const Catalogue: React.FC = observer(() => {
+  const [searchPramas, setSearchParams] = useSearchParams();
   const store = useLocalStore(() => new ProductsStore());
   const products = store.products;
-  const [searchPramas, setSearchParams] = useSearchParams();
-  const shouldFetch = React.useRef(true);
 
   React.useEffect(() => {
-    /**
-     * NOTE: не придумал способа лучше, как запретить реакту дважды выполнять useEffect
-     * без этого store.fetch вызывался дважды и ломал бесконечный скролл,
-     * а сбрасывать стор внутри не вариант, так как данные дополняются по мере скрола
-     */
-    if (shouldFetch.current) {
-      shouldFetch.current = false;
-      store.setPaginationOffset(searchPramas.get('offset') || String(store.offset));
-      store.fetch();
-    }
-  }, [store, searchPramas]);
-
-  const handleNext = () => {
+    store.setPage(Number(searchPramas.get('page')) || FIRST_PAGE);
     store.fetch();
-    searchPramas.set('offset', String(store.offset));
+  }, [searchPramas, store]);
+
+  const handleNext = React.useCallback(() => {
+    store.fetch();
+    searchPramas.set('page', String(store.page));
     setSearchParams(searchPramas);
-  };
+  }, [searchPramas, setSearchParams, store]);
 
   return (
     <section className={styles.catalogue}>
-      <Search productsStore={store} />
-      <Grid total={products.length}>
+      <ProductStoreContext.Provider value={store}>
+        <Search />
+      </ProductStoreContext.Provider>
+      <Grid total={store.count}>
         <InfiniteScroll
           className={styles.scroll}
           dataLength={products.length}
-          endMessage={
-            <Text color="secondary" view="h-32" weight="bold">
-              Yay! You have seen it all
-            </Text>
-          }
+          endMessage={<EndMessage shouldShow={store.meta !== 'loading'} />}
           hasMore={products.length !== store.count}
           loader={<Loader />}
           next={handleNext}
@@ -57,7 +62,6 @@ export const Catalogue = observer(() => {
           <Cards products={products} />
         </InfiniteScroll>
       </Grid>
-      <Pagination />
     </section>
   );
 });

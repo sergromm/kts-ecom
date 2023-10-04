@@ -1,0 +1,16 @@
+.back {
+  display: flex;
+  gap: $space-xs;
+  align-items: center;
+  width: min-content;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.back:hover {
+  opacity: 0.5;
+}

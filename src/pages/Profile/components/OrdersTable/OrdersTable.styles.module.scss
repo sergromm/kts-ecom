@@ -1,0 +1,21 @@
+.header {
+  text-align: left;
+}
+
+.table {
+  width: 100%;
+}
+
+th,
+td {
+  padding-top: $space-xs;
+  padding-bottom: $space-m;
+}
+
+.total {
+  font-variant-numeric: tabular-nums diagonal-fractions;
+}
+
+.status {
+  text-transform: capitalize;
+}

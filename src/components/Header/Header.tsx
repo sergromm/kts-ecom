@@ -1,16 +1,23 @@
 import classNames from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
+import { observer } from 'mobx-react-lite';
+import * as React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from 'assets/logo.svg';
 import { Text } from 'components/Text';
-import { Icon } from 'components/icons/Icon';
+import { CartIcon } from 'components/icons/CartIcon';
+import { ProfileIcon } from 'components/icons/ProfileIcon';
+import { SiginIcon } from 'components/icons/SigninIcon/SigninIcon';
 import { routerPaths } from 'config/routerPaths';
+import cartStore from 'store/cart';
+import userStore from 'store/user';
 import styles from './Header.module.scss';
 
 const Navigation: React.FC = () => {
   const nav = [
     { link: routerPaths.root, title: 'Products' },
     { link: routerPaths.categories, title: 'Categories' },
-    { link: routerPaths.about, title: 'About us' },
+    // { link: routerPaths.about, title: 'About us' },
   ];
   const { pathname } = useLocation();
 
@@ -32,72 +39,66 @@ const Navigation: React.FC = () => {
   );
 };
 
-export const Header = () => {
+const Buttons: React.FC<{ handleOpenModal: () => void }> = observer(({ handleOpenModal }) => {
+  return (
+    <div className={styles.buttons}>
+      <>
+        <button className={styles.button} onClick={handleOpenModal}>
+          <CartIcon height={30} width={30} />
+          <AnimatePresence>
+            {cartStore.count > 0 && (
+              <motion.div
+                animate={{ scale: 1 }}
+                className={styles.indicator}
+                exit={{ scale: 0 }}
+                initial={{ scale: 0 }}
+              >
+                <motion.div
+                  animate={{ opacity: 0, scale: 1 }}
+                  className={styles.glow}
+                  initial={{ opacity: 1, scale: 1.5 }}
+                  transition={{
+                    type: 'tween',
+                    duration: 0.4,
+                  }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </button>
+        {userStore.profile.id ? (
+          <NavLink className={styles.button} to={routerPaths.profile.root}>
+            {userStore.profile.avatar ? (
+              <img className={styles.avatar} src={userStore.profile.avatar} />
+            ) : (
+              <ProfileIcon height={30} width={30} />
+            )}
+          </NavLink>
+        ) : (
+          <NavLink className={styles.button} to={routerPaths.signup}>
+            <SiginIcon height={30} width={30} />
+          </NavLink>
+        )}
+      </>
+    </div>
+  );
+});
+
+type HeaderProps = {
+  handleOpenModal: () => void;
+};
+
+export const Header: React.FC<HeaderProps> = ({ handleOpenModal }) => {
+  const { pathname } = useLocation();
+  const shouldShowButton = pathname === routerPaths.signup || pathname === routerPaths.signin;
   return (
     <header className={styles.header}>
       <div className={styles.content}>
         <NavLink to="/">
-          <img alt="logo" src={Logo} />
+          <Logo />
         </NavLink>
         <Navigation />
-        <div className={styles.buttons}>
-          <button className={styles.button}>
-            <Icon height={30} width={30}>
-              <svg fill="none" height="30" viewBox="0 0 30 30" width="30" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M9.375 9.58751V8.37501C9.375 5.56251 11.6375 2.80001 14.45 2.53751C17.8 2.21251 20.625 4.85001 20.625 8.13751V9.86251"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeMiterlimit="10"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M11.25 27.5H18.75C23.775 27.5 24.675 25.4875 24.9375 23.0375L25.875 15.5375C26.2125 12.4875 25.3375 10 20 10H10C4.66253 10 3.78753 12.4875 4.12503 15.5375L5.06253 23.0375C5.32503 25.4875 6.22503 27.5 11.25 27.5Z"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeMiterlimit="10"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M19.3694 15H19.3806"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M10.6181 15H10.6294"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                />
-              </svg>
-            </Icon>
-          </button>
-          <button className={styles.button}>
-            <Icon height={30} width={30}>
-              <svg fill="none" height="30" viewBox="0 0 30 30" width="30" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15 15C18.4518 15 21.25 12.2018 21.25 8.75C21.25 5.29822 18.4518 2.5 15 2.5C11.5482 2.5 8.75 5.29822 8.75 8.75C8.75 12.2018 11.5482 15 15 15Z"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M25.7374 27.5C25.7374 22.6625 20.9249 18.75 14.9999 18.75C9.07495 18.75 4.26245 22.6625 4.26245 27.5"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                />
-              </svg>
-            </Icon>
-          </button>
-        </div>
+        {!shouldShowButton ? <Buttons handleOpenModal={handleOpenModal} /> : <div />}
       </div>
     </header>
   );

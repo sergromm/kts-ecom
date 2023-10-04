@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Card } from 'components/Card';
 import { Text } from 'components/Text';
 import { ProductType } from 'entities/protuct';
@@ -7,7 +8,7 @@ export type RelatedProps = {
   products: ProductType[];
 };
 
-const Related = ({ products }: RelatedProps) => {
+const Related: React.FC<RelatedProps> = ({ products }) => {
   return (
     <section className={styles.related}>
       <Text tag="h2" view="h-32" weight="bold">
@@ -16,7 +17,13 @@ const Related = ({ products }: RelatedProps) => {
       <div className={styles.cards}>
         {products.map((product) => {
           return (
-            <Card image={product.images[0]} key={product.id} subtitle={product.description} title={product.title} />
+            <Card
+              hash={product.blurhash[0].blurhash}
+              image={product.images[0]}
+              key={product.id}
+              subtitle={product.description}
+              title={product.title}
+            />
           );
         })}
       </div>

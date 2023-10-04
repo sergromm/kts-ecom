@@ -1,6 +1,7 @@
 .button {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: $space-xxs;
   border: none;
   cursor: pointer;
@@ -9,8 +10,8 @@
   background-color: $button-primary-bg;
   color: $button-primary-text;
   height: 52px;
-  width: fit-content;
   white-space: nowrap;
+  transition: $hover;
 
   &:hover:enabled {
     background-color: $button-primary-bg-hover;

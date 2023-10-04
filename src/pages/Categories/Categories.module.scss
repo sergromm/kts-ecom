@@ -1,0 +1,30 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px $whole-page-padding 48px;
+  gap: $space-xl;
+  max-width: $content-max-width;
+  margin: 0 auto;
+  box-sizing: content-box;
+}
+
+.grid {
+  display: grid;
+  justify-content: center;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 0.7fr));
+  width: 100%;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  max-width: 653px;
+  text-align: center;
+  gap: $space-m;
+}
+
+.card {
+  text-decoration: none;
+}

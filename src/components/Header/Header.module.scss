@@ -6,7 +6,7 @@
   background-color: $white;
   padding: $space-m $whole-page-padding;
   border-bottom: thin solid $header-border;
-  z-index: $top;
+  z-index: $header;
 }
 
 .content {
@@ -22,21 +22,63 @@
   display: flex;
   gap: $space-xl;
   cursor: pointer;
+  margin: 0;
+  padding: 0;
 }
 
 .buttons {
   display: flex;
   gap: $space-m;
+  min-width: 92px;
 }
 
 .button {
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;
   color: $text-primary;
+  transition: $hover;
+  padding: 0;
+  width: 30px;
+  height: 30px;
   &:hover {
     color: $text-secondary;
   }
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border: 3px solid transparent;
+  background: linear-gradient(to right, #ad7e5c, #518581) border-box;
+  transition: $hover;
+  border-radius: 30px;
+  opacity: 1;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.indicator {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 8px;
+  background: $red;
+  outline: solid 2px white;
+}
+
+.glow {
+  background: radial-gradient(circle, rgba(255, 72, 72, 0.5) 0%, rgba(255, 255, 255, 0) 80%);
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
 }
 
 .link {

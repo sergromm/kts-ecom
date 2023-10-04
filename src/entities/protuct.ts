@@ -7,4 +7,8 @@ export type ProductType = {
   description: string;
   category: CategoryType;
   images: string[];
+  blurhash: {
+    blurhash: string;
+    index: number;
+  }[];
 };
