@@ -1,7 +1,6 @@
 .main {
   display: flex;
   justify-content: space-between;
-  padding-left: 100px;
   height: calc(100vh - $header-height);
 }
 
@@ -23,8 +22,19 @@
   flex-direction: column;
   gap: $space-l;
   width: 100%;
-  margin-top: 25vh;
   max-width: 600px;
+}
+
+.container {
+  margin-top: 25vh;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 600px);
+  gap: $space-l;
+  padding: 0 $whole-page-padding;
+  box-sizing: content-box;
+  justify-self: center;
+  margin: 25vh auto 0;
 }
 
 .video {

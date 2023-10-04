@@ -13,7 +13,7 @@ export const FadeIn: React.FC<React.PropsWithChildren<{ className: string; tag?:
       animate={{ opacity: 1 }}
       className={className}
       initial={{ opacity: 0 }}
-      transition={{ type: 'tween', duration: 0.6 }}
+      transition={{ type: 'tween', duration: 0.4 }}
     >
       {children}
     </Element>

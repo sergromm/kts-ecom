@@ -76,6 +76,7 @@ class CartStore implements ILocalStore {
     const options = {
       headers: {
         apikey: process.env.SUPABASE_PUBLIC_KEY,
+        Prefer: 'return=representation',
       },
     };
 
@@ -117,7 +118,7 @@ class CartStore implements ILocalStore {
     } catch (error) {
       runInAction(() => {
         this.meta = Meta.error;
-        toast.error('The product is already in your cart');
+        toast.error("Something went wrong, couldn't add to cart");
       });
     }
   };

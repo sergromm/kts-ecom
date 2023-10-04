@@ -38,8 +38,21 @@
   border: none;
   cursor: pointer;
   color: $text-primary;
+  transition: $hover;
   &:hover {
     color: $text-secondary;
+  }
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border: $brand 3px solid;
+  transition: $hover;
+  border-radius: 30px;
+  opacity: 1;
+  &:hover {
+    opacity: 0.7;
   }
 }
 

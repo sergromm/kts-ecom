@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 import { Button } from 'components/Button';
 import { Cart } from 'components/Cart';
 import { Header } from 'components/Header';
+import { ProtectedRoute } from 'components/ProtectedRoute/ProtectedRoute';
 import { routerPaths } from 'config/routerPaths';
 import { useQueryParamsStoreInit } from 'hooks/useQueryParamsStoreInit';
 import { AuthLayout, SignIn, SignUp } from 'pages/Auth';
@@ -12,7 +13,9 @@ import { Checkout } from 'pages/Checkout';
 import { Product } from 'pages/Product';
 import { Products } from 'pages/Products';
 import { ProductModal } from 'pages/Products/components/ProductModal';
+import { Profile } from 'pages/Profile';
 import cartStore from 'store/cart';
+import userStore from 'store/user';
 
 const App: React.FC = () => {
   const [open, setOpen] = React.useState(false);
@@ -20,6 +23,15 @@ const App: React.FC = () => {
   const state = location.state as { backgroundLocation?: Location };
 
   React.useEffect(() => {
+    const handleLogin = async () => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        await userStore.getUserProfile(token);
+      }
+    };
+
+    handleLogin();
+
     cartStore.fetch();
   }, []);
 
@@ -36,8 +48,16 @@ const App: React.FC = () => {
           <Route element={<Product />} path={routerPaths.productId} />
         </Route>
         <Route element={<Categories />} path={routerPaths.categories} />
-        <Route element={<Button>hi</Button>} path={routerPaths.about} />
         <Route element={<Checkout />} path={routerPaths.checkout} />
+        <Route element={<Button>hi</Button>} path={routerPaths.about} />
+        <Route
+          element={
+            <ProtectedRoute redirect={routerPaths.signin}>
+              <Profile />
+            </ProtectedRoute>
+          }
+          path={routerPaths.profile}
+        />
         <Route element={<AuthLayout />}>
           <Route element={<SignUp />} path={routerPaths.signup} />
           <Route element={<SignIn />} path={routerPaths.signin} />

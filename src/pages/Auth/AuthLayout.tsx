@@ -1,39 +1,38 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
+import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import vidoe from 'assets/a8798f8d21b54ecbaac541576ca06bef.mp4';
 import image from 'assets/hero-image-placeholder.jpg';
 import { FadeIn } from 'components/FadeIn';
-import { Text } from 'components/Text';
 import { routerPaths } from 'config/routerPaths';
+import userStore from 'store/user';
+import { NavigationLinks } from './NavigationLinks';
 import styles from './Auth.module.scss';
 
-const Navigation: React.FC<React.PropsWithChildren<{ to: string }>> = ({ to, children }) => {
-  const { pathname } = useLocation();
+export const AuthLayout: React.FC = observer(() => {
+  const navigate = useNavigate();
 
-  return (
-    <NavLink className={styles.link} to={to}>
-      <Text color={pathname === to ? 'primary' : 'secondary'} view="h-32" weight="bold">
-        {children}
-      </Text>
-    </NavLink>
-  );
-};
+  React.useEffect(() => {
+    const handleLogin = async () => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        await userStore.getUserProfile(token);
+        navigate(routerPaths.profile);
+      }
+    };
 
-export const AuthLayout: React.FC = () => {
+    handleLogin();
+  }, [navigate]);
   return (
     <FadeIn className={styles.main}>
-      <motion.form animate={{ opacity: 1 }} className={styles.form} initial={{ opacity: 0 }}>
-        <div className={styles.links}>
-          <Navigation to={routerPaths.signup}>Sign up</Navigation>
-          <Text view="h-32" weight="bold">
-            /
-          </Text>
-          <Navigation to={routerPaths.signin}>Sign in</Navigation>
-        </div>
-        <Outlet />
-      </motion.form>
+      <div className={styles.container}>
+        <NavigationLinks />
+        <AnimatePresence>
+          <Outlet />
+        </AnimatePresence>
+      </div>
       <video className={styles.video} placeholder={image} poster={image} src={vidoe} autoPlay loop muted></video>
     </FadeIn>
   );
-};
+});
