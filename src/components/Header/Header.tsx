@@ -17,7 +17,7 @@ const Navigation: React.FC = () => {
   const nav = [
     { link: routerPaths.root, title: 'Products' },
     { link: routerPaths.categories, title: 'Categories' },
-    { link: routerPaths.about, title: 'About us' },
+    // { link: routerPaths.about, title: 'About us' },
   ];
   const { pathname } = useLocation();
 

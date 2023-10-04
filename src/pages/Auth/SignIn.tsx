@@ -41,7 +41,7 @@ export const SignIn: React.FC = () => {
         type="email"
         value={form.email}
         onChange={(value) => {
-          setForm((prev) => ({ email: value, password: prev.password }));
+          setForm((prev) => ({ ...prev, email: value }));
         }}
       />
       <Input
@@ -52,7 +52,7 @@ export const SignIn: React.FC = () => {
         value={form.password}
         formNoValidate
         onChange={(value) => {
-          setForm((prev) => ({ email: prev.email, password: value }));
+          setForm((prev) => ({ ...prev, password: value }));
         }}
       />
       <Button key={'submit'}>Sign in</Button>
