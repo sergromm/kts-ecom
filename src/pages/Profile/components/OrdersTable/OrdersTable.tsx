@@ -15,19 +15,21 @@ const Row: React.FC<RowProps> = ({ id, products, date, total, status }) => {
   return (
     <tr>
       <td>
-        <Text>{id}</Text>
+        <Text view="p-18">{id}</Text>
       </td>
       <td>
-        <Text>{products}</Text>
+        <Text maxLines={1} view="p-18">
+          {products}
+        </Text>
       </td>
       <td>
-        <Text>{date}</Text>
+        <Text view="p-18">{date}</Text>
       </td>
       <td>
-        <Text>{new Intl.NumberFormat('us-US', { style: 'currency', currency: 'USD' }).format(total)}</Text>
+        <Text view="p-18">{new Intl.NumberFormat('us-US', { style: 'currency', currency: 'USD' }).format(total)}</Text>
       </td>
       <td>
-        <Text className={styles.status} color="accent">
+        <Text className={styles.status} color="accent" view="p-18">
           {status}
         </Text>
       </td>
@@ -56,18 +58,30 @@ export const OrdersTable: React.FC = () => {
   return (
     <table className={styles.table}>
       <tr className={styles.header}>
-        <th style={{ width: 100 }}>Number</th>
-        <th>
-          <Text>Order</Text>
+        <th style={{ width: 100 }}>
+          <Text view="p-20" weight="medium">
+            Number
+          </Text>
         </th>
-        <th>
-          <Text>Date</Text>
+        <th style={{ width: 300 }}>
+          <Text view="p-20" weight="medium">
+            Order
+          </Text>
         </th>
-        <th>
-          <Text>Total</Text>
+        <th style={{ width: 100 }}>
+          <Text view="p-20" weight="medium">
+            Date
+          </Text>
         </th>
-        <th>
-          <Text>Status</Text>
+        <th style={{ width: 100 }}>
+          <Text view="p-20" weight="medium">
+            Total
+          </Text>
+        </th>
+        <th style={{ width: 100 }}>
+          <Text view="p-20" weight="medium">
+            Status
+          </Text>
         </th>
       </tr>
       {rows.map((row) => (

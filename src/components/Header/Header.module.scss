@@ -67,12 +67,12 @@
   width: 6px;
   height: 6px;
   border-radius: 8px;
-  background: red;
+  background: $red;
   outline: solid 2px white;
 }
 
 .glow {
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.5) 0%, rgba(255, 255, 255, 0) 80%);
+  background: radial-gradient(circle, rgba(255, 72, 72, 0.5) 0%, rgba(255, 255, 255, 0) 80%);
   position: absolute;
   top: -5px;
   left: -5px;

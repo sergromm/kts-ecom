@@ -14,7 +14,7 @@ import { Checkout } from 'pages/Checkout';
 import { Product } from 'pages/Product';
 import { Products } from 'pages/Products';
 import { ProductModal } from 'pages/Products/components/ProductModal';
-import { Favorites, Main, Orders, Profile, ProfileLayout } from 'pages/Profile';
+import { Favorites, Main, Orders, ProfileLayout } from 'pages/Profile';
 import cartStore from 'store/cart';
 import userStore from 'store/user';
 
@@ -59,7 +59,6 @@ const App: React.FC = () => {
           }
         >
           <Route element={<Main />} path={routerPaths.profile.root} />
-          <Route element={<Profile />} path={routerPaths.profile.me} />
           <Route element={<Orders />} path={routerPaths.profile.orders} />
           <Route element={<Favorites />} path={routerPaths.profile.favorites} />
         </Route>

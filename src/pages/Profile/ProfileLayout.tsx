@@ -23,10 +23,6 @@ const profileRoutes = [
     title: 'Main',
   },
   {
-    path: routerPaths.profile.me,
-    title: 'Profile',
-  },
-  {
     path: routerPaths.profile.orders,
     title: 'Orders',
   },
@@ -50,20 +46,16 @@ export const ProfileLayout: React.FC = observer(() => {
           {profileRoutes.map((route) => (
             <NavItem key={route.path} {...route} />
           ))}
-          <li>
+          <li className={styles.bottom}>
             <button className={styles.logout} onClick={handleLogout}>
-              <Text view="p-24">Logout</Text>
+              <Text className={styles.text} view="p-24">
+                Logout
+              </Text>
             </button>
           </li>
         </ul>
       </aside>
-      <section className={styles.content}>
-        <Text view="title" weight="bold">
-          Welcome, {userStore.profile.firstName}!
-        </Text>
-
-        <Outlet />
-      </section>
+      <Outlet />
     </main>
   );
 });
