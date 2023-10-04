@@ -40,7 +40,7 @@ const getSettingsForStyles = (withModules = false) => {
 };
 
 module.exports = {
-  target: isProd ? 'browserlist' : 'web',
+  target: isProd ? 'browserslist' : 'web',
   entry: path.join(srcPath, './main.tsx'),
   output: {
     path: buildPath,
