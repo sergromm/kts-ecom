@@ -103,22 +103,25 @@ class UserStore implements ILocalStore {
   };
 
   getUserProfile = async (token: string) => {
-    const response = await axios.get('https://rzknhedkzukvgtstzbxj.supabase.co/auth/v1/user', {
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: process.env.SUPABASE_PUBLIC_KEY,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const user = await response.data;
-    const [profile] = await this.getProfile(user.id);
-
-    runInAction(() => {
-      this._profile = profile;
-      this._token = token;
-      return;
-    });
+    try {
+      const response = await axios.get('https://rzknhedkzukvgtstzbxj.supabase.co/auth/v1/user', {
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: process.env.SUPABASE_PUBLIC_KEY,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const user = await response.data;
+      const [profile] = await this.getProfile(user.id);
+      runInAction(() => {
+        this._profile = profile;
+        this._token = token;
+        return;
+      });
+    } catch (error) {
+      toast.error('Token expired. Signin again.');
+      localStorage.removeItem('access_token');
+    }
   };
 
   logout = async (token: string) => {

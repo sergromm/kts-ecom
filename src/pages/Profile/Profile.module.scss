@@ -1,0 +1,55 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 100px $whole-page-padding 48px;
+  gap: $space-xl;
+  max-width: $content-max-width;
+  margin: 0 auto;
+  box-sizing: content-box;
+}
+.links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: $space-m;
+  padding: 0;
+  margin: 0;
+}
+
+.link {
+  text-decoration: none;
+  transition: $hover;
+  opacity: 1;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.logout {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  transition: $hover;
+  opacity: 1;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: $space-xl;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: $space-xl;
+}

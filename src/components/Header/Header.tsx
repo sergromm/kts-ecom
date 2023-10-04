@@ -6,8 +6,8 @@ import { NavLink, useLocation } from 'react-router-dom';
 import Logo from 'assets/logo.svg';
 import { Text } from 'components/Text';
 import { CartIcon } from 'components/icons/CartIcon';
-import { DragHandleIcon } from 'components/icons/DragHandleIcon';
 import { ProfileIcon } from 'components/icons/ProfileIcon';
+import { SiginIcon } from 'components/icons/SigninIcon/SigninIcon';
 import { routerPaths } from 'config/routerPaths';
 import cartStore from 'store/cart';
 import userStore from 'store/user';
@@ -67,7 +67,7 @@ const Buttons: React.FC<{ handleOpenModal: () => void }> = observer(({ handleOpe
           </AnimatePresence>
         </button>
         {userStore.profile.id ? (
-          <NavLink className={styles.button} to={routerPaths.profile}>
+          <NavLink className={styles.button} to={routerPaths.profile.root}>
             {userStore.profile.avatar ? (
               <img className={styles.avatar} src={userStore.profile.avatar} />
             ) : (
@@ -76,7 +76,7 @@ const Buttons: React.FC<{ handleOpenModal: () => void }> = observer(({ handleOpe
           </NavLink>
         ) : (
           <NavLink className={styles.button} to={routerPaths.signup}>
-            <DragHandleIcon height={30} width={30} />
+            <SiginIcon height={30} width={30} />
           </NavLink>
         )}
       </>

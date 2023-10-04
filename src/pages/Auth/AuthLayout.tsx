@@ -17,7 +17,7 @@ export const AuthLayout: React.FC = () => {
       const token = localStorage.getItem('access_token');
       if (token) {
         await userStore.getUserProfile(token);
-        navigate(routerPaths.profile);
+        navigate(routerPaths.profile.root);
       }
     };
 

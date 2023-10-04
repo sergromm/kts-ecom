@@ -20,7 +20,7 @@ export const SignIn: React.FC = () => {
     const body = Object.fromEntries(data.entries()) as AuthBody;
     localStorage.removeItem('cartId');
     await userStore.signin(body);
-    navigate(routerPaths.profile);
+    navigate(routerPaths.profile.root);
   };
 
   return (

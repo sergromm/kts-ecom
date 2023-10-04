@@ -1,0 +1,23 @@
+/* The component style is inserted here. */
+.header {
+  text-align: left;
+}
+
+.table {
+  // border-spacing: $space-m;
+  width: 100%;
+}
+
+th,
+td {
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.total {
+  font-variant-numeric: tabular-nums diagonal-fractions;
+}
+
+.status {
+  text-transform: capitalize;
+}
