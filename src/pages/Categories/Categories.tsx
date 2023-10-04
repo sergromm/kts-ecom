@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { Card } from 'components/Card';
 import { FadeIn } from 'components/FadeIn';
 import { Hero } from 'components/Hero';
+import { SkeletonGrid } from 'components/Skeleton';
 import { useLocalStore } from 'hooks/useLocalStore';
 import { CategoriesStore } from 'store/categories';
 import styles from './Categories.module.scss';
+const Grid = React.lazy(() => import('./Grid'));
 
 export const Categories: React.FC = observer(() => {
   const store = useLocalStore(() => new CategoriesStore());
@@ -22,23 +22,9 @@ export const Categories: React.FC = observer(() => {
           looking for"
         title="Categories"
       />
-
-      <section className={styles.grid}>
-        {store.categories.map((category) => {
-          return (
-            <Link className={styles.card} key={category.id} to={`/?filter=${category.name}`}>
-              <Card
-                fit="cover"
-                hash={category.blurhash}
-                image={category.image}
-                size="small"
-                subtitle=""
-                title={category.name}
-              />
-            </Link>
-          );
-        })}
-      </section>
+      <React.Suspense fallback={<SkeletonGrid />}>
+        <Grid categories={store.categories} />
+      </React.Suspense>
     </FadeIn>
   );
 });
