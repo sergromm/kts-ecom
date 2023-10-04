@@ -41,20 +41,18 @@ export const ProfileLayout: React.FC = observer(() => {
 
   return (
     <main className={styles.main}>
-      <aside>
-        <ul className={styles.links}>
-          {profileRoutes.map((route) => (
-            <NavItem key={route.path} {...route} />
-          ))}
-          <li className={styles.bottom}>
-            <button className={styles.logout} onClick={handleLogout}>
-              <Text className={styles.text} view="p-24">
-                Logout
-              </Text>
-            </button>
-          </li>
-        </ul>
-      </aside>
+      <ul className={styles.links}>
+        {profileRoutes.map((route) => (
+          <NavItem key={route.path} {...route} />
+        ))}
+        <li className={styles.bottom}>
+          <button className={styles.logout} onClick={handleLogout}>
+            <Text className={styles.text} view="p-24">
+              Logout
+            </Text>
+          </button>
+        </li>
+      </ul>
       <Outlet />
     </main>
   );

@@ -4,6 +4,7 @@
   display: grid;
   grid-template-columns: auto 0.9fr;
   grid-template-rows: 1fr;
+  justify-content: space-between;
   padding: var(--top-padding) $whole-page-padding var(--bottom-padding);
   gap: $space-xl;
   max-width: $content-max-width;
