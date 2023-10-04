@@ -1,5 +1,4 @@
 import { AnimatePresence } from 'framer-motion';
-import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import vidoe from 'assets/a8798f8d21b54ecbaac541576ca06bef.mp4';
@@ -10,7 +9,7 @@ import userStore from 'store/user';
 import { NavigationLinks } from './NavigationLinks';
 import styles from './Auth.module.scss';
 
-export const AuthLayout: React.FC = observer(() => {
+export const AuthLayout: React.FC = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -24,6 +23,7 @@ export const AuthLayout: React.FC = observer(() => {
 
     handleLogin();
   }, [navigate]);
+
   return (
     <FadeIn className={styles.main}>
       <div className={styles.container}>
@@ -35,4 +35,4 @@ export const AuthLayout: React.FC = observer(() => {
       <video className={styles.video} placeholder={image} poster={image} src={vidoe} autoPlay loop muted></video>
     </FadeIn>
   );
-});
+};

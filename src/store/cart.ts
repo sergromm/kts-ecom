@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, reaction, runInAction } from 'mobx';
 import { toast } from 'sonner';
 import { ProductType } from 'entities/protuct';
+import userStore from 'store/user';
 import { ILocalStore } from './types';
 import { Meta } from './utils';
 
@@ -10,7 +11,7 @@ type CartItem = Omit<ProductType, 'description' | 'category'>;
 
 class CartStore implements ILocalStore {
   private _cart: CartItem[] = [];
-  private _cartId: string | null = '907d44d1-ff91-4621-a9a3-88622dc1ed32';
+  private _cartId: string = '';
   private _meta: Meta = Meta.initial;
   private _discount: number = 0;
   constructor() {
@@ -37,6 +38,10 @@ class CartStore implements ILocalStore {
 
   get cartId() {
     return this._cartId;
+  }
+
+  set cartId(value: string) {
+    this._cartId = value;
   }
 
   get count() {
@@ -67,9 +72,15 @@ class CartStore implements ILocalStore {
     this._meta = value;
   }
 
-  create = async (id: string) => {
+  create = async (id?: string | null) => {
+    const localCartId = localStorage.getItem('cartId');
     if (id) {
       this._cartId = id;
+      localStorage.setItem('cartId', this._cartId);
+      return;
+    } else if (!id && localCartId) {
+      this._cartId = localCartId;
+      localStorage.setItem('cartId', this._cartId);
       return;
     }
 
@@ -80,9 +91,14 @@ class CartStore implements ILocalStore {
       },
     };
 
-    const cartId = await axios.post('https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/carts', options);
+    const cartId = await axios.post('https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/carts', null, options);
+    const [cart] = cartId.data;
 
-    this._cartId = cartId.data;
+    runInAction(() => {
+      this._cartId = cart.id;
+      localStorage.setItem('cartId', this._cartId);
+      return;
+    });
 
     return;
   };
@@ -155,6 +171,7 @@ class CartStore implements ILocalStore {
     }
 
     this.meta = Meta.loading;
+    this.create();
 
     const options = {
       headers: {
@@ -182,7 +199,19 @@ class CartStore implements ILocalStore {
     }
   };
 
-  destroy(): void {}
+  destroy(): void {
+    return this._userReaction();
+  }
+
+  private readonly _userReaction = reaction(
+    () => {
+      return userStore.profile;
+    },
+    async (profile) => {
+      await this.create(profile.cartId);
+      await this.fetch();
+    },
+  );
 }
 
 export default new CartStore();

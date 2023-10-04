@@ -9,11 +9,12 @@ type Profile = {
   firstName: string;
   lastName: string;
   avatar: string;
+  cartId: string;
 };
 
 type PrivateFields = '_token' | '_profile' | '_meta';
 export type AuthBody = { email: string; password: string };
-const defaultProfileState = { id: '', firstName: '', lastName: '', avatar: '' };
+const defaultProfileState = { id: '', firstName: '', lastName: '', avatar: '', cartId: '' };
 class UserStore implements ILocalStore {
   private _token: string = '';
   private _profile: Profile = defaultProfileState;
@@ -81,10 +82,7 @@ class UserStore implements ILocalStore {
 
       await this.getUserProfile(user.access_token);
 
-      runInAction(() => {
-        localStorage.setItem('access_token', user.access_token);
-        return;
-      });
+      localStorage.setItem('access_token', user.access_token);
     } catch (error) {
       runInAction(() => {
         this._meta = Meta.error;
@@ -133,6 +131,7 @@ class UserStore implements ILocalStore {
         },
       });
       localStorage.removeItem('access_token');
+      localStorage.removeItem('cartId');
     } catch (error) {
       toast.error("Couldn't logout.");
     }

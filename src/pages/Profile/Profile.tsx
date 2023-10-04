@@ -1,7 +1,9 @@
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Text } from 'components/Text';
+import cartStore from 'store/cart';
 import userStore from 'store/user';
 
 export const Profile: React.FC = observer(() => {
@@ -23,7 +25,17 @@ export const Profile: React.FC = observer(() => {
             <Link to="/profile/favorites">Favorites</Link>
           </li>
           <li>
-            <button onClick={() => userStore.logout(userStore.token!)}>Logout</button>
+            <button
+              onClick={() => {
+                runInAction(() => {
+                  userStore.logout(userStore.token!);
+                  cartStore.cartId = '';
+                  console.log(cartStore.cartId);
+                });
+              }}
+            >
+              Logout
+            </button>
           </li>
         </ul>
       </aside>

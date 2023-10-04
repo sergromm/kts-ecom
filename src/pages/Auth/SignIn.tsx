@@ -18,6 +18,7 @@ export const SignIn: React.FC = () => {
 
     const data = new FormData(e.currentTarget as HTMLFormElement);
     const body = Object.fromEntries(data.entries()) as AuthBody;
+    localStorage.removeItem('cartId');
     await userStore.signin(body);
     navigate(routerPaths.profile);
   };

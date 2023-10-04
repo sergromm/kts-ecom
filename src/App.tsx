@@ -1,3 +1,4 @@
+import { action } from 'mobx';
 import * as React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Toaster } from 'sonner';
@@ -23,16 +24,16 @@ const App: React.FC = () => {
   const state = location.state as { backgroundLocation?: Location };
 
   React.useEffect(() => {
-    const handleLogin = async () => {
+    const handleLogin = action(async () => {
       const token = localStorage.getItem('access_token');
+
       if (token) {
         await userStore.getUserProfile(token);
       }
-    };
+      cartStore.fetch();
+    });
 
     handleLogin();
-
-    cartStore.fetch();
   }, []);
 
   useQueryParamsStoreInit();

@@ -72,9 +72,9 @@ export const CartList: React.FC<React.PropsWithChildren> = ({ children }) => {
 export const Cart: React.FC<CartProps> = observer(({ open, handleClose }) => {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
-  React.useEffect(() => {
-    cartStore.fetch();
-  }, [open]);
+  // React.useEffect(() => {
+  //   cartStore.fetch();
+  // }, [open]);
 
   const isEmpty = cartStore.count === 0;
 
