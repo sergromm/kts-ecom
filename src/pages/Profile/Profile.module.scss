@@ -28,9 +28,16 @@
   transition: $hover;
   opacity: 1;
   cursor: pointer;
+  display: inline-flex;
   &:hover {
     opacity: 0.5;
   }
+}
+
+.favorite {
+  display: flex;
+  gap: $space-xs;
+  align-items: baseline;
 }
 
 .bottom {

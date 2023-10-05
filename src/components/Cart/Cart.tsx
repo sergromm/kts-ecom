@@ -8,7 +8,7 @@ import { Content, Modal, Overlay } from 'components/Modal';
 import { Text } from 'components/Text';
 import { routerPaths } from 'config/routerPaths';
 import { ProductType } from 'entities/protuct';
-import { useCart } from 'hooks/useCart';
+import { useCard } from 'hooks/useCard';
 import cartStore from 'store/cart';
 import { Meta } from 'store/utils';
 import styles from './Cart.module.scss';
@@ -28,7 +28,7 @@ export const CartItem: React.FC<
   React.PropsWithChildren<{ product: Omit<ProductType, 'description' | 'category'> }>
 > = ({ product }) => {
   const [pending, setPending] = React.useState(false);
-  const { remove } = useCart(setPending);
+  const { remove } = useCard(setPending);
 
   return (
     <motion.li

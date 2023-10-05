@@ -6,7 +6,7 @@ import { Button } from 'components/Button';
 import { Content, Modal, Overlay } from 'components/Modal';
 import { Text } from 'components/Text';
 import { ArrowRightIcon } from 'components/icons/ArrowRightIcon';
-import { useCart } from 'hooks/useCart';
+import { useCard } from 'hooks/useCard';
 import { useLocalStore } from 'hooks/useLocalStore';
 import cartStore from 'store/cart';
 import { ProductStore } from 'store/product';
@@ -28,7 +28,7 @@ const contentVariants = {
 export const ProductModal: React.FC = observer(() => {
   const { productId } = useParams();
   const [pending, setPending] = React.useState(false);
-  const { add } = useCart(setPending);
+  const { add } = useCard(setPending);
   const inCart = cartStore.cart.some((p) => p.id === Number(productId));
   const [open, setOpen] = React.useState(true);
 

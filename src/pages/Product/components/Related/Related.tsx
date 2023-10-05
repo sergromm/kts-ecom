@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card } from 'components/Card';
+import { ProductCard } from 'components/Card';
 import { Text } from 'components/Text';
 import { ProductType } from 'entities/protuct';
 import styles from './Related.module.scss';
@@ -16,15 +16,7 @@ const Related: React.FC<RelatedProps> = ({ products }) => {
       </Text>
       <div className={styles.cards}>
         {products.map((product) => {
-          return (
-            <Card
-              hash={product.blurhash[0].blurhash}
-              image={product.images[0]}
-              key={product.id}
-              subtitle={product.description}
-              title={product.title}
-            />
-          );
+          return <ProductCard key={product.id} product={product} />;
         })}
       </div>
     </section>

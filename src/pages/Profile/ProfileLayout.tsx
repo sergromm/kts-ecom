@@ -7,24 +7,32 @@ import { routerPaths } from 'config/routerPaths';
 import userStore from 'store/user';
 import styles from './Profile.module.scss';
 
-const NavItem: React.FC<{ path: string; title: string }> = ({ path, title }) => {
+const NavItem: React.FC<{ path: string; title: string }> = observer(({ path, title }) => {
+  React.useEffect(() => {
+    userStore.getFavorites();
+  }, []);
   return (
     <li>
       <NavLink className={styles.link} to={path}>
-        <Text view="p-24">{title}</Text>
+        <Text className={styles.favorite} view="p-24">
+          {title}{' '}
+          {path === routerPaths.profile.favorites ? (
+            userStore.favorites.length > 0 ? (
+              <Text color="accent" tag="span" view="p-20">
+                {userStore.favorites.length}
+              </Text>
+            ) : null
+          ) : null}
+        </Text>
       </NavLink>
     </li>
   );
-};
+});
 
 const profileRoutes = [
   {
     path: routerPaths.profile.root,
     title: 'Main',
-  },
-  {
-    path: routerPaths.profile.orders,
-    title: 'Orders',
   },
   {
     path: routerPaths.profile.favorites,

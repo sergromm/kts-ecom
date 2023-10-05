@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { toast } from 'sonner';
+import { ProductType } from 'entities/protuct';
 import { getAxiosError } from 'utils/getAxiosError';
 import { ILocalStore } from './types';
 import { Meta } from './utils';
@@ -13,11 +14,12 @@ type Profile = {
   cartId: string;
 };
 
-type PrivateFields = '_token' | '_profile' | '_meta';
+type PrivateFields = '_token' | '_profile' | '_meta' | '_favorites';
 export type AuthBody = { email: string; password: string };
 const defaultProfileState = { id: '', firstName: '', lastName: '', avatar: '', cartId: '' };
 class UserStore implements ILocalStore {
   private _token: string = '';
+  private _favorites: ProductType[] = [];
   private _profile: Profile = defaultProfileState;
   private _meta: Meta = Meta.initial;
 
@@ -25,6 +27,9 @@ class UserStore implements ILocalStore {
     makeObservable<UserStore, PrivateFields>(this, {
       _token: observable,
       token: computed,
+
+      _favorites: observable.ref,
+      favorites: computed,
 
       _meta: observable,
       meta: computed,
@@ -35,6 +40,9 @@ class UserStore implements ILocalStore {
       signin: action,
       logout: action,
       getUserProfile: action,
+      getFavorites: action,
+      favorite: action,
+      removeFromFavorites: action,
     });
   }
 
@@ -44,6 +52,10 @@ class UserStore implements ILocalStore {
 
   get profile() {
     return this._profile;
+  }
+
+  get favorites() {
+    return this._favorites;
   }
 
   get meta() {
@@ -101,6 +113,7 @@ class UserStore implements ILocalStore {
       runInAction(() => {
         this._meta = Meta.error;
       });
+
       const message = getAxiosError(error);
       toast.error(message);
     }
@@ -128,6 +141,105 @@ class UserStore implements ILocalStore {
       toast.error(message);
       localStorage.removeItem('access_token');
       localStorage.removeItem('cartId');
+    }
+  };
+
+  favorite = async (product: ProductType) => {
+    if (this._meta === Meta.loading) {
+      return;
+    }
+
+    this._meta = Meta.loading;
+
+    const body = {
+      userId: this._profile.id,
+      productId: product.id,
+    };
+
+    const options = {
+      headers: {
+        apikey: process.env.SUPABASE_PUBLIC_KEY,
+        Authorization: `Bearer ${this._token}`,
+      },
+    };
+
+    try {
+      await axios.post('https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/user_favorites', body, options);
+      runInAction(() => {
+        this._meta = Meta.success;
+        this.getFavorites();
+        toast(`${product.title} added to your favorites`);
+      });
+    } catch (error) {
+      runInAction(() => {
+        this._meta = Meta.error;
+        toast.error("Couldn't add to favorites");
+      });
+    }
+  };
+
+  removeFromFavorites = async (productId: number) => {
+    if (this._meta === Meta.loading) {
+      return;
+    }
+
+    this._meta = Meta.loading;
+
+    const options = {
+      headers: {
+        apikey: process.env.SUPABASE_PUBLIC_KEY,
+        Authorization: `Bearer ${this._token}`,
+      },
+      params: {
+        productId: `eq.${productId}`,
+        userId: `eq.${this._profile.id}`,
+      },
+    };
+
+    try {
+      await axios.delete('https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/user_favorites', options);
+      runInAction(() => {
+        this._meta = Meta.success;
+        this.getFavorites();
+      });
+    } catch (error) {
+      runInAction(() => {
+        this._meta = Meta.error;
+        toast.error("Couldn't remove from favorites");
+      });
+    }
+  };
+
+  getFavorites = async () => {
+    if (this._meta === Meta.loading) {
+      return;
+    }
+
+    this._meta = Meta.loading;
+
+    const options = {
+      headers: {
+        apikey: process.env.SUPABASE_PUBLIC_KEY,
+        Authorization: `Bearer ${this._token}`,
+      },
+      params: {
+        select: 'product:products(*,category:categories!inner(name))',
+        userId: `eq.${this._profile.id}`,
+      },
+    };
+
+    const favorites = await axios.get<{ product: ProductType }[]>(
+      'https://rzknhedkzukvgtstzbxj.supabase.co/rest/v1/user_favorites',
+      options,
+    );
+    if (favorites) {
+      runInAction(() => {
+        this._favorites = favorites.data.map((favorite) => favorite.product);
+        return;
+      });
+      this._meta = Meta.success;
+    } else {
+      this._meta = Meta.error;
     }
   };
 

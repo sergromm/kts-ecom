@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { routerPaths } from 'config/routerPaths';
 import { ProductType } from 'entities/protuct';
 import cartStore from 'store/cart';
+import userStore from 'store/user';
 
-export const useCart = (setPending: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const useCard = (setPending: React.Dispatch<React.SetStateAction<boolean>>) => {
   const navigate = useNavigate();
 
   const toCheckout = React.useCallback(() => {
@@ -36,5 +37,19 @@ export const useCart = (setPending: React.Dispatch<React.SetStateAction<boolean>
     [wrapper],
   );
 
-  return { add, remove };
+  const favorite = React.useCallback(
+    (product: ProductType) => (event: React.MouseEvent) => {
+      wrapper(() => userStore.favorite(product))(event);
+    },
+    [wrapper],
+  );
+
+  const removeFromFavorites = React.useCallback(
+    (id: number) => (event: React.MouseEvent) => {
+      wrapper(() => userStore.removeFromFavorites(id))(event);
+    },
+    [wrapper],
+  );
+
+  return { add, remove, favorite, removeFromFavorites };
 };
