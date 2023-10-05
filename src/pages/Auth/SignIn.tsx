@@ -9,7 +9,7 @@ import userStore, { AuthBody } from 'store/user';
 import styles from './Auth.module.scss';
 
 export const SignIn: React.FC = () => {
-  const [form, setForm] = React.useState({ email: 'sergichev@gmail.com', password: 'ktsshop' });
+  const [form, setForm] = React.useState({ email: 'ktsshop@ktsshop.com', password: 'ktsshop' });
   const [valid, setValid] = React.useState(true);
   const navigate = useNavigate();
 

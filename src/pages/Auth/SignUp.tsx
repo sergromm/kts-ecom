@@ -84,6 +84,7 @@ export const SignUp: React.FC = () => {
       <Input
         name="email"
         placeholder="E-mail"
+        type="email"
         value={form.email}
         required
         onChange={(value) => {
@@ -93,6 +94,7 @@ export const SignUp: React.FC = () => {
       <Input
         name="password"
         placeholder="Password"
+        type="password"
         value={form.password}
         required
         onChange={(value) => {
@@ -102,6 +104,7 @@ export const SignUp: React.FC = () => {
       <Input
         name="confirm"
         placeholder="Confirm password"
+        type="password"
         value={form.confirm}
         required
         onChange={(value) => {
