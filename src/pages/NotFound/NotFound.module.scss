@@ -1,0 +1,19 @@
+.main {
+  height: calc(100vh - $header-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: $space-s;
+}
+
+.title {
+  font-size: 169px;
+  line-height: 172px;
+  display: flex;
+}
+
+.subtitle {
+  margin-bottom: $space-xl;
+}

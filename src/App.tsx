@@ -11,6 +11,7 @@ import { useQueryParamsStoreInit } from 'hooks/useQueryParamsStoreInit';
 import { AuthLayout, SignIn, SignUp } from 'pages/Auth';
 import { Categories } from 'pages/Categories';
 import { Checkout } from 'pages/Checkout';
+import { NotFound } from 'pages/NotFound/NotFound';
 import { Product } from 'pages/Product';
 import { Products } from 'pages/Products';
 import { ProductModal } from 'pages/Products/components/ProductModal';
@@ -44,6 +45,7 @@ const App: React.FC = () => {
       <Cart handleClose={() => setOpen(false)} open={open} />
       <Toaster position="bottom-center" richColors />
       <Routes location={state?.backgroundLocation || location}>
+        <Route element={<NotFound />} path="*" />
         <Route element={<Products />} path={routerPaths.root} />
         <Route path={routerPaths.products}>
           <Route element={<Product />} path={routerPaths.productId} />
