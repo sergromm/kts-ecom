@@ -109,13 +109,13 @@ export const ProductModal: React.FC = observer(() => {
               </Text>
 
               <div className={styles.actions}>
-                <Button disabled={inCart} loading={pending} onClick={add(product)}>
-                  Add To Cart
-                </Button>
                 <Link className={styles.link} to={`/products/${product.id}`}>
                   To product&apos;s page
                   <ArrowRightIcon height={31} width={31} />
                 </Link>
+                <Button disabled={inCart} loading={pending} onClick={add(product)}>
+                  Add To Cart
+                </Button>
               </div>
             </div>
           </motion.div>
