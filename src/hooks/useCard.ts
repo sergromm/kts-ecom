@@ -8,6 +8,10 @@ import userStore from 'store/user';
 export const useCard = (setPending: React.Dispatch<React.SetStateAction<boolean>>) => {
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    userStore.getFavorites();
+  }, []);
+
   const toCheckout = React.useCallback(() => {
     navigate(routerPaths.checkout);
   }, [navigate]);
