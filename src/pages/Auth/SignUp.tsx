@@ -13,8 +13,8 @@ const MotionInput = motion(Input);
 
 export const SignUp: React.FC = () => {
   const [form, setForm] = React.useState({
-    email: 'sergichev@gmail.com',
-    password: 'ktsshop',
+    email: '',
+    password: '',
     confirm: '',
     firstName: '',
     lastName: '',
@@ -39,8 +39,8 @@ export const SignUp: React.FC = () => {
       return;
     }
 
-    if (data.firstName === '' || data.lastName === '') {
-      toast.error('First and last name are required.');
+    if (data.firstName === '') {
+      toast.error('First name is required.');
       return;
     }
 
@@ -69,7 +69,6 @@ export const SignUp: React.FC = () => {
       setShowNameFields(true);
     }
   }, [form.confirm, form.email, form.password]);
-
   return (
     <motion.form
       animate={{ opacity: 1 }}
@@ -86,6 +85,7 @@ export const SignUp: React.FC = () => {
         name="email"
         placeholder="E-mail"
         value={form.email}
+        required
         onChange={(value) => {
           setForm((prev) => ({ ...prev, email: value }));
         }}
@@ -94,6 +94,7 @@ export const SignUp: React.FC = () => {
         name="password"
         placeholder="Password"
         value={form.password}
+        required
         onChange={(value) => {
           setForm((prev) => ({ ...prev, password: value }));
         }}
@@ -102,6 +103,7 @@ export const SignUp: React.FC = () => {
         name="confirm"
         placeholder="Confirm password"
         value={form.confirm}
+        required
         onChange={(value) => {
           setForm((prev) => ({ ...prev, confirm: value }));
         }}
@@ -117,6 +119,7 @@ export const SignUp: React.FC = () => {
               name="firstName"
               placeholder="First name"
               value={form.firstName}
+              required
               onChange={(value) => {
                 setForm((prev) => ({ ...prev, firstName: value }));
               }}

@@ -10,7 +10,7 @@ import styles from './Auth.module.scss';
 
 export const SignIn: React.FC = () => {
   const [form, setForm] = React.useState({ email: 'sergichev@gmail.com', password: 'ktsshop' });
-  const [valid, setValid] = React.useState(false);
+  const [valid, setValid] = React.useState(true);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,6 +42,7 @@ export const SignIn: React.FC = () => {
         placeholder="E-mail"
         type="email"
         value={form.email}
+        required
         onChange={(value) => {
           setForm((prev) => ({ ...prev, email: value }));
         }}
@@ -52,7 +53,7 @@ export const SignIn: React.FC = () => {
         placeholder="Password"
         type="password"
         value={form.password}
-        formNoValidate
+        required
         onChange={(value) => {
           setForm((prev) => ({ ...prev, password: value }));
         }}
