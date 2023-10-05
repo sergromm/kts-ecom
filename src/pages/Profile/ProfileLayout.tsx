@@ -18,7 +18,7 @@ const NavItem: React.FC<{ path: string; title: string }> = observer(({ path, tit
           {title}{' '}
           {path === routerPaths.profile.favorites ? (
             userStore.favorites.length > 0 ? (
-              <Text color="accent" tag="span" view="p-20">
+              <Text color="accent" tag="span" view="p-18" weight="bold">
                 {userStore.favorites.length}
               </Text>
             ) : null
