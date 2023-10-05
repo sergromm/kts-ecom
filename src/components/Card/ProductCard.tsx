@@ -30,14 +30,16 @@ export const ProductCard: React.FC<{ product: ProductType }> = observer(({ produ
       <Card
         actionSlot={
           <div className={styles.action}>
-            <motion.button
-              className={styles.favorite}
-              whileHover={{ color: '#487773' }}
-              whileTap={{ color: '#86aaa7' }}
-              onClick={(e) => (inFavorites ? removeFromFavorites(product.id)(e) : favorite(product)(e))}
-            >
-              <MotionHeart fill="#518581" height={30} selected={inFavorites} width={30} />
-            </motion.button>
+            {userStore.profile.id && (
+              <motion.button
+                className={styles.favorite}
+                whileHover={{ color: '#487773' }}
+                whileTap={{ color: '#86aaa7' }}
+                onClick={(e) => (inFavorites ? removeFromFavorites(product.id)(e) : favorite(product)(e))}
+              >
+                <MotionHeart fill="#518581" height={30} selected={inFavorites} width={30} />
+              </motion.button>
+            )}
             <Button disabled={inCart} loading={pending} onClick={add(product)}>
               Add to Cart
             </Button>
