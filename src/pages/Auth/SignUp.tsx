@@ -20,6 +20,7 @@ export const SignUp: React.FC = () => {
     lastName: '',
   });
   const navigate = useNavigate();
+  const [valid, setValid] = React.useState(false);
   const [showNameFields, setShowNameFields] = React.useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -77,6 +78,7 @@ export const SignUp: React.FC = () => {
       initial={{ opacity: 0 }}
       key={'form'}
       transition={{ type: 'tween', duration: 0.4 }}
+      onChange={(e) => setValid(e.currentTarget.checkValidity())}
       onInvalid={() => toast.error('Ivalid credentials format')}
       onSubmit={handleSubmit}
     >
@@ -134,7 +136,9 @@ export const SignUp: React.FC = () => {
           </>
         )}
       </AnimatePresence>
-      <Button type="submit">Sign up</Button>
+      <Button disabled={!valid} type="submit">
+        Sign up
+      </Button>
     </motion.form>
   );
 };

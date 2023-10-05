@@ -10,6 +10,7 @@ import styles from './Auth.module.scss';
 
 export const SignIn: React.FC = () => {
   const [form, setForm] = React.useState({ email: 'sergichev@gmail.com', password: 'ktsshop' });
+  const [valid, setValid] = React.useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -31,6 +32,7 @@ export const SignIn: React.FC = () => {
       initial={{ opacity: 0 }}
       key={'form'}
       transition={{ type: 'tween', duration: 0.4 }}
+      onChange={(e) => setValid(e.currentTarget.checkValidity())}
       onInvalid={() => toast.error('Ivalid credentials format')}
       onSubmit={handleSubmit}
     >
@@ -55,7 +57,9 @@ export const SignIn: React.FC = () => {
           setForm((prev) => ({ ...prev, password: value }));
         }}
       />
-      <Button key={'submit'}>Sign in</Button>
+      <Button disabled={!valid} type="submit">
+        Sign in
+      </Button>
     </motion.form>
   );
 };
